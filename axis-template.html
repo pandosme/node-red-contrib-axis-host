@@ -1,0 +1,79 @@
+<script type="text/x-red" data-template-name="Axis Template">
+    <div class="form-row">
+        <label for="node-input-preset"><i class="icon-tag"></i> Device</label>
+        <input type="text" id="node-input-preset">
+    </div>
+    <div class="form-row">
+        <label for="node-input-action"><i class="icon-tag"></i> Action</label>
+        <select id="node-input-action">
+            <option value="Get">Get</option>
+            <option value="Set">Set</option>
+		</select>
+	</div>
+    <div class="form-row input_options">
+        <label for="node-input-options"><i class="icon-tag"></i> Options</label>
+        <input type="text" id="node-input-options" placeholder="Some options....">
+    </div>
+</script>
+
+<script type="text/javascript">
+RED.nodes.registerType('Axis Template',{
+	category: 'Axis',
+	color: '#FFCC33',
+	defaults: {
+		preset: {type:"Device Access"},
+		action: { value:"Get"},
+		options: { value:""}
+	},
+	icon: "font-awesome/fa-rocket",
+	inputs:1,
+	outputs:1,
+	label: function() {
+		return this.action || "Axis Template";
+	},
+	oneditprepare: function() {
+		$("#node-input-action").change(function() {
+			var action = $("#node-input-action").val();
+			$(".input_options").hide();
+			switch (action) {
+				case "Get":
+				break;
+				case "Set":
+					$(".input_options").show();
+				break;
+			}
+		});
+	}
+});
+</script>
+
+<script type="text/x-red" data-help-name="Axis Template">
+	<h2>Inputs & Outputs</h2>
+	Set the device and call an action.
+	Action will only output on success.  Use a Catch node to get detailed errors.
+	
+	<br/><br/>
+
+	<p>
+		<b>Get</b><br/>
+		Get something...
+		<dl class="message-properties">
+			<dt>msg.payload<span class="property-type">string</span></dt>
+			<dd>
+				payload is the URL that you want to access
+			</dd>
+		</dl>	
+	</p>
+	<br/>
+	<p>
+		<b>Set</b><br/>
+		Set something...
+		<dl class="message-properties">
+			<dt>msg.payload<span class="property-type">string</span></dt>
+			<dd>
+				payload is the URL that you want to access
+			</dd>
+		</dl>	
+	</p>
+	<br/>
+</script>
