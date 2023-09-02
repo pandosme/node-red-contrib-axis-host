@@ -3,7 +3,7 @@
         <label for="node-input-group"><i class="icon-tag"></i> Event group</label>
         <select id="node-input-group">
             <option value="">All</option>
-            <option value="com.axis.Onvif.Analytics1">com.axis.Onvif.Analytics1</option>
+            <option value="com.axis">com.axis</option>
 		</select>
 	</div>
 </script>
@@ -13,7 +13,7 @@ RED.nodes.registerType('Device DBus',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
-		group: { value:"/com/axis/Onvif/Analytics1"}
+		group: { value:"com.axis.Onvif.Analytics1"}
 	},
 	icon: "font-awesome/fa-wave-square",
 	inputs:0,

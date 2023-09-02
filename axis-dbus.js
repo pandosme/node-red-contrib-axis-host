@@ -14,21 +14,23 @@ module.exports = function(RED) {
 			monitor += " " + this.group;
 		console.log(monitor);
 		const busCTLProcess = spawn('busctl', [monitor, '-j']);
-
         busCTLProcess.stdout.on('data', (data) => {
             var output = data.toString();
-            var jsonData = null;
-            try {
-                jsonData = JSON.parse(output);
-            } catch {
-                node.error("Parse error",{payload: output});
-                return;
-            }
-            node.send({payload: jsonData});
+			var items = output.split('\n');
+			for( var i = 0; i < items.length; i++ ) {
+				var jsonData = null;
+				try {
+					jsonData = JSON.parse(item[i]);
+				} catch {
+					node.error("Parse error",{payload: item[i]});
+					return;
+				}
+				node.send({payload: jsonData});
+			}
         });
 
         busCTLProcess.on('error', (error) => {
-            node.error("Eventlistener failed",error );
+            node.error("DBus failed",error );
         });
 
         busCTLProcess.stderr.on('data', (data) => {
@@ -36,7 +38,7 @@ module.exports = function(RED) {
         });
 
         busCTLProcess.on('close', (code) => {
-            node.log('Child process exited with code ${code}');
+            node.error("DBus failed",{topic:"Error",payload: code} );
         });
 
         node.on('close', (done) => {
