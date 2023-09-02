@@ -5,13 +5,15 @@
             <option value="application">ACAP</option>
             <option value="io">IO</option>
             <option value="ptz">PTZ</option>
-            <option value="videosorce">Video</option>
+            <option value="videosource">Video</option>
             <option value="storage">Storage</option>
-            <option value="temp">Temperture</option>
+            <option value="temperture">Temperture</option>
             <option value="device">Device</option>
-            <option value="">All</option>
+            <option value="All events">All events</option>
 		</select>
 	</div>
+    <label for="node-input-initialization"><i class="icon-tag"></i><input type="checkbox" id="node-input-initialization"> &nbsp;&nbsp;Suppress initialization states</label>
+	
 </script>
 
 <script type="text/javascript">
@@ -19,7 +21,8 @@ RED.nodes.registerType('Device Events',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
-		group: { value:"application"}
+		group: { value:"application"},
+		initialization: { value:false }
 	},
 	icon: "font-awesome/fa-wave-square",
 	inputs:0,

@@ -2,6 +2,7 @@
 	<div class="form-row">
         <label for="node-input-resolution"><i class="icon-tag"></i> Resolution</label>
         <select id="node-input-resolution">
+            <option value="2688x1512">2688x1512 [16:9]</option>
             <option value="1920x1080">1920x1080 [16:9]</option>
             <option value="1280x720">1280x720 [16:9]</option>
             <option value="640x360">640x360 [16:9]</option>
@@ -16,6 +17,21 @@
             <option value="640x640">640x640 [1:1]</option>
 		</select>
 	</div>
+	<div class="form-row">
+        <label for="node-input-overlay"><i class="icon-tag"></i> Overlay</label>
+        <select id="node-input-overlay">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+		</select>
+	</div>
+	<div class="form-row">
+        <label for="node-input-output"><i class="icon-tag"></i> Output</label>
+        <select id="node-input-output">
+            <option value="buffer">Buffer</option>
+            <option value="base64">Base64</option>
+		</select>
+	</div>
+	
 </script>
 
 <script type="text/javascript">
@@ -23,7 +39,9 @@ RED.nodes.registerType('Camera JPEG',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
-		resolution: { value:"1280x720"}
+		resolution: { value:"1280x720"},
+		overlay: { value:"yes"},
+		output: { value:"buffer"}
 	},
 	icon: "font-awesome/fa-camera",
 	inputs: 1,
