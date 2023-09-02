@@ -1,38 +1,37 @@
-<script type="text/x-red" data-template-name="Axis Events">
+<script type="text/x-red" data-template-name="Device Events">
 	<div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="">
-        <label for="node-input-group"><i class="icon-tag"></i> Events</label>
-        <select id="node-input-action">
-            <option value="Group 1">Group 1</option>
-            <option value="Group 2">Group 2</option>
+        <label for="node-input-group"><i class="icon-tag"></i> Event group</label>
+        <select id="node-input-group">
+            <option value="application">ACAP</option>
+            <option value="io">IO</option>
+            <option value="ptz">PTZ</option>
+            <option value="videosorce">Video</option>
+            <option value="storage">Storage</option>
+            <option value="temp">Temperture</option>
+            <option value="device">Device</option>
+            <option value="">All</option>
 		</select>
 	</div>
 </script>
 
 <script type="text/javascript">
-RED.nodes.registerType('Axis Events',{
+RED.nodes.registerType('Device Events',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
-		name: {value:""},
-		group: { value:"Group 1"}
+		group: { value:"ACAP"}
 	},
-	icon: "font-awesome/fa-rocket",
-	inputs:1,
+	icon: "font-awesome/fa-wave-square",
+	inputs:0,
 	outputs:1,
 	label: function() {
-		return this.name || this.group || "Axis Events";
-	},
-	oneditprepare: function() {
-		$("#node-input-events").change(function() {
-		});
+		return this.group || "Device Events";
 	}
 });
 </script>
 
-<script type="text/x-red" data-help-name="Axis Events">
-	<h2>Outputs</h2>
-	TBD
+<script type="text/x-red" data-help-name="Device Events">
+	<h2>Events</h2>
+	Sends slelected events detected in an Axis device.  This node will only work when Node-RED is running on an Axis Device.
 	
 </script>

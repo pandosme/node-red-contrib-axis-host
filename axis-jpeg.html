@@ -1,0 +1,41 @@
+<script type="text/x-red" data-template-name="Camera JPEG">
+	<div class="form-row">
+        <label for="node-input-resolution"><i class="icon-tag"></i> Resolution</label>
+        <select id="node-input-resolution">
+            <option value="1920x1080">1920x1080 [16:9]</option>
+            <option value="1280x720">1280x720 [16:9]</option>
+            <option value="640x360">640x360 [16:9]</option>
+            <option value="320x180">320x180 [16:9]</option>
+            <option value="800x600">800x600 [4:3]</option>
+            <option value="640x480">640x480 [4:3]</option>
+            <option value="320x240">320x240 [4:3]</option>
+            <option value="4096x4096">2048x2048 [1:1]</option>
+            <option value="2048x2048">2048x2048 [1:1]</option>
+            <option value="1280x1280">1280x1280 [1:1]</option>
+            <option value="800x800">800x800 [1:1]</option>
+            <option value="640x640">640x640 [1:1]</option>
+		</select>
+	</div>
+</script>
+
+<script type="text/javascript">
+RED.nodes.registerType('Camera JPEG',{
+	category: 'Axis',
+	color: '#FFCC33',
+	defaults: {
+		resolution: { value:"1280x720"}
+	},
+	icon: "font-awesome/fa-camera",
+	inputs: 1,
+	outputs:1,
+	label: function() {
+		return this.resolution || "Camera JPEG";
+	}
+});
+</script>
+
+<script type="text/x-red" data-help-name="Camera JPEG">
+	<h2>Camera JPEG</h2>
+	TBD
+	
+</script>
