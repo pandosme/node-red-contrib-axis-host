@@ -128,11 +128,15 @@ module.exports = function(RED) {
         });
 
         eventlistner.on('error', (error) => {
-            node.send(`Error in child process: ${error.message}`);
+            node.error("Eventlistener failed",error );
+        });
+
+        eventlistner.stderr.on('data', (data) => {
+            node.error("Eventlistener failed",{topic:"Error",payload:data.toString()} );
         });
 
         eventlistner.on('close', (code) => {
-            node.log(`Child process exited with code ${code}`);
+            node.log('Child process exited with code ${code}');
         });
 
         node.on('close', (done) => {

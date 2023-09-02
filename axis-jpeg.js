@@ -2,7 +2,7 @@
 
 module.exports = function(RED) {
 	
-    function AXIS_JEPG(config) {
+    function AXIS_JPEG(config) {
 		RED.nodes.createNode(this,config);
 		this.resolution = config.resolution;
 		var node = this;

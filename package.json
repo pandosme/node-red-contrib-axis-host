@@ -7,8 +7,9 @@
 	"keywords": ["node-red","Axis"],
 	"node-red": {
 		"nodes": {
-			"Events": "axis-events.js",
-			"Camera JPEG": "axis-jpeg.js"
+			"Device Events": "axis-events.js",
+			"Camera JPEG": "axis-jpeg.js",
+			"Device DBus": "axis-dbus.js"			
 		}
 	},
 	"dependencies": {},
