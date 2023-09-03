@@ -2,10 +2,24 @@
 	"name": "node-red-contrib-axis-host",
 	"version": "1.0.0",
 	"license": "MIT",
+    "description": "Access resources in Axis devices when Node-RED is running on the Axis device",
+    "author": {
+      "name": "Fred Juhlin",
+      "email": "fred.juhlin@gmail.com"
+    },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandosme/node-red-contrib-axis-host"
+  },
+  "homepage": "https://github.com/pandosme/node-red-contrib-axis-host",
+  "bugs": {
+    "url": "https://github.com/pandosme/node-red-contrib-axis-host/issues"
+  },
 	"bundleDependencies": false,
 	"deprecated": false,
 	"keywords": ["node-red","Axis"],
 	"node-red": {
+		"version": ">=2.0.0",
 		"nodes": {
 			"Device Events": "axis-events.js",
 			"Camera JPEG": "axis-jpeg.js"
