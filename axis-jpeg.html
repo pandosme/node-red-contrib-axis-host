@@ -53,7 +53,42 @@ RED.nodes.registerType('Camera JPEG',{
 </script>
 
 <script type="text/x-red" data-help-name="Camera JPEG">
-	<h2>Camera JPEG</h2>
-	TBD
+
+<h2>Inputs</h2>
+
+<br/>
+
+<p>
+	<b>Resolution</b><br/>
+	Set the resolution you want.  Note that if the resolution is not supported by the camera, an error will be thrown.
+	<dl class="message-properties">
+		<dt>msg.resolution<span class="property-type">string</span></dt>
+		<dd>
+			Overrides the node setting resolution. The syntax is "WIDTHxHEIGHT";
+		</dd>
+	</dl>	
+</p><br/>
+<p>
+	<b>Overlay</b><br/>
+	Select if you want text, image and graphics overlay in the image (if present).
+</p><br/>
+<p>
+	<b>Image crop</b><br/>
+	It is possible to extract part of the image (crop). Make sure that coordinates are within the image resolution.
+	<dl class="message-properties">
+		<dt>msg.crop<span class="property-type">object</span></dt>
+		<dd>
+		{<br/>
+		&nbsp;&nbsp;"x":100,<br/>
+		&nbsp;&nbsp;"y":100,<br/>
+		&nbsp;&nbsp;"w":200,<br/>
+		&nbsp;&nbsp;"h":150<br/>
+		}<br/>
+		</dd>
+	</dl>	
+</p><br/><br/>
+
+<h2>Outputs</h2>
+JPEG image as binary buffer or base64
 	
 </script>

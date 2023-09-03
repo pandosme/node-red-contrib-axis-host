@@ -1,5 +1,5 @@
 {
-	"name": "node-red-contrib-axis-bindings",
+	"name": "node-red-contrib-axis-host",
 	"version": "1.0.0",
 	"license": "MIT",
 	"bundleDependencies": false,
@@ -8,8 +8,7 @@
 	"node-red": {
 		"nodes": {
 			"Device Events": "axis-events.js",
-			"Camera JPEG": "axis-jpeg.js",
-			"Device DBus": "axis-dbus.js"			
+			"Camera JPEG": "axis-jpeg.js"
 		}
 	},
 	"dependencies": {},
