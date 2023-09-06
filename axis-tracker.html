@@ -16,36 +16,39 @@ RED.nodes.registerType('Object Tracker',{
 </script>
 
 <script type="text/x-red" data-help-name="Object Tracker">
-Outputs tracker of detected objects in scene. The object data will be updated when the object has moved 5% (ore more) of the camer view.
-Place a function node after the tracker node to process logic and add filter.
-
+<p>
+Outputs tracker data of detected objects in scene. The object data will be updated when the object has moved 5% (ore more) of the camer view.
+This data can be porcessed and filter for various use cases.
+</p>
+<p>
 The coordintate system is [0,0...1000,1000] regardless of camera aspect ratio.  The origo is in the top-left corner.
 To map coordinate to pixels:
 pixelX = (x / 1000) * image width;
 pixelY = (y / 1000) * image height
+<p>
 
+<p>
+Output data properties:
+</p>
 <pre>
-{
-	"id":number,		Unique ID of each object that can be used to tracker a specific object
-	"type":"Person",	Values: "Person", "Vehicle" or "Other"
-	"active":false,		true while the object is being tracked. false when object is lost (left scene)
-	"class":"Human",	Values: "Human", "Car", "Truck", "Bus", "Motorcycle", (Unknown)"Vehicle", "Face", "License plate" 
-	"distance": number	Distance traveled in percent of camera view.  Distance may be longer than 100% if object moves back and forth.
-	"age": number,		Seconds the object has been in scene
-	"birth": EPOCH,		Timestamp when the object was detected
-	"timestamp":EPOCH,	Current/las timestamp
-	"x": number,		Bounding box x position
-	"y": number,		Bounding box y position	
-	"w": number,		Bounding box width
-	"h": number,		Bounding box width
-	"cx": number,		Center of gravity X
-	"cy": number,		Center of gravity X
-	"bx": number,		Birth X (center of gravity)
-	"by": number,		Birth y (center of gravity)
-	"dx": number,		Total delta X movement from bx.  Values < 0 means left, Values > 0 means right
-	"dy":number			Total delta Y movement from by.  Values < 0 means up, Values > 0 means down
-}
+id:			Unique ID of each object that can be used to tracker a specific object
+type:		Values: Person, Vehicle or Other
+active:		true while the object is being tracked. false when object is lost (left scene)
+class:		Values: Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
+distance:	Distance traveled in percent of camera view.  Distance may be longer than 100% if object moves back and forth.
+age:		Seconds the object has been in scene
+birth:		Timestamp when the object was detected
+timestamp:	Current/last timestamp
+x:			Bounding box x position
+y:			Bounding box y position	
+w:			Bounding box width
+h:			Bounding box height
+cx:			Center of gravity X
+cy:			Center of gravity X
+bx:			Birth X (center of gravity)
+by:			Birth y (center of gravity)
+dx:			Total delta X movement from bx.  Negative value means left, positiv means right
+dy:			Total delta Y movement from by.  Negative value means up, positiv means down
 </pre>
-
 
 </script>

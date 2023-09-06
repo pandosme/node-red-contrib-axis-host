@@ -147,15 +147,15 @@ module.exports = function(RED) {
         });
 
         eventlistner.on('error', (error) => {
-            node.error("Device events not avaialble",{payload:"Unable to locate service"});
+            node.error("Device Events not avaialble",{payload:"Unable to locate service"});
         });
 
         eventlistner.stderr.on('data', (data) => {
-            node.error("Device Events failed",{topic:"Error",payload:data.toString()} );
+            node.error("Device Event error",{topic:"Error",payload:data.toString()} );
         });
 
         eventlistner.on('close', (code) => {
-            node.error('Device Events stopped",{payload:"Process exited with code "+code});
+            node.warn("Device Events stopped",{payload:"Child process exited with code " + code});
         });
 
         node.on('close', (done) => {

@@ -11,20 +11,26 @@ module.exports = function(RED) {
         const tracker = spawn('/usr/local/packages/Nodered/nodetracker');
 
         tracker.stdout.on('data', (data) => {
-			var declarationsID = data.toString().split("\n");
-			node.send({payload:declarationsID});
+			var output = data.toString();
+			try {
+				var jsonData = JSON.parse(output);
+				node.send({payload:jsonData});
+			} catch {
+				node.error("Parse error",{payload: output});
+				return;
+			}
         });
 
         tracker.on('error', (error) => {
-            node.error("Tracker not avaialble",{payload:"Service not found"} );
+            node.error("Object Tracker not available",{payload:"Unable to locate service"} );
         });
 
         tracker.stderr.on('data', (data) => {
-            node.error("Tracker error",{topic:"Error",payload:data.toString()} );
+            node.error("Object Tracker error",{topic:"Error",payload:data.toString()} );
         });
 
         tracker.on('close', (code) => {
-            node.error("Tracker stopped",{payload:'Process exited with code ' + code);
+            node.warn("Object Tracker stopped",{payload:'Child process exited with code ' + code });
         });
 
         node.on('close', (done) => {

@@ -9,8 +9,8 @@
 	</div>
 
     <div class="form-row user_input_value">
-        <label for="node-input-value"><i class="icon-tag"></i> Value </label> <label for="node-input-value">[<span id="valueType">]<span></label>
-        <input type="text" id="node-input-cgi" placeholder="Leave blank if msg.payload is the value.">
+        <label for="node-input-value"><i class="icon-tag"></i> Value </label> <label for="node-input-value"><span id="valueType"></span></label>
+        <input type="text" id="node-input-value" placeholder="Leave blank when msg.payload is the value.">
     </div>
 </script>
 
@@ -20,10 +20,10 @@ RED.nodes.registerType('Event Out',{
 	color: '#FFCC33',
 	defaults: {
 		eventId: { value:"event"},
-		value: { value: 1 }
+		value: { value: "" }
 	},
-	icon: "font-awesome/fa-wave-square",
-	inputs:0,
+	icon: "font-awesome/fa-bolt",
+	inputs:1,
 	outputs:1,
 	label: function() {
 		return this.group || "Event Out";
@@ -32,11 +32,11 @@ RED.nodes.registerType('Event Out',{
 		$("#node-input-eventId").change(function() {
 			var type = $("#node-input-eventId").val();
 			if( type === "event" )
-				$("#valueType").html("number");
+				$("#valueType").html("number (int)");
 			if( type === "state" )
-				$("#valueType").html("Bool, 0/1");
+				$("#valueType").html("Boolean (true/false)");
 			if( type === "data" )
-				$("#valueType").html("String");
+				$("#valueType").html("String (e.g. JSON)");
 		});
 	}
 	
