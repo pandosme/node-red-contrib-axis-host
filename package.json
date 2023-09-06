@@ -22,7 +22,9 @@
 		"version": ">=2.0.0",
 		"nodes": {
 			"Device Events": "axis-events.js",
-			"Camera JPEG": "axis-jpeg.js"
+			"Camera JPEG": "axis-jpeg.js",
+			"Event Out": "axis-event-out.js",
+			"Object Tracker": "axis-tracker.js"
 		}
 	},
 	"dependencies": {},

@@ -1,0 +1,48 @@
+<script type="text/x-red" data-template-name="Event Out">
+	<div class="form-row">
+        <label for="node-input-eventId"><i class="icon-tag"></i> Event type</label>
+        <select id="node-input-eventId">
+            <option value="event">Event</option>
+            <option value="state">State</option>
+            <option value="Data">Data</option>
+		</select>
+	</div>
+
+    <div class="form-row user_input_value">
+        <label for="node-input-value"><i class="icon-tag"></i> Value </label> <label for="node-input-value">[<span id="valueType">]<span></label>
+        <input type="text" id="node-input-cgi" placeholder="Leave blank if msg.payload is the value.">
+    </div>
+</script>
+
+<script type="text/javascript">
+RED.nodes.registerType('Event Out',{
+	category: 'Axis',
+	color: '#FFCC33',
+	defaults: {
+		eventId: { value:"event"},
+		value: { value: 1 }
+	},
+	icon: "font-awesome/fa-wave-square",
+	inputs:0,
+	outputs:1,
+	label: function() {
+		return this.group || "Event Out";
+	},
+	oneditprepare: function() {
+		$("#node-input-eventId").change(function() {
+			var type = $("#node-input-eventId").val();
+			if( type === "event" )
+				$("#valueType").html("number");
+			if( type === "state" )
+				$("#valueType").html("Bool, 0/1");
+			if( type === "data" )
+				$("#valueType").html("String");
+		});
+	}
+	
+});
+</script>
+
+<script type="text/x-red" data-help-name="Event Out">
+	
+</script>
