@@ -30,11 +30,11 @@ module.exports = function(RED) {
 			
 			exec(command,(error, stdout, stderr) => {
 				if (error) {
-					node.error("Image error",{payload:error.message});
+					node.error("Camera JPEG not available",{payload:"Unable to locate the service"});
 					return;
 				}
 				if (stderr) {
-					node.error("Image error 2",{payload:stderr});
+					node.error("Camera JPEG error",{payload:stderror});
 					return;
 				}
 				fs.readFile('/tmp/imgfile.jpg', function read(err, data) {
@@ -43,9 +43,10 @@ module.exports = function(RED) {
 						return;
 					}
 					if( node.output === "base64" )
-						node.send({topic:"image",payload:data.toString('base64')});
+						msg.payload = data.toString('base64');
 					else
-						node.send({topic:"image",payload:data});
+						msg.payload = data;
+					node.send(msg);
 				});
 			});
 		});
