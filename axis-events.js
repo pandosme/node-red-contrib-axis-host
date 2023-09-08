@@ -147,7 +147,7 @@ module.exports = function(RED) {
         });
 
         eventlistner.on('error', (error) => {
-            node.error("Device Events not avaialble",{payload:"Unable to locate service"});
+            node.error("Events not avaialble",{payload:"Unable to locate service"});
         });
 
         eventlistner.stderr.on('data', (data) => {
@@ -155,7 +155,7 @@ module.exports = function(RED) {
         });
 
         eventlistner.on('close', (code) => {
-            node.warn("Device Events stopped",{payload:"Child process exited with code " + code});
+            node.warn("Events stopped",{payload:"Child process exited with code " + code});
         });
 
         node.on('close', (done) => {
@@ -167,7 +167,7 @@ module.exports = function(RED) {
         });
     }
 	
-    RED.nodes.registerType("Device Events",AXIS_Events,{
+    RED.nodes.registerType("Events",AXIS_Events,{
 		defaults: {
 			group: { type:"text" },
 			initialization: { type:"boolean" }

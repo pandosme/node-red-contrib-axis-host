@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="Camera JPEG">
+<script type="text/x-red" data-template-name="Camera">
 	<div class="form-row">
         <label for="node-input-resolution"><i class="icon-tag"></i> Resolution</label>
         <select id="node-input-resolution">
@@ -35,7 +35,7 @@
 </script>
 
 <script type="text/javascript">
-RED.nodes.registerType('Camera JPEG',{
+RED.nodes.registerType('Camera',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
@@ -47,12 +47,12 @@ RED.nodes.registerType('Camera JPEG',{
 	inputs: 1,
 	outputs:1,
 	label: function() {
-		return this.resolution || "Camera JPEG";
+		return this.resolution || "Camera";
 	}
 });
 </script>
 
-<script type="text/x-red" data-help-name="Camera JPEG">
+<script type="text/x-red" data-help-name="Camera">
 
 <h2>Inputs</h2>
 

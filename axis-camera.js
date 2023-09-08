@@ -5,7 +5,7 @@ const fs = require('fs');
 
 module.exports = function(RED) {
 	
-    function AXIS_JPEG(config) {
+    function AXIS_Camera(config) {
 		RED.nodes.createNode(this,config);
 		this.resolution = config.resolution;
 		this.overlay = config.overlay;
@@ -30,11 +30,11 @@ module.exports = function(RED) {
 			
 			exec(command,(error, stdout, stderr) => {
 				if (error) {
-					node.error("Camera JPEG not available",{payload:"Unable to locate the service"});
+					node.error("Camera not available",{payload:"Camera service not found"});
 					return;
 				}
 				if (stderr) {
-					node.error("Camera JPEG error",{payload:stderror});
+					node.error("Camera error",{payload:stderror});
 					return;
 				}
 				fs.readFile('/tmp/imgfile.jpg', function read(err, data) {
@@ -52,7 +52,7 @@ module.exports = function(RED) {
 		});
     }
 	
-    RED.nodes.registerType("Camera JPEG",AXIS_JPEG,{
+    RED.nodes.registerType("Camera",AXIS_Camera,{
 		defaults: {
 			resolution: { type:"text" },
 			overlay:  { type:"text" },

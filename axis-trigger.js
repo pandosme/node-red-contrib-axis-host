@@ -4,7 +4,7 @@ const { exec } = require('child_process');
 
 module.exports = function(RED) {
 	
-    function AXIS_Event_Out(config) {
+    function Axis_Trigger(config) {
 		RED.nodes.createNode(this,config);
 		this.eventID = config.eventId;
 		this.value = config.value;
@@ -21,7 +21,7 @@ module.exports = function(RED) {
 						value = parseInt(value);
 					if( isNaN(value) ) {
 						msg.payload = "Value must be a number";
-						node.warn("Invlid input",msg);
+						node.error("Invlid input",msg);
 						return;
 					}
 					command += " -t 0 -v " + value;
@@ -39,7 +39,7 @@ module.exports = function(RED) {
 						value = 0;
 					if( isNaN(value) ) {
 						msg.payload = "Value must be a boolean";
-						node.warn("Invlid input",msg);
+						node.error("Invlid input",msg);
 						return;
 					}
 					command += " -t 1 -s " + value;
@@ -51,7 +51,7 @@ module.exports = function(RED) {
 						value = JSON.stringify(value);
 					if( typeof value !== "string" ) {
 						msg.payload = "Value must be a string";
-						node.warn("Invlid input",msg);
+						node.error("Invlid input",msg);
 						return;
 					}
 					command += " -t 2 -d " + value;
@@ -59,21 +59,18 @@ module.exports = function(RED) {
 			}
 			exec(command,(error, stdout, stderr) => {
 				if (error) {
-					node.error("Event out not available",{payload:"Service not found"});
+					node.error("Trigger not available",{payload:"Trigger service not found"});
 					return;
 				}
 				if (stderr) {
-					node.error("Event Out failed",{payload:stderr});
+					node.error("Trigger failed",{payload:stderr});
 					return;
 				}
-				msg.payload = {};
-				msg.payload[eventId] = value;
-				node.send(msg);
 			});
 		});
     }
 	
-    RED.nodes.registerType("Event Out",AXIS_Event_Out,{
+    RED.nodes.registerType("Trigger",Axis_Trigger,{
 		defaults: {
 			eventId: { type:"text" },
 			value: { type: "text" }

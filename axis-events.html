@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="Device Events">
+<script type="text/x-red" data-template-name="Events">
 	<div class="form-row">
         <label for="node-input-group"><i class="icon-tag"></i> Event group</label>
         <select id="node-input-group">
@@ -17,7 +17,7 @@
 </script>
 
 <script type="text/javascript">
-RED.nodes.registerType('Device Events',{
+RED.nodes.registerType('Events',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
@@ -28,12 +28,27 @@ RED.nodes.registerType('Device Events',{
 	inputs:0,
 	outputs:1,
 	label: function() {
-		return this.group || "Device Events";
+		var text = "Events: ";
+		if( this.group == "application")
+			text += "ACAP";
+		if( this.group == "IO")
+			text += "IO";
+		if( this.group == "videosource")
+			text += "Video";
+		if( this.group == "storage")
+			text += "Storage";
+		if( this.group == "temperture")
+			text += "Temperture";
+		if( this.group == "device")
+			text += "Device";
+		if( this.group == "All events")
+			text += "All";
+		return text;
 	}
 });
 </script>
 
-<script type="text/x-red" data-help-name="Device Events">
+<script type="text/x-red" data-help-name="Events">
 
 	Sends selected events detected in an Axis device.  This node will only work when Node-RED is running on an Axis Device.<br/>
 	Select an event group to filter.  You may need to filter on event topic to extract the specific event you will process (eg. using a Switch Node)

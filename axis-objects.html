@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="Object Detection">
+<script type="text/x-red" data-template-name="Objects">
 	<div class="form-row">
         <label for="node-input-output"><i class="icon-tag"></i> Output</label>
         <select id="node-input-output">
@@ -6,19 +6,23 @@
             <option value="2">Trackers</option>
             <option value="3">Paths</option>
 		</select>
-        <label for="node-input-type"><i class="icon-tag"></i> Detect</label>
-        <select id="node-input-type">
+	</div>
+	<div class="form-row">
+        <label for="node-input-classFilter"><i class="icon-tag"></i> Detect</label>
+        <select id="node-input-classFilter">
             <option value="-1">Everything</option>
             <option value="0">Human</option>
             <option value="1">Car</option>
             <option value="2">Truck</option>
             <option value="3">Bus</option>
             <option value="4">Bike</option>
-            <option value="5">Unknown Vehicle</option>
+            <option value="5">(Other)Vehicle</option>
             <option value="6">Face</option>
             <option value="7">License plate</option>
-            <option value="8">Other</option>
+            <option value="8">Undefined</option>
 		</select>
+	</div>
+	<div class="form-row">
         <label for="node-input-confidence"><i class="icon-tag"></i> Confidence</label>
         <select id="node-input-confidence">
             <option value="0">Any</option>
@@ -33,6 +37,8 @@
             <option value="90">90 or more</option>
             <option value="100">100 or more</option>
 		</select>
+	</div>
+	<div class="form-row">
         <label for="node-input-rotation"><i class="icon-tag"></i> Rotation</label>
         <select id="node-input-rotation">
             <option value="0">0</option>
@@ -40,6 +46,8 @@
             <option value="180">180</option>
             <option value="270">270</option>
 		</select>
+	</div>
+	<div class="form-row">
         <label for="node-input-cog"><i class="icon-tag"></i> Center-of-gravity</label>
         <select id="node-input-cog">
             <option value="0">Center of object</option>
@@ -49,12 +57,12 @@
 </script>
 
 <script type="text/javascript">
-RED.nodes.registerType('Object Tracker',{
+RED.nodes.registerType('Objects',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
-		output: { value:"2"},
-		type: { value:"Everything"},
+		output: { value:"1"},
+		classFilter: { value:"-1"},
 		confidence: { value:"0"},
 		rotation: { value:"0"},
 		cog: { value:"0"}
@@ -63,22 +71,41 @@ RED.nodes.registerType('Object Tracker',{
 	inputs:0,
 	outputs:1,
 	label: function() {
-		var text = "Objects";
-		if( output == "1")
-			text = "Detections";
-		if( output == "2")
-			text = "Trackers";
-		if( output == "3")
-			text = "Paths";
+		var text = "";
+		if( this.output == "1")
+			text += "Detections";
+		if( this.output == "2")
+			text += "Trackers";
+		if( this.output == "3")
+			text += "Paths";
+		if( this.classFilter == "-1" )
+			text += "/Any";
+		if( this.classFilter == "0" )
+			text += "/Human";
+		if( this.classFilter == "1" )
+			text += "/Car";
+		if( this.classFilter == "2" )
+			text += "/Truck";
+		if( this.classFilter == "3" )
+			text += "/Bus";
+		if( this.classFilter == "4" )
+			text += "/Bike";
+		if( this.classFilter == "5" )
+			text += "/(Other)vehicle";
+		if( this.classFilter == "6" )
+			text += "/Face";
+		if( this.classFilter == "7" )
+			text += "/License plate";
+		if( this.classFilter == "8" )
+			text += "/Undefined";
 		return text;
 	}
 });
 </script>
 
-<script type="text/x-red" data-help-name="Object Tracker">
+<script type="text/x-red" data-help-name="Objects">
 <p>
-Outputs tracker data of detected objects in scene. The object data will be updated when the object has moved 5% (ore more) of the camer view.
-This data can be porcessed and filter for various use cases.
+TBD
 </p>
 <p>
 The coordintate system is [0,0...1000,1000] regardless of camera aspect ratio.  The origo is in the top-left corner.
@@ -88,7 +115,7 @@ pixelY = (y / 1000) * image height
 <p>
 
 <p>
-Output data properties:
+Trackers:
 </p>
 <pre>
 id:			Unique ID of each object that can be used to tracker a specific object

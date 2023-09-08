@@ -1,6 +1,6 @@
 {
 	"name": "node-red-contrib-axis-host",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"license": "MIT",
     "description": "Access resources in Axis devices when Node-RED is running on the Axis device",
     "author": {
@@ -21,10 +21,10 @@
 	"node-red": {
 		"version": ">=2.0.0",
 		"nodes": {
-			"Device Events": "axis-events.js",
-			"Camera JPEG": "axis-jpeg.js",
-			"Event Out": "axis-event-out.js",
-			"Object Tracker": "axis-tracker.js"
+			"Events": "axis-events.js",
+			"Camera": "axis-camera.js",
+			"Trigger": "axis-trigger.js",
+			"Objects": "axis-objects.js"
 		}
 	},
 	"dependencies": {},

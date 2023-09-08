@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="Event Out">
+<script type="text/x-red" data-template-name="Trigger">
 	<div class="form-row">
         <label for="node-input-eventId"><i class="icon-tag"></i> Event type</label>
         <select id="node-input-eventId">
@@ -15,7 +15,7 @@
 </script>
 
 <script type="text/javascript">
-RED.nodes.registerType('Event Out',{
+RED.nodes.registerType('Trigger',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
@@ -24,9 +24,9 @@ RED.nodes.registerType('Event Out',{
 	},
 	icon: "font-awesome/fa-bolt",
 	inputs:1,
-	outputs:1,
+	outputs:0,
 	label: function() {
-		return this.eventId || "Event Out";
+		return "Trigger: " + this.eventId;
 	},
 	oneditprepare: function() {
 		$("#node-input-eventId").change(function() {
@@ -43,6 +43,6 @@ RED.nodes.registerType('Event Out',{
 });
 </script>
 
-<script type="text/x-red" data-help-name="Event Out">
+<script type="text/x-red" data-help-name="Trigger">
 	
 </script>
