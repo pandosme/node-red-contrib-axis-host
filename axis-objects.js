@@ -8,32 +8,27 @@ module.exports = function(RED) {
 		RED.nodes.createNode(this,config);
 		var node = this;
 
-		var command = "/usr/local/packages/Nodered/nodeobjects";
-		command += " " + config.output;
-		command += " " + config.rotation;
-		command += " " + config.cog;
-		command += " " + config.classFilter;
-		command += " " + config.confidence;		
-
-		console.log(command);
-
-        const process = spawn(command);
+        const process = spawn("/usr/local/packages/Nodered/nodeobjects",[config.output,config.rotation,config.cog,config.classFilter,config.confidence]);
 
         process.stdout.on('data', (data) => {
 			var output = data.toString();
 			var rows = output.split("\n");
 			for( var i = 0; i < rows.length; i++ ) {
-				try {
-					var jsonData = JSON.parse(rows[i]);
+				if( rows[i].length ) {
+					var jsonData = null;
+					try {
+						jsonData = JSON.parse(rows[i]);
+					} catch {
+						node.error("Parse error",{payload: rows[i]});
+						return;
+					}
 					node.send({payload:jsonData});
-				} catch {
-					node.error("Parse error",{payload: rows[i]});
-					return;
 				}
 			}
         });
 
         process.on('error', (error) => {
+			node.warn(error);
             node.error("Objects not available",{payload:"Objects service not found"} );
         });
 
@@ -42,7 +37,7 @@ module.exports = function(RED) {
         });
 
         process.on('close', (code) => {
-            node.warn("Objects stopped",{payload:'Child process exited with code ' + code });
+//            node.error("Objects stopped",{payload:'Child process exited with code ' + code });
         });
 
         node.on('close', (done) => {

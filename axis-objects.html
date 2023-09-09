@@ -36,6 +36,10 @@
             <option value="80">80 or more</option>
             <option value="90">90 or more</option>
             <option value="100">100 or more</option>
+            <option value="100">110 or more</option>
+            <option value="100">120 or more</option>
+            <option value="100">130 or more</option>
+            <option value="100">140 or more</option>
 		</select>
 	</div>
 	<div class="form-row">
@@ -48,7 +52,7 @@
 		</select>
 	</div>
 	<div class="form-row">
-        <label for="node-input-cog"><i class="icon-tag"></i> Center-of-gravity</label>
+        <label for="node-input-cog"><i class="icon-tag"></i> CoG</label>
         <select id="node-input-cog">
             <option value="0">Center of object</option>
             <option value="1">Middle-bottom (feet)</option>
@@ -61,9 +65,9 @@ RED.nodes.registerType('Objects',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
-		output: { value:"1"},
+		output: { value:"2"},
 		classFilter: { value:"-1"},
-		confidence: { value:"0"},
+		confidence: { value:"50"},
 		rotation: { value:"0"},
 		cog: { value:"0"}
 	},
@@ -73,31 +77,31 @@ RED.nodes.registerType('Objects',{
 	label: function() {
 		var text = "";
 		if( this.output == "1")
-			text += "Detections";
+			text += "Detections: ";
 		if( this.output == "2")
-			text += "Trackers";
+			text += "Trackers: ";
 		if( this.output == "3")
-			text += "Paths";
+			text += "Paths: ";
 		if( this.classFilter == "-1" )
-			text += "/Any";
+			text += "Everything";
 		if( this.classFilter == "0" )
-			text += "/Human";
+			text += "Human";
 		if( this.classFilter == "1" )
-			text += "/Car";
+			text += "Car";
 		if( this.classFilter == "2" )
-			text += "/Truck";
+			text += "Truck";
 		if( this.classFilter == "3" )
-			text += "/Bus";
+			text += "Bus";
 		if( this.classFilter == "4" )
-			text += "/Bike";
+			text += "Bike";
 		if( this.classFilter == "5" )
-			text += "/(Other)vehicle";
+			text += "(Other)vehicle";
 		if( this.classFilter == "6" )
-			text += "/Face";
+			text += "Face";
 		if( this.classFilter == "7" )
-			text += "/License plate";
+			text += "License plate";
 		if( this.classFilter == "8" )
-			text += "/Undefined";
+			text += "Undefined";
 		return text;
 	}
 });
@@ -105,8 +109,33 @@ RED.nodes.registerType('Objects',{
 
 <script type="text/x-red" data-help-name="Objects">
 <p>
-TBD
+Objects provides data from the cameras object detection analytics.
 </p>
+<h3>Configuration</h3>
+<p>
+	<b>Output</b><br/>
+	Select Detections, Tracker or Path depending on the use case
+</p>
+<p>
+	<b>Detect</b><br/>
+	Select the object class depending on the use case
+</p>
+<p>
+	<b>Confidence</b><br/>
+	Set the minimum confidence level to suppress unwanted detections.  Look at the output confidence value to find a good level.
+</p>
+<p>
+	<b>Rotation</b><br/>
+	The analytics data has no sense of the camera rotation.  If the camera is mounted upsidedown you may need to set 180 degrees to align image/video to the data.  If the camera is rotated to "portrait mode", select 90 or 270 degrees, depending on the rotation direction.
+</p>
+<p>
+	<b>CoG: Center of Gravity</b><br/>
+	Defines the position of cx and cy.  Depending on use case and camera mounting you may want these values to be in the center of the bounding box or places at the center-bottom.
+	If the camera is mounted in the ceiling, looking stright down you should use "Center".  If the camera is mounted on the wall, having a perspective view, select bottom (feet).
+</p>
+
+
+<h3>Coordindate system</h3>
 <p>
 The coordintate system is [0,0...1000,1000] regardless of camera aspect ratio.  The origo is in the top-left corner.
 To map coordinate to pixels:
@@ -114,9 +143,20 @@ pixelX = (x / 1000) * image width;
 pixelY = (y / 1000) * image height
 <p>
 
+<h3>Detections Output</h3>
 <p>
-Trackers:
+Detection provides the raw unprocessed data from the cameras analytics.  This may provide huge amount of data.  Use this data with coution and only when Trackers or Paths are not able to solve the use case.
+<pre>
+id:			Unique ID of each object that can be used to tracker a specific object
+type:		Values: Person, Vehicle or Other
+class:		Values: Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
+distance:	Distance traveled in percent of camera view.  Distance may be longer than 100% if object moves back and forth.
+</pre>
 </p>
+
+<h3>Trackers Output</h3>
+<p>
+Trackers are update when an object has moved 5% or more of the camer view.  Trackers are optimal for real-time automation.  A motion detection logic can easily be accomplished cheching if the cx and cy values are withing a selected area.
 <pre>
 id:			Unique ID of each object that can be used to tracker a specific object
 type:		Values: Person, Vehicle or Other
@@ -137,5 +177,6 @@ by:			Birth y (center of gravity)
 dx:			Total delta X movement from bx.  Negative value means left, positiv means right
 dy:			Total delta Y movement from by.  Negative value means up, positiv means down
 </pre>
+</p>
 
 </script>
