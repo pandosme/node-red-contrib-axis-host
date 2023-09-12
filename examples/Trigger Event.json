@@ -1,0 +1,186 @@
+[
+    {
+        "id": "1f6e23cc9d202f5d",
+        "type": "tab",
+        "label": "Trigger Event",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "502216d01fb391e7",
+        "type": "Trigger",
+        "z": "1f6e23cc9d202f5d",
+        "eventId": "event",
+        "value": "1234",
+        "x": 440,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "c059d7745dbdf323",
+        "type": "Trigger",
+        "z": "1f6e23cc9d202f5d",
+        "eventId": "state",
+        "value": "",
+        "x": 430,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e322e1b591cadd21",
+        "type": "Trigger",
+        "z": "1f6e23cc9d202f5d",
+        "eventId": "data",
+        "value": "",
+        "x": 430,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "0712d64f5771188b",
+        "type": "Events",
+        "z": "1f6e23cc9d202f5d",
+        "group": "application",
+        "initialization": false,
+        "x": 190,
+        "y": 60,
+        "wires": [
+            [
+                "0fa7d4bf80a1a180"
+            ]
+        ]
+    },
+    {
+        "id": "0fa7d4bf80a1a180",
+        "type": "debug",
+        "z": "1f6e23cc9d202f5d",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "cd9c35aab34862cf",
+        "type": "inject",
+        "z": "1f6e23cc9d202f5d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 140,
+        "wires": [
+            [
+                "502216d01fb391e7"
+            ]
+        ]
+    },
+    {
+        "id": "fb289f0ec0286acd",
+        "type": "inject",
+        "z": "1f6e23cc9d202f5d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "c059d7745dbdf323"
+            ]
+        ]
+    },
+    {
+        "id": "6dcd3791ece79058",
+        "type": "inject",
+        "z": "1f6e23cc9d202f5d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "c059d7745dbdf323"
+            ]
+        ]
+    },
+    {
+        "id": "1dc03e7a2532b17b",
+        "type": "inject",
+        "z": "1f6e23cc9d202f5d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Hello",
+        "payloadType": "str",
+        "x": 170,
+        "y": 300,
+        "wires": [
+            [
+                "e322e1b591cadd21"
+            ]
+        ]
+    }
+]

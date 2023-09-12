@@ -6,9 +6,20 @@ module.exports = function(RED) {
 	
     function AXIS_Objects(config) {
 		RED.nodes.createNode(this,config);
-		var node = this;
+		this.output = "Nothing";
+		
+		if( parseInt(config.output) === 1 )
+			this.output = "detections";
+		if( parseInt(config.output) === 2 )
+			this.output = "tracker";
+		if( parseInt(config.output) === 3 )
+			this.output = "path";
 
-        const process = spawn("/usr/local/packages/Nodered/nodeobjects",[config.output,config.rotation,config.cog,config.classFilter,config.confidence]);
+		var node = this;
+		var predictions = 0;
+        const process = spawn("/usr/local/packages/Nodered/nodeobjects",[config.output,config.rotation,config.cog,config.classFilter,config.confidence, predictions]);
+
+		node.status({fill:"green",shape:"dot",text:"Running"});
 
         process.stdout.on('data', (data) => {
 			var output = data.toString();
@@ -22,13 +33,17 @@ module.exports = function(RED) {
 						node.error("Parse error",{payload: rows[i]});
 						return;
 					}
-					node.send({payload:jsonData});
+					
+					node.send({
+						topic: node.output,
+						payload:jsonData
+					});
 				}
 			}
         });
 
         process.on('error', (error) => {
-			node.warn(error);
+			node.status({fill:"red",shape:"dot",text:"Stopped"});
             node.error("Objects not available",{payload:"Objects service not found"} );
         });
 
@@ -37,11 +52,12 @@ module.exports = function(RED) {
         });
 
         process.on('close', (code) => {
+			node.status({fill:"red",shape:"dot",text:"Stopped"});
 //            node.error("Objects stopped",{payload:'Child process exited with code ' + code });
         });
 
         node.on('close', (done) => {
-            // Clean up when the node is closed
+			node.status({fill:"red",shape:"dot",text:"Stopped"});
             if (process) {
                 process.kill(); // Terminate the child process
             }

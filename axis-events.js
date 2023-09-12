@@ -19,9 +19,9 @@ module.exports = function(RED) {
 		}
 
         const eventlistner = spawn('eventlistener');
+		node.status({fill:"green",shape:"dot",text:"Running"});
 
         eventlistner.stdout.on('data', (data) => {
-
 			if( suppress )
 				return;
 			
@@ -148,6 +148,7 @@ module.exports = function(RED) {
 
         eventlistner.on('error', (error) => {
             node.error("Events not avaialble",{payload:"Unable to locate service"});
+			node.status({fill:"red",shape:"dot",text:"Stopped"});
         });
 
         eventlistner.stderr.on('data', (data) => {
@@ -155,11 +156,13 @@ module.exports = function(RED) {
         });
 
         eventlistner.on('close', (code) => {
-            node.warn("Events stopped",{payload:"Child process exited with code " + code});
+//            node.warn("Events stopped",{payload:"Child process exited with code " + code});
+			node.status({fill:"red",shape:"dot",text:"Stopped"});
         });
 
         node.on('close', (done) => {
             // Clean up when the node is closed
+			node.status({fill:"red",shape:"dot",text:"Stopped"});
             if (eventlistner) {
                 eventlistner.kill(); // Terminate the child process
             }

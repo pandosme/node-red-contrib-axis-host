@@ -2,9 +2,9 @@
 	<div class="form-row">
         <label for="node-input-output"><i class="icon-tag"></i> Output</label>
         <select id="node-input-output">
+            <option value="2">Tracker</option>
+            <option value="3">Path</option>
             <option value="1">Detections</option>
-            <option value="2">Trackers</option>
-            <option value="3">Paths</option>
 		</select>
 	</div>
 	<div class="form-row">
@@ -54,8 +54,8 @@
 	<div class="form-row">
         <label for="node-input-cog"><i class="icon-tag"></i> CoG</label>
         <select id="node-input-cog">
-            <option value="0">Center of object</option>
-            <option value="1">Middle-bottom (feet)</option>
+            <option value="1">Center of object</option>
+            <option value="0">Middle-bottom (feet)</option>
 		</select>
 	</div>
 </script>
@@ -79,9 +79,9 @@ RED.nodes.registerType('Objects',{
 		if( this.output == "1")
 			text += "Detections: ";
 		if( this.output == "2")
-			text += "Trackers: ";
+			text += "Tracker: ";
 		if( this.output == "3")
-			text += "Paths: ";
+			text += "Paths ";
 		if( this.classFilter == "-1" )
 			text += "Everything";
 		if( this.classFilter == "0" )
@@ -143,34 +143,22 @@ pixelX = (x / 1000) * image width;
 pixelY = (y / 1000) * image height
 <p>
 
-<h3>Detections Output</h3>
+<h3>Tracker</h3>
 <p>
-Detection provides the raw unprocessed data from the cameras analytics.  This may provide huge amount of data.  Use this data with coution and only when Trackers or Paths are not able to solve the use case.
+Tracker is output when an object has moved 5% or more of the camera view.  Trackers are optimal for real-time processeing, logic and automation.
 <pre>
 id:			Unique ID of each object that can be used to tracker a specific object
-type:		Values: Person, Vehicle or Other
-class:		Values: Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
-distance:	Distance traveled in percent of camera view.  Distance may be longer than 100% if object moves back and forth.
-</pre>
-</p>
-
-<h3>Trackers Output</h3>
-<p>
-Trackers are update when an object has moved 5% or more of the camer view.  Trackers are optimal for real-time automation.  A motion detection logic can easily be accomplished cheching if the cx and cy values are withing a selected area.
-<pre>
-id:			Unique ID of each object that can be used to tracker a specific object
-type:		Values: Person, Vehicle or Other
 active:		true while the object is being tracked. false when object is lost (left scene)
-class:		Values: Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
+class:		Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
 distance:	Distance traveled in percent of camera view.  Distance may be longer than 100% if object moves back and forth.
 age:		Seconds the object has been in scene
-birth:		Timestamp when the object was detected
-timestamp:	Current/last timestamp
+birth:		Timestamp when the object was detected. EPOCH ms resolution.
+timestamp:	Current/last timestamp. EPOCH ms resolution
 x:			Bounding box x position
 y:			Bounding box y position	
 w:			Bounding box width
 h:			Bounding box height
-cx:			Center of gravity X
+cx:			Center of gravity X.  Placement depends on node configuration.
 cy:			Center of gravity X
 bx:			Birth X (center of gravity)
 by:			Birth y (center of gravity)
@@ -178,5 +166,47 @@ dx:			Total delta X movement from bx.  Negative value means left, positiv means 
 dy:			Total delta Y movement from by.  Negative value means up, positiv means down
 </pre>
 </p>
+
+<h3>Path</h3>
+<p>
+Path data are output when an object has exit the scene.  Path data are optimal counting, flow heatmap, dwell heatmap and forensic search.  
+<pre>
+id:			Unique object ID
+confidence: Some value.  The higher, the better.  Use this value to set confidence level in the node configuration.
+class:		Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
+timestamp:	Time when object entered the scene.  EPOCH ms resolution.
+dx:			Total delta X the object travelled in the scene.  negative value = left, postive values = right
+dy:			Total delta Y the object travelled in the scene.  negative value = up, postive values = down
+age:		Total time the object stated in the scene
+distance:	Thotal distance in percent of view.  This can be greater than 100 if the object move back and forth
+dwell:		The longest dwell period in seconds in a single sample position
+path:		An Array of sampled positions the object had moving through the scene.  The first sample is the first place the object entered the scene
+{
+x:			Sample position X
+y:			Sample position Y
+d:			Dwell time in seconds in the sampled position
+}
+</pre>
+</p>
+
+<h3>Detections</h3>
+<p>
+Detection provides the raw unprocessed data from the cameras analytics.  This may provide huge amount of data.  Use this data with coution and only when Trackers or Paths are not able to solve the use case.
+<pre>
+id:			Unique ID of each object that can be used to tracker a specific object
+timestamp:	EPOCH ms resolution.
+detections:	Array of all detection objects currently detected
+id:			Unique ID of each object that can be used to tracker a specific object
+class:		Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
+confidence:	Some value.  The higher, the better.  Use this value to set confidence level in the node configuration.
+x:			Bounding box x position
+y:			Bounding box y position
+w:			Bounding box width
+h:			Bounding box height,
+cx:			Center of gravity X.  Placement depends on node configuration
+cy:			Center of gravity Y
+</pre>
+</p>
+
 
 </script>

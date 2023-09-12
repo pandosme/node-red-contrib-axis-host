@@ -13,6 +13,7 @@ module.exports = function(RED) {
 		node.on('input', function(msg) {
 			var eventId = node.eventID;
 			var value = node.value || msg.payload;
+			var args = [];
 
 			var command = "/usr/local/packages/Nodered/opt/eventcli";
 			switch( eventId ) {
@@ -30,7 +31,7 @@ module.exports = function(RED) {
 					if( value === "true" )
 						value = 1;
 					if( value === "false" )
-						value = 1;
+						value = 0;
 					if( typeof value === "string" )
 						value = parseInt(value);
 					if( value === true )
@@ -54,10 +55,14 @@ module.exports = function(RED) {
 						node.error("Invlid input",msg);
 						return;
 					}
-					command += " -t 2 -d " + value;
+					command += ' -t 2 -d \'' + value + '\'';
 					break;
+				default:
+					node.error("Trigger failed",{payload: eventId + " is not a valid event type"});
+					return;
 			}
-			exec(command,(error, stdout, stderr) => {
+		
+			exec(command,args,(error, stdout, stderr) => {
 				if (error) {
 					node.error("Trigger not available",{payload:"Trigger service not found"});
 					return;
