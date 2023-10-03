@@ -1,5 +1,12 @@
 <script type="text/x-red" data-template-name="Objects">
 	<div class="form-row">
+        <label for="node-input-version"><i class="icon-tag"></i> Version</label>
+        <select id="node-input-version">
+            <option value="2">FW 11.6 or later </option>
+            <option value="1">FW 11.5 or earlier) </option>
+		</select>
+	</div>
+	<div class="form-row">
         <label for="node-input-output"><i class="icon-tag"></i> Output</label>
         <select id="node-input-output">
             <option value="2">Tracker</option>
@@ -19,7 +26,7 @@
             <option value="5">(Other)Vehicle</option>
             <option value="6">Face</option>
             <option value="7">License plate</option>
-            <option value="8">Undefined</option>
+            <option value="8">Unkown</option>
 		</select>
 	</div>
 	<div class="form-row">
@@ -36,10 +43,6 @@
             <option value="80">80 or more</option>
             <option value="90">90 or more</option>
             <option value="100">100 or more</option>
-            <option value="100">110 or more</option>
-            <option value="100">120 or more</option>
-            <option value="100">130 or more</option>
-            <option value="100">140 or more</option>
 		</select>
 	</div>
 	<div class="form-row">
@@ -58,6 +61,27 @@
             <option value="0">Middle-bottom (feet)</option>
 		</select>
 	</div>
+	<div class="form-row">
+        <label for="node-input-predictions"><i class="icon-tag"></i> Predictions</label>
+        <select id="node-input-predictions">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+		</select>
+	</div>
+	<div class="form-row idle">
+        <label for="node-input-idle"><i class="icon-tag"></i> Max idle</label>
+        <select id="node-input-confidence">
+            <option value="0">Forever</option>
+            <option value="1">1 minute</option>
+            <option value="2">2 minutes</option>
+            <option value="3">3 minutes</option>
+            <option value="5">5 minutes</option>
+            <option value="10">10 minutes</option>
+            <option value="20">20 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">1 hour</option>
+		</select>
+	</div>
 </script>
 
 <script type="text/javascript">
@@ -65,23 +89,26 @@ RED.nodes.registerType('Objects',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
+		version: { value:"2"},
 		output: { value:"2"},
 		classFilter: { value:"-1"},
 		confidence: { value:"50"},
 		rotation: { value:"0"},
-		cog: { value:"0"}
+		cog: { value:"0"},
+		predictions: { value:"1"}
+		idle: { value:"0"}
 	},
 	icon: "font-awesome/fa-object-ungroup",
-	inputs:0,
+	inputs: 0,
 	outputs:1,
 	label: function() {
 		var text = "";
-		if( this.output == "1")
-			text += "Detections: ";
+		if( this.output === "1")
+			text = "Detections: ";
 		if( this.output == "2")
-			text += "Tracker: ";
+			text = "Tracker: ";
 		if( this.output == "3")
-			text += "Paths ";
+			text = "Path: ";
 		if( this.classFilter == "-1" )
 			text += "Everything";
 		if( this.classFilter == "0" )
@@ -95,14 +122,29 @@ RED.nodes.registerType('Objects',{
 		if( this.classFilter == "4" )
 			text += "Bike";
 		if( this.classFilter == "5" )
-			text += "(Other)vehicle";
+			text += "Vehicle (other)";
 		if( this.classFilter == "6" )
 			text += "Face";
 		if( this.classFilter == "7" )
 			text += "License plate";
 		if( this.classFilter == "8" )
-			text += "Undefined";
+			text += "Unkown";
 		return text;
+	}
+	oneditprepare: function() {
+		$("#node-input-output").change(function() {
+			var output = $("#node-input-output").val();
+			var version = $("#node-input-version").val();
+			var showIdle = true;
+			if( output === "1")
+				showIdle = false;
+			if( version === "1")
+				showIdle = false;
+			if( showIdle )
+				$(".idle").show();
+			else
+				$(".idle").hide();
+		});
 	}
 });
 </script>
@@ -112,6 +154,11 @@ RED.nodes.registerType('Objects',{
 Objects provides data from the cameras object detection analytics.
 </p>
 <h3>Configuration</h3>
+<p>
+	<b>Version</b><br/>
+	As video analytics evolve, new features may not be avaialbel in older firmware.<br/>
+	Select Version based on the camera firmware version.
+</p>
 <p>
 	<b>Output</b><br/>
 	Select Detections, Tracker or Path depending on the use case
@@ -132,6 +179,14 @@ Objects provides data from the cameras object detection analytics.
 	<b>CoG: Center of Gravity</b><br/>
 	Defines the position of cx and cy.  Depending on use case and camera mounting you may want these values to be in the center of the bounding box or places at the center-bottom.
 	If the camera is mounted in the ceiling, looking stright down you should use "Center".  If the camera is mounted on the wall, having a perspective view, select bottom (feet).
+</p>
+<p>
+	<b>Predictions</b><br/>
+	Include detections based on predictions.  This may improve tracking and path in some scenarios.  It may also extend object detection after they are lost.  What setting works best depends on environment.
+</p>
+<p>
+	<b>Max Idle</b><br/>
+	The maximum time an object may idle still before it is defined as "dead".
 </p>
 
 
@@ -182,9 +237,9 @@ distance:	Thotal distance in percent of view.  This can be greater than 100 if t
 dwell:		The longest dwell period in seconds in a single sample position
 path:		An Array of sampled positions the object had moving through the scene.  The first sample is the first place the object entered the scene
 {
-x:			Sample position X
-y:			Sample position Y
-d:			Dwell time in seconds in the sampled position
+  x:			Sample position X
+  y:			Sample position Y
+  d:			Dwell time in seconds in the sampled position
 }
 </pre>
 </p>

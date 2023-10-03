@@ -1,6 +1,6 @@
 //Copyright (c) 2023 Fred Juhlin
 
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 
 module.exports = function(RED) {
 	
@@ -8,14 +8,13 @@ module.exports = function(RED) {
 		RED.nodes.createNode(this,config);
 		this.eventID = config.eventId;
 		this.value = config.value;
+		this.triggerProcess = 0;
 		var node = this;
 
 		node.on('input', function(msg) {
 			var eventId = node.eventID;
 			var value = node.value || msg.payload;
 			var args = [];
-
-			var command = "/usr/local/packages/Nodered/opt/eventcli";
 			switch( eventId ) {
 				case "event":
 					if( typeof value === "string" )
@@ -25,7 +24,10 @@ module.exports = function(RED) {
 						node.error("Invlid input",msg);
 						return;
 					}
-					command += " -t 0 -v " + value;
+					args.push('-t');
+					args.push('0');
+					args.push('-v');
+					args.push(value);
 					break;
 				case "state":
 					if( value === "true" )
@@ -43,7 +45,10 @@ module.exports = function(RED) {
 						node.error("Invlid input",msg);
 						return;
 					}
-					command += " -t 1 -s " + value;
+					args.push('-t');
+					args.push('1');
+					args.push('-s');
+					args.push(value);
 					break;
 				case "data":
 					if( typeof value === "number" )
@@ -55,22 +60,32 @@ module.exports = function(RED) {
 						node.error("Invlid input",msg);
 						return;
 					}
-					command += ' -t 2 -d \'' + value + '\'';
+					args.push('-t');
+					args.push('2');
+					args.push('-d');
+					args.push('\'' + value + '\'');
 					break;
 				default:
 					node.error("Trigger failed",{payload: eventId + " is not a valid event type"});
 					return;
 			}
-		
-			exec(command,args,(error, stdout, stderr) => {
-				if (error) {
-					node.error("Trigger not available",{payload:"Trigger service not found"});
-					return;
+			
+			node.triggerProcess = spawn("/usr/local/packages/Nodered/opt/eventcli",args);
+
+			node.triggerProcess.on('error', (error) => {
+				node.error("Event Error",{payload:"Unable to locate service"});
+			});
+
+			node.triggerProcess.stderr.on('data', (data) => {
+				node.error("Event error",{topic:"Error",payload:data.toString()} );
+			});
+
+			node.on('close', (done) => {
+				if (node.triggerProcess) {
+					node.triggerProcess.kill(); // Terminate the child process
 				}
-				if (stderr) {
-					node.error("Trigger failed",{payload:stderr});
-					return;
-				}
+				node.triggerProcess = 0;
+				done();
 			});
 		});
     }

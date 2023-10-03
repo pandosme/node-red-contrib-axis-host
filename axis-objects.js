@@ -6,18 +6,22 @@ module.exports = function(RED) {
 	
     function AXIS_Objects(config) {
 		RED.nodes.createNode(this,config);
-		this.output = "Nothing";
+		this.version = config.version;
+		this.output = config.output;
+		this.confidence = config.confidence;
+		this.classFilter = config.classFilter;
+		this.rotation = config.rotation;
+		this.cog = config.cog;
+		this.predictions = config.predictions;
+		this.idle = config.idle || "0"
 		
-		if( parseInt(config.output) === 1 )
-			this.output = "detections";
-		if( parseInt(config.output) === 2 )
-			this.output = "tracker";
-		if( parseInt(config.output) === 3 )
-			this.output = "path";
-
 		var node = this;
-		var predictions = 0;
-        const process = spawn("/usr/local/packages/Nodered/nodeobjects",[config.output,config.rotation,config.cog,config.classFilter,config.confidence, predictions]);
+		var topic = config.output==="1"?"detections":config.output==="2"?"tracker":"path";
+
+		var path = "/usr/local/packages/Nodered/nodeobjects";
+		if( this.version === "2")
+			path += "2";
+        var process = spawn(path,[node.output,node.rotation,node.cog,node.classFilter,node.confidence, node.predictions, node.idle]);
 
 		node.status({fill:"green",shape:"dot",text:"Running"});
 
@@ -35,7 +39,7 @@ module.exports = function(RED) {
 					}
 					
 					node.send({
-						topic: node.output,
+						topic: topic,
 						payload:jsonData
 					});
 				}
@@ -67,11 +71,14 @@ module.exports = function(RED) {
 	
     RED.nodes.registerType("Objects", AXIS_Objects,{
 		defaults: {
+			version: { type:"text" },
 			output: { type:"text" },
 			classFilter: { type:"text" },
 			confidence: { type:"text" },
 			rotation: { type:"text" },
-			cog: { type:"text" }
+			cog: { type:"text" },
+			predictions: { type:"text" },
+			idle: { type:"text"}
 		}		
 	});
 }

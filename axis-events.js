@@ -47,13 +47,16 @@ module.exports = function(RED) {
 				}
 
 				if (row.search('-------------------------') >= 0) {
+					var send = true;
 					if(topic0 && topic1 ) {
 						var topic = topic0 + "/" + topic1;
-						if( topic2 )
+						if( topic2 ) {
 							topic += "/" + topic2;
+							if( topic2 === "xinternal_data" )
+								send = false;
+						}
 						if (topic3)
 							topic += "/" + topic3;
-						var send = true;
 						//Ignore events
 						if( node.group !== "All events" && topic.search(node.group) < 0 )
 							send = false
@@ -99,13 +102,11 @@ module.exports = function(RED) {
 					continue;
 
 				var property = items[0].split(" ")[0].replace(/[^\w\s]/g, '').toLowerCase();
-				var value = items[1].split(" ")[0];
+				var value = items[1];
 
 				//Make number and cleanup
 				if( isNaN(value) === false )
 					value = parseInt(value);
-				else
-					value = value.replace(/[^\w\s]/g, '');
 
 				//Make boolean
 				if (property === "active")
