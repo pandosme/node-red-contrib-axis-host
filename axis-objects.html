@@ -68,9 +68,9 @@
             <option value="0">No</option>
 		</select>
 	</div>
-	<div class="form-row idle">
+	<div class="form-row idleSelect">
         <label for="node-input-idle"><i class="icon-tag"></i> Max idle</label>
-        <select id="node-input-confidence">
+        <select id="node-input-idle">
             <option value="0">Forever</option>
             <option value="1">1 minute</option>
             <option value="2">2 minutes</option>
@@ -95,7 +95,7 @@ RED.nodes.registerType('Objects',{
 		confidence: { value:"50"},
 		rotation: { value:"0"},
 		cog: { value:"0"},
-		predictions: { value:"1"}
+		predictions: { value:"1"},
 		idle: { value:"0"}
 	},
 	icon: "font-awesome/fa-object-ungroup",
@@ -130,7 +130,7 @@ RED.nodes.registerType('Objects',{
 		if( this.classFilter == "8" )
 			text += "Unkown";
 		return text;
-	}
+	},
 	oneditprepare: function() {
 		$("#node-input-output").change(function() {
 			var output = $("#node-input-output").val();
@@ -141,9 +141,9 @@ RED.nodes.registerType('Objects',{
 			if( version === "1")
 				showIdle = false;
 			if( showIdle )
-				$(".idle").show();
+				$(".idleSelect").show();
 			else
-				$(".idle").hide();
+				$(".idleSelect").hide();
 		});
 	}
 });

@@ -13,7 +13,7 @@ module.exports = function(RED) {
 		this.rotation = config.rotation;
 		this.cog = config.cog;
 		this.predictions = config.predictions;
-		this.idle = config.idle || "0"
+		this.idle = config.idle || "0";
 		
 		var node = this;
 		var topic = config.output==="1"?"detections":config.output==="2"?"tracker":"path";
