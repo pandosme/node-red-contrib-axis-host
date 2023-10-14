@@ -1,6 +1,6 @@
 [
     {
-        "id": "d72747adda9a706a",
+        "id": "74ed6882c1309930",
         "type": "tab",
         "label": "Objects",
         "disabled": false,
@@ -8,167 +8,66 @@
         "env": []
     },
     {
-        "id": "4aa0a3181301b01e",
+        "id": "afa65359f250b6fd",
         "type": "Objects",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "version": "1",
         "output": "2",
         "classFilter": "-1",
-        "confidence": "0",
+        "confidence": "40",
         "rotation": "0",
         "cog": "1",
-        "predictions": "1",
-        "x": 310,
-        "y": 220,
-        "wires": [
-            [
-                "3cbfd78351d7012b"
-            ]
-        ]
-    },
-    {
-        "id": "6ed27905e14f4dd1",
-        "type": "catch",
-        "z": "d72747adda9a706a",
-        "name": "",
-        "scope": null,
-        "uncaught": false,
-        "x": 140,
-        "y": 420,
-        "wires": [
-            [
-                "c416d324449504de"
-            ]
-        ]
-    },
-    {
-        "id": "c416d324449504de",
-        "type": "debug",
-        "z": "d72747adda9a706a",
-        "name": "Error",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 370,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "62e79732f6db0cfc",
-        "type": "ui_template",
-        "z": "d72747adda9a706a",
-        "group": "0d7b022bf27a54b7",
-        "name": "Augmented Video",
-        "order": 5,
-        "width": "16",
-        "height": "16",
-        "format": "<script src=\"/js/media-stream-player.min.js\"></script>\n\n<div id=\"{{'player_'+$id}}\"></div>\n\n<script>\nvar ctx = null;\nvar canvas = null;\nvar trackers = {};\n\n(function(scope) {\nscope.$watch('msg', function(msg) {\n    if (!msg)\n      return;\n    console.log(msg.topic);\n    var width = 1280;\n    var height = 720;\n\n    if( msg.topic === \"video\" ) {\n        var width = msg.width || 1280;\n        var height = msg.height || 720;\n        var rotation = msg.rotation || 0;\n\n        $(\"#player_\"+scope.$id).empty();\n\n        if(rotation == 90 || rotation == 270 ) {\n            $(\"#player_\"+scope.$id).append('<div id=\"view_' + scope.$id + '\" style=\"width:450px; height:800px;\">');\n        } else {\n            $(\"#player_\"+scope.$id).append('<div id=\"view_' + scope.$id + '\" style=\"width:800px; height:450px;\">');\n        }\n        $(\"#view_\"+scope.$id).append('<div id=\"canvas_'+ scope.$id + '\" style=\"width:100%; height:100%; position:relative\">');\n        $(\"#canvas_\"+scope.$id).append('<img id=\"image_' + scope.$id + '\" class=\"card-img-top\" src=\"\" alt=\"Image\" style=\"width:100%; height:100%; position:absolute; top:0px; left:0px;\">');\n        $(\"#canvas_\"+scope.$id).append('<div id=\"video_' + scope.$id + '\" style=\"width:100%; height:100%; position:absolute; top:0px; left:0px;\"></div>');\n        $(\"#canvas_\"+scope.$id).append('<canvas id=\"objects_' + scope.$id + '\" width=\"1000\" height=\"1000\" style=\"width:100%; height:100%; position:absolute; top:0px; left:0px;\"></canvas>');\n\n        $(\"#image_\"+scope.$id).attr('src','http://'+window.location.hostname+'/axis-cgi/jpg/image.cgi?resolution='+width+'x'+height+'&_='+new Date().getTime());\n        if( msg.payload ) {\n            var player = '<media-stream-player hostname=\"'+window.location.hostname+'\"  format=\"RTP_H264\" compression=\"40\" audio=\"0\" resolution=\"'+width+'x'+height+'\" variant=\"basic\" autoplay></media-stream-player>';\n            $(\"#video_\"+scope.$id).append(player);\n        }\n        canvas = document.getElementById(\"objects_\"+scope.$id);\n        ctx = canvas.getContext(\"2d\");\n    }\n\n    if( msg.topic === \"path\" ) {\n        if(!ctx)\n            return;\n        var path = msg.payload;\n        var first = path.path[0];\n        var last = path.path[path.path.length-1];\n        var middle = path.path[path.path.length/2]\n  \n        ctx.beginPath();\n        ctx.lineWidth = 3;\n        ctx.strokeStyle = '#00FF00';\n        ctx.font = \"30px Arial\";\n\n        ctx.beginPath();\n        ctx.moveTo(first.x, first.y );\n        ctx.arc(first.x, first.y, 3, 0, 2 * Math.PI);\n        ctx.stroke();\n\n        ctx.strokeStyle = '#FFFF00';\n        ctx.fillStyle = '#FFFF00';\n        ctx.beginPath();\n        ctx.moveTo(path.path[0].x, path.path[0].y );\n        for( var i = 1; i < path.path.length; i++ )\n            ctx.lineTo(path.path[i].x,path.path[i].y );\n        ctx.lineTo(last.x,last.y );\n        var text = path.class || \"Undefined\";\n        if( path.hasOwnProperty(\"confidence\"))\n            text += \" \" + path.confidence;\n        if( path.hasOwnProperty(\"age\"))\n            text += \" \" + path.age + \"s\";\n        ctx.fillText(text, middle.x, middle.y-10 );\n        ctx.stroke();\n\n        ctx.beginPath();\n        ctx.lineWidth=3;\n        ctx.strokeStyle='#FF0000';\n        ctx.moveTo(last.x, last.y );\n        ctx.arc(last.x, last.y, 3, 0, 2 * Math.PI);\n        ctx.stroke();\n    }\n\n    if( msg.topic === \"tracker\" ) {\n        if(!ctx)\n            return;\n        ctx.beginPath();\n        ctx.clearRect(0, 0, 1000, 1000 );\n        ctx.stroke();\n\n        ctx.lineWidth = 3;\n        ctx.strokeStyle = '#FFFF00';\n        ctx.font = \"30px Arial\";\n        ctx.fillStyle = '#FFFF00';\n\n        trackers[msg.payload.id] = msg.payload;\n        if( msg.payload.active === false )\n            delete trackers[msg.payload.id];\n        ctx.beginPath();\n        for(var id in trackers) {\n            if( trackers[id].hasOwnProperty(\"bx\")) {\n                ctx.moveTo(trackers[id].bx,trackers[id].by);\n                ctx.lineTo(trackers[id].cx,trackers[id].cy);\n            }\n            ctx.rect(trackers[id].x, trackers[id].y,trackers[id].w,trackers[id].h );\n            var text = trackers[id].class || \"Undefined\";\n            if( trackers[id].hasOwnProperty(\"confidence\"))\n              text += \" \" + trackers[id].confidence;\n            if( trackers[id].hasOwnProperty(\"age\"))\n              text += \" \" + trackers[id].age + \"s\";\n            ctx.fillText(text, trackers[id].x, trackers[id].y-10);\n\n        }\n        ctx.stroke();\n    }\n\n    if( msg.topic === \"detections\" ) {\n        if(!ctx)\n            return;\n        ctx.beginPath();\n        ctx.clearRect(0, 0, 1000, 1000 );\n        ctx.stroke();\n\n        var detections = msg.payload;\n        if( !Array.isArray(detections) )\n            detections = detections.detections;\n         \n        ctx.beginPath();\n        ctx.lineWidth = 3;\n        ctx.font = \"30px Arial\";\n        ctx.fillStyle = '#FFFF00';\n        ctx.strokeStyle = '#FFFF00';\n        detections.forEach( function(detection){\n            if( detection.hasOwnProperty(\"bx\")) {\n                ctx.moveTo(detection.bx,detection.by);\n                ctx.lineTo(detection.cx,detection.cy);\n            }\n            ctx.rect(detection.x, detection.y,detection.w,detection.h );\n            var text = detection.class || \"Undefined\";\n            if( detection.hasOwnProperty(\"confidence\"))\n              text += \" \" + detection.confidence;\n            if( detection.hasOwnProperty(\"age\"))\n              text += \" \" + detection.age + \"s\";\n            ctx.fillText(text, detection.x, detection.y-10 );\n        });\n        ctx.stroke();\n    }  \n    if( msg.topic === \"reset\" ) {\n        if( !ctx )\n            return;\n         ctx.beginPath();\n         ctx.clearRect(0, 0, 1000, 1000 );\n         ctx.stroke();\n    }\n});\n})(scope);\n</script>\n\n",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 690,
+        "predictions": "0",
+        "x": 230,
         "y": 160,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b356f862a19b19d9",
-        "type": "ui_ui_control",
-        "z": "d72747adda9a706a",
-        "name": "",
-        "events": "all",
-        "x": 140,
-        "y": 460,
-        "wires": [
             [
-                "dcb67f78c0eba589"
+                "473649e22757d0da"
             ]
         ]
     },
     {
-        "id": "dcb67f78c0eba589",
-        "type": "function",
-        "z": "d72747adda9a706a",
-        "name": "Tab: Objects",
-        "func": "msg.topic = \"video\";\nmsg.payload = false;\n\nif( msg.payload !== \"change\" )\n    return msg;\n\nif( msg.name !== \"Objects\")\n    return msg;\nmsg.payload = true;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 310,
-        "y": 460,
-        "wires": [
-            [
-                "2708981a0903facb",
-                "7498f6b83c61b474",
-                "782ce8b6fa22fed0",
-                "0c903bc49ac53a07",
-                "c70e6c692aebc79e"
-            ]
-        ]
-    },
-    {
-        "id": "655f02061b610632",
+        "id": "4f4431b726a9d1b8",
         "type": "ui_dropdown",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "Rotation",
-        "label": "",
+        "label": "Rotation",
         "tooltip": "",
         "place": "Select rotation",
-        "group": "0d7b022bf27a54b7",
+        "group": "610ebc43f67cfd4b",
         "order": 4,
-        "width": "2",
+        "width": "5",
         "height": "1",
-        "passthru": false,
+        "passthru": true,
         "multiple": false,
         "options": [
             {
-                "label": "0°",
-                "value": 0,
-                "type": "num"
+                "label": "Landscape",
+                "value": "Landscape",
+                "type": "str"
             },
             {
-                "label": "90°",
-                "value": 90,
-                "type": "num"
-            },
-            {
-                "label": "180°",
-                "value": 180,
-                "type": "num"
-            },
-            {
-                "label": "270°",
-                "value": 270,
-                "type": "num"
+                "label": "Portrait",
+                "value": "Portrait",
+                "type": "str"
             }
         ],
         "payload": "",
         "topic": "rotation",
         "topicType": "str",
         "className": "",
-        "x": 840,
-        "y": 520,
+        "x": 600,
+        "y": 360,
         "wires": [
             [
-                "ee1697c66f6d9152"
+                "90ec7b2798efd4a0"
             ]
         ]
     },
     {
-        "id": "ee1697c66f6d9152",
+        "id": "90ec7b2798efd4a0",
         "type": "change",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "",
         "rules": [
             {
@@ -184,77 +83,40 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1040,
-        "y": 520,
+        "x": 840,
+        "y": 360,
         "wires": [
-            [
-                "2708981a0903facb"
-            ]
+            []
         ]
     },
     {
-        "id": "a2e5eb038b7820d1",
+        "id": "b8e54332a8935fdc",
         "type": "ui_dropdown",
-        "z": "d72747adda9a706a",
-        "name": "Resolution",
-        "label": "",
+        "z": "74ed6882c1309930",
+        "name": "Aspect",
+        "label": "Camera aspect",
         "tooltip": "",
         "place": "Select resolution",
-        "group": "0d7b022bf27a54b7",
+        "group": "610ebc43f67cfd4b",
         "order": 3,
-        "width": "3",
+        "width": "5",
         "height": "1",
         "passthru": true,
         "multiple": false,
         "options": [
             {
-                "label": "No video",
-                "value": false,
-                "type": "bool"
-            },
-            {
-                "label": "2688x1512",
-                "value": "2688x1512",
+                "label": "16:9",
+                "value": "16:9",
                 "type": "str"
             },
             {
-                "label": "1920x1080",
-                "value": "1920x1080",
+                "label": "4:3",
+                "value": "4:3",
                 "type": "str"
             },
             {
-                "label": "1280x720",
-                "value": "1280x720",
-                "type": "str"
-            },
-            {
-                "label": "1024x576",
-                "value": "1024x579",
-                "type": "str"
-            },
-            {
-                "label": "800x450",
-                "value": "800x450",
-                "type": "str"
-            },
-            {
-                "label": "640x360",
-                "value": "640x360",
-                "type": "str"
-            },
-            {
-                "label": "480x270",
-                "value": "480x270",
-                "type": "str"
-            },
-            {
-                "label": "320x180",
-                "value": "320x180",
-                "type": "str"
-            },
-            {
-                "label": "160x90",
-                "value": "160x90",
+                "label": "1:1",
+                "value": "1:1",
                 "type": "str"
             }
         ],
@@ -262,43 +124,43 @@
         "topic": "topic",
         "topicType": "msg",
         "className": "",
-        "x": 850,
-        "y": 580,
+        "x": 600,
+        "y": 400,
         "wires": [
             [
-                "c595a2416bdcee60"
+                "1a9ffc1945c721ad"
             ]
         ]
     },
     {
-        "id": "1b620cf86bc9cdde",
+        "id": "c43934c5eba4a113",
         "type": "function",
-        "z": "d72747adda9a706a",
-        "name": "Format player",
-        "func": "msg.topic = \"video\";\n\nif( msg.payload === false )\n    return msg;\n\nvar resolution = flow.get(\"resolution\") || \"800x450\";\nvar items = resolution.split(\"x\");\nmsg.width = parseInt(items[0]);\nmsg.height = parseInt(items[1]);\nmsg.rotation = flow.get(\"rotation\") || 0;\nmsg.payload = true;\nreturn msg;",
+        "z": "74ed6882c1309930",
+        "name": "Video player",
+        "func": "msg.topic = \"video\";\n\nmsg.payload = {\n    aspect: flow.get(\"aspect\") || \"16:9\",\n    rotation: flow.get(\"rotation\") || \"Landscape\"\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 320,
-        "y": 160,
+        "x": 470,
+        "y": 120,
         "wires": [
             [
-                "62e79732f6db0cfc"
+                "04355ba9e143d9d4"
             ]
         ]
     },
     {
-        "id": "c595a2416bdcee60",
+        "id": "1a9ffc1945c721ad",
         "type": "change",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "",
         "rules": [
             {
                 "t": "set",
-                "p": "resolution",
+                "p": "aspect",
                 "pt": "flow",
                 "to": "payload",
                 "tot": "msg"
@@ -309,97 +171,56 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1050,
-        "y": 580,
+        "x": 840,
+        "y": 400,
         "wires": [
-            [
-                "2708981a0903facb"
-            ]
+            []
         ]
     },
     {
-        "id": "2708981a0903facb",
-        "type": "link out",
-        "z": "d72747adda9a706a",
-        "name": "link out 1",
-        "mode": "link",
-        "links": [
-            "70a5aecbf791261d"
-        ],
-        "x": 1225,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "70a5aecbf791261d",
-        "type": "link in",
-        "z": "d72747adda9a706a",
-        "name": "link in 1",
-        "links": [
-            "2708981a0903facb"
-        ],
-        "x": 195,
-        "y": 160,
-        "wires": [
-            [
-                "1b620cf86bc9cdde"
-            ]
-        ]
-    },
-    {
-        "id": "fefbe3c1a5b5ca9d",
-        "type": "comment",
-        "z": "d72747adda9a706a",
-        "name": "Video",
-        "info": "",
-        "x": 130,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "7498f6b83c61b474",
+        "id": "d6ba479528e9ac8b",
         "type": "function",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "Rotation",
-        "func": "msg.payload = flow.get(\"rotation\") || 0;\nflow.set(\"rotation\",msg.payload);\nreturn msg;",
+        "func": "msg.payload = flow.get(\"rotation\") || \"Landscape\";\nflow.set(\"rotation\",msg.payload);\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 640,
-        "y": 520,
+        "x": 400,
+        "y": 360,
         "wires": [
             [
-                "655f02061b610632"
+                "4f4431b726a9d1b8"
             ]
         ]
     },
     {
-        "id": "782ce8b6fa22fed0",
+        "id": "ee28010f5f1bc6bf",
         "type": "function",
-        "z": "d72747adda9a706a",
-        "name": "Resolution",
-        "func": "msg.payload = flow.get(\"resolution\") || \"800x450\";\nflow.set(\"resolution\",msg.payload);\nreturn msg;",
+        "z": "74ed6882c1309930",
+        "name": "Aspect",
+        "func": "msg.payload = flow.get(\"aspect\") || \"16:9\";\nflow.set(\"aspect\",msg.payload);\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 650,
-        "y": 580,
+        "x": 400,
+        "y": 400,
         "wires": [
             [
-                "a2e5eb038b7820d1"
+                "b8e54332a8935fdc"
             ]
         ]
     },
     {
-        "id": "96bdc85363426616",
+        "id": "9d9f1c9d814ef28a",
         "type": "change",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "",
         "rules": [
             {
@@ -415,16 +236,16 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1050,
-        "y": 640,
+        "x": 830,
+        "y": 320,
         "wires": [
             []
         ]
     },
     {
-        "id": "0c903bc49ac53a07",
+        "id": "dcec6ed674d89f67",
         "type": "function",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "Confidence",
         "func": "msg.payload = flow.get(\"confidence\") || 50;\nflow.set(\"confidence\",msg.payload);\nreturn msg;",
         "outputs": 1,
@@ -433,25 +254,25 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 650,
-        "y": 640,
+        "x": 410,
+        "y": 320,
         "wires": [
             [
-                "c133349bdb7e28e1"
+                "dd92f9b9d95e3b4c"
             ]
         ]
     },
     {
-        "id": "c133349bdb7e28e1",
+        "id": "dd92f9b9d95e3b4c",
         "type": "ui_numeric",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "",
         "label": "Confidence",
         "tooltip": "",
-        "group": "0d7b022bf27a54b7",
+        "group": "610ebc43f67cfd4b",
         "order": 2,
-        "width": "4",
-        "height": "1",
+        "width": "0",
+        "height": "0",
         "wrap": false,
         "passthru": true,
         "topic": "topic",
@@ -461,26 +282,26 @@
         "max": "100",
         "step": "10",
         "className": "",
-        "x": 850,
-        "y": 640,
+        "x": 610,
+        "y": 320,
         "wires": [
             [
-                "96bdc85363426616"
+                "9d9f1c9d814ef28a"
             ]
         ]
     },
     {
-        "id": "43fbe703ed9337c7",
+        "id": "2c6675ce02fbe81f",
         "type": "ui_dropdown",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "Class selection",
         "label": "",
         "tooltip": "",
         "place": "Select detection",
-        "group": "0d7b022bf27a54b7",
+        "group": "610ebc43f67cfd4b",
         "order": 1,
-        "width": "3",
-        "height": "1",
+        "width": "0",
+        "height": "0",
         "passthru": true,
         "multiple": true,
         "options": [
@@ -525,7 +346,7 @@
                 "type": "str"
             },
             {
-                "label": "Unknown type",
+                "label": "Object",
                 "value": "Object",
                 "type": "str"
             }
@@ -534,38 +355,38 @@
         "topic": "topic",
         "topicType": "msg",
         "className": "",
-        "x": 860,
-        "y": 700,
+        "x": 620,
+        "y": 280,
         "wires": [
             [
-                "bcdf850bf34a291f"
+                "b03c6fadd2812341"
             ]
         ]
     },
     {
-        "id": "c70e6c692aebc79e",
+        "id": "f203815f1cf4e0ba",
         "type": "function",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "Classes",
-        "func": "msg.payload = flow.get(\"classes\") || [\"Human\",\"Car\"];\nflow.set(\"classes\",msg.payload);\nreturn msg;",
+        "func": "msg.payload = flow.get(\"classes\") || [\"Human\",\"Car\",\"Truck\",\"Bus\",\"Motorcycle\",\"Vehicle\",\"Face\",\"License plate\",\"Object\"]\n\nflow.set(\"classes\",msg.payload);\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 640,
-        "y": 700,
+        "x": 400,
+        "y": 280,
         "wires": [
             [
-                "43fbe703ed9337c7"
+                "2c6675ce02fbe81f"
             ]
         ]
     },
     {
-        "id": "19ce1eccefd78e7c",
+        "id": "ba83b5bc139f2d7c",
         "type": "ui_button",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "",
         "group": "0d7b022bf27a54b7",
         "order": 6,
@@ -582,39 +403,38 @@
         "payloadType": "json",
         "topic": "video",
         "topicType": "str",
-        "x": 330,
+        "x": 190,
         "y": 120,
         "wires": [
             [
-                "62e79732f6db0cfc"
+                "c43934c5eba4a113"
             ]
         ]
     },
     {
-        "id": "3cbfd78351d7012b",
+        "id": "473649e22757d0da",
         "type": "function",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "Filter",
-        "func": "var classFilter = flow.get(\"classes\") || [\"Human\",\"Car\",\"Truck\",\"Bus\",\"Motorcycle\",\"Vehicle\",\"Face\",\"License plate\",\"Object\"];\n\n//Filter unwanted class types\nvar ignoreClass = true;\nclassFilter.forEach(function(element) {\n    if( element === msg.payload.class)\n        ignoreClass = false;\n});\nif(ignoreClass)\n    return;\n\n//Filter confidence\nvar confidence = flow.get(\"confidence\") || 0;\nif( msg.payload.confidence < confidence )\n    return;\n\n//Object passed all filters\n\nreturn msg;",
+        "func": "var classFilter = flow.get(\"classes\") || [\"Human\",\"Car\",\"Truck\",\"Bus\",\"Motorcycle\",\"Vehicle\",\"Face\",\"License plate\",\"Object\"];\nvar confidence = flow.get(\"confidence\") || 0;\n\nif( Array.isArray(msg.payload) ) {\n    var list = [];\n    msg.payload.forEach( function(detection){\n        if( detection.active === false )\n            return;\n\n        var ignoreClass = true;\n        classFilter.forEach(function(element) {\n            if( element === detection.class)\n                ignoreClass = false;\n        });\n        if(ignoreClass)\n            return;\n        //Filter confidence\n        if( detection.confidence < confidence )\n            return;\n        list.push(detection);\n    });\n    if(list.length == 0)\n        return;\n    msg.payload = list;\n    return msg;\n}\n\nif( msg.payload.distance < 20 )\n    return 0;\n\n//Filter unwanted class types\nvar ignoreClass = true;\nclassFilter.forEach(function(element) {\n    if( element === msg.payload.class)\n        ignoreClass = false;\n});\nif(ignoreClass)\n    return;\n\n//Filter confidence\nif( msg.payload.confidence < confidence )\n    return;\n\n//Object passed all filters\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 510,
-        "y": 220,
+        "x": 490,
+        "y": 160,
         "wires": [
             [
-                "62e79732f6db0cfc",
-                "bd69ce8416e2660a"
+                "04355ba9e143d9d4"
             ]
         ]
     },
     {
-        "id": "bcdf850bf34a291f",
+        "id": "b03c6fadd2812341",
         "type": "change",
-        "z": "d72747adda9a706a",
+        "z": "74ed6882c1309930",
         "name": "",
         "rules": [
             {
@@ -630,27 +450,111 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1040,
-        "y": 700,
+        "x": 840,
+        "y": 280,
         "wires": [
             []
         ]
     },
     {
-        "id": "bd69ce8416e2660a",
-        "type": "debug",
-        "z": "d72747adda9a706a",
-        "name": "debug 1",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 700,
-        "y": 220,
-        "wires": []
+        "id": "611e87ef5171ee88",
+        "type": "inject",
+        "z": "74ed6882c1309930",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "d6ba479528e9ac8b",
+                "ee28010f5f1bc6bf",
+                "dcec6ed674d89f67",
+                "f203815f1cf4e0ba"
+            ]
+        ]
+    },
+    {
+        "id": "152974deb25c3e2a",
+        "type": "catch",
+        "z": "74ed6882c1309930",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 200,
+        "y": 40,
+        "wires": [
+            [
+                "d0cd5c8269f55b27"
+            ]
+        ]
+    },
+    {
+        "id": "d0cd5c8269f55b27",
+        "type": "ui_toast",
+        "z": "74ed6882c1309930",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 430,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "04355ba9e143d9d4",
+        "type": "ui_template",
+        "z": "74ed6882c1309930",
+        "group": "0d7b022bf27a54b7",
+        "name": "Video player",
+        "order": 6,
+        "width": "16",
+        "height": "16",
+        "format": "<script src=\"/js/media-stream-player.min.js\"></script>\n\n<div id=\"{{'view_'+$id}}\" style=\"width:800px; height:450px;\">\n  <div style=\"width:100%; height:100%; position:relative\">\n    <div id=\"{{'video_'+$id}}\" style=\"width:100%; height:100%; position:absolute; top:0px; left:0px;\"></div>\n    <canvas id=\"{{'canvas_'+$id}}\" width=\"1000\" height=\"1000\" style=\"width:100%; height:100%; position:absolute; top:0px; left:0px;\"></canvas>\n  </div>\n</div>\n\n<script>\n  var ctx = null;\nvar imageWidth = 800;\nvar imageHeight = 450;\nvar strength = 0.5;\nvar pathList = [];\nvar trackers = {};\nvar selectArea = null;\nvar aoi = null;\nvar playing = null;\n\n(function(scope) {\n    scope.$watch('msg', function(msg) {\n        if( !msg || !msg.topic  )\n            return;\n        console.log(msg.topic);\n\n        switch( msg.topic ) {\n        case \"video\":\n            setupVideo(scope,msg.payload);\n            trackers = {};\n            playing = true;\n            break;\n\n        case \"detections\":\n            if(!playing)\n                return;\n            drawDetections(msg.payload);\n            break;\n\n        case \"tracker\":\n            if(!playing)\n                return;\n            drawTracker(msg.payload);\n            break;\n\n        case \"path\":\n            if(!playing)\n                return;\n            drawPath(msg.payload);\n            break;\n\t\t}\n    });\n})(scope);\n\nfunction ClearCanvas() {\n    if(ctx) {\n        ctx.beginPath();\n        ctx.clearRect(0, 0, 1000, 1000 );\n        ctx.stroke();\n    }\n\n}\n\nfunction setupVideo( scope, data ) {\n    var rotation = data.rotation;\n    var aspect = data.aspect;\n    imageWidth = 800;  //Default for 16:9\n    imageHeight = 450;\n    videoWidth = 1280; \n    videoHeight = 720;\n\n    ClearCanvas();\n    \n    if(aspect === \"1:1\") {\n        imageHeight = 800;\n        videoWidth = 800;\n        videoHeight = 800;\n    }\n\n    if(aspect === \"4:3\") {\n        imageHeight = 600;\n        videoWidth = 800;\n        videoHeight = 600;\n    }\n\n    //Setup rotation\n    if(rotation === \"Portrait\" ) {\n        var temp = imageWidth;\n        imageWidth = imageHeight;\n        imageHeight = temp;\n    }\n\n    ctx = null;\n\n    $(\"#view_\"+scope.$id).css(\"width\", imageWidth + \"px\");\n    $(\"#view_\"+scope.$id).css(\"height\", imageHeight + \"px\");\n\n    $(\"#video_\"+scope.$id).empty();\n    var player = '<media-stream-player hostname=\"'+window.location.hostname+'\" format=\"RTP_H264\" compression=\"40\" audio=\"0\" resolution=\"'+videoWidth+'x'+videoHeight+'\" variant=\"basic\" autoplay></media-stream-player>';\n    $(\"#video_\"+scope.$id).append(player);\n    \n    var canvas = document.getElementById(\"canvas_\"+scope.$id);\n    ctx = canvas.getContext(\"2d\");\n}\n\nfunction drawPath( data ) {\n    if(!ctx)\n        return;\n    ClearCanvas();\n    var first = data.path[0];\n    var last = data.path[data.path.length-1];\n\n    ctx.globalAlpha = strength;\n    ctx.beginPath();\n    ctx.lineWidth = 3;\n    ctx.strokeStyle = '#00FF00';\n    ctx.font = \"30px Arial\";\n    ctx.fillStyle = '#FFFF00';\n    ctx.moveTo(first.x, first.y );\n    ctx.arc(first.x, first.y, 3, 0, 2 * Math.PI);\n    // ctx.fillText(data.class, first.x, first.y - 10 );\n    ctx.stroke();\n\n    ctx.beginPath();\n    ctx.strokeStyle = '#FFFF00';\n    ctx.moveTo(data.path[0].x, data.path[0].y );\n    for( var i = 1; i < data.path.length; i++ )\n        ctx.lineTo(data.path[i].x,data.path[i].y ); ctx.lineTo(last.x,last.y );\n    ctx.stroke(); ctx.beginPath();\n    ctx.lineWidth=3;\n    ctx.strokeStyle='#FF0000';\n    ctx.moveTo(last.x, last.y );\n    ctx.arc(last.x, last.y, 3, 0, 2 * Math.PI); ctx.stroke();\n}\n\nfunction drawDetections( detections ) {\n    if(!ctx)\n        return;\n    ClearCanvas();\n\n    ctx.beginPath();\n    ctx.lineWidth = 3;\n    ctx.font = \"30px Arial\";\n    ctx.fillStyle = '#FFFF00';\n    ctx.strokeStyle = '#FFFF00';\n    detections.forEach( function(detection){\n        if( detection.hasOwnProperty(\"bx\")) {\n            ctx.moveTo(detection.bx,detection.by);\n            ctx.lineTo(detection.cx,detection.cy);\n        }\n        ctx.rect(detection.x, detection.y,detection.w,detection.h );\n        var text = detection.class || \"Undefined\";\n        if( detection.hasOwnProperty(\"confidence\"))\n            text += \" \" + detection.confidence;\n        if( detection.hasOwnProperty(\"age\") )\n            text += \" \" + detection.age + \"s\";\n        ctx.fillText(text, detection.x, detection.y-10 );\n    });\n    ctx.stroke();\n}\n\nfunction drawTracker( tracker ) {\n    if(!ctx)\n        return;\n    ClearCanvas();\n\n    ctx.lineWidth = 3;\n    ctx.strokeStyle = '#FFFF00';\n    ctx.font = \"30px Arial\";\n    ctx.fillStyle = '#FFFF00';\n\n    trackers[tracker.id] = tracker;\n    if( tracker.active === false )\n        delete trackers[tracker.id];\n    ctx.beginPath();\n    for(var id in trackers) {\n        if( trackers[id].hasOwnProperty(\"bx\")) {\n            ctx.moveTo(trackers[id].bx,trackers[id].by);\n            ctx.lineTo(trackers[id].cx,trackers[id].cy);\n        }\n        ctx.rect(trackers[id].x, trackers[id].y,trackers[id].w,trackers[id].h );\n        var text = trackers[id].class || \"Undefined\";\n        if( trackers[id].hasOwnProperty(\"confidence\"))\n            text += \" \" + trackers[id].confidence;\n        if( trackers[id].hasOwnProperty(\"age\"))\n              text += \" \" + trackers[id].age + \"s\";\n        ctx.fillText(text, trackers[id].x, trackers[id].y-10);\n    }\n    ctx.stroke();\n}\n\n\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 730,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "610ebc43f67cfd4b",
+        "type": "ui_group",
+        "name": "Settings",
+        "tab": "b0934bc6da5a1654",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "0d7b022bf27a54b7",

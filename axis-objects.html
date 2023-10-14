@@ -2,8 +2,8 @@
 	<div class="form-row">
         <label for="node-input-version"><i class="icon-tag"></i> Version</label>
         <select id="node-input-version">
-            <option value="2">FW 11.6 or later </option>
-            <option value="1">FW 11.5 or earlier) </option>
+            <option value="1">V1 (Any FW) </option>
+            <option value="2">V2 (FW 11.6 or later) </option>
 		</select>
 	</div>
 	<div class="form-row">
@@ -89,13 +89,13 @@ RED.nodes.registerType('Objects',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
-		version: { value:"2"},
+		version: { value:"1"},
 		output: { value:"2"},
 		classFilter: { value:"-1"},
-		confidence: { value:"50"},
+		confidence: { value:"40"},
 		rotation: { value:"0"},
 		cog: { value:"0"},
-		predictions: { value:"1"},
+		predictions: { value:"0"},
 		idle: { value:"0"}
 	},
 	icon: "font-awesome/fa-object-ungroup",
@@ -132,7 +132,21 @@ RED.nodes.registerType('Objects',{
 		return text;
 	},
 	oneditprepare: function() {
-		$("#node-input-output").change(function() {
+		$("#node-input-output").change(function(e){
+			var output = $("#node-input-output").val();
+			var version = $("#node-input-version").val();
+			var showIdle = true;
+			if( output === "1")
+				showIdle = false;
+			if( version === "1")
+				showIdle = false;
+			if( showIdle )
+				$(".idleSelect").show();
+			else
+				$(".idleSelect").hide();
+		));
+
+		$("#node-input-version").change(function() {
 			var output = $("#node-input-output").val();
 			var version = $("#node-input-version").val();
 			var showIdle = true;
