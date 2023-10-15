@@ -57,7 +57,7 @@ module.exports = function(RED) {
 
         process.on('close', (code) => {
 			node.status({fill:"red",shape:"dot",text:"Stopped"});
-//            node.error("Objects stopped",{payload:'Child process exited with code ' + code });
+            node.error("Objects stopped",{payload:'Exit code ' + code });
         });
 
         node.on('close', (done) => {
