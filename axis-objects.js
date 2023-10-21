@@ -21,6 +21,9 @@ module.exports = function(RED) {
 		var path = "/usr/local/packages/Nodered/nodeobjects";
 		if( this.version === "2")
 			path += "2";
+
+		var restart = true;
+
         var process = spawn(path,[node.output,node.rotation,node.cog,node.classFilter,node.confidence, node.predictions, node.idle]);
 
 		node.status({fill:"green",shape:"dot",text:"Running"});
@@ -56,11 +59,14 @@ module.exports = function(RED) {
         });
 
         process.on('close', (code) => {
-			node.status({fill:"red",shape:"dot",text:"Stopped"});
-            node.error("Objects stopped",{payload:'Exit code ' + code });
+			if( restart ) {
+				process = spawn(path,[node.output,node.rotation,node.cog,node.classFilter,node.confidence, node.predictions, node.idle]);
+				node.error("Objects restarted",{payload:'Process exited with code ' + code });
+			}
         });
 
         node.on('close', (done) => {
+			restart = false;
 			node.status({fill:"red",shape:"dot",text:"Stopped"});
             if (process) {
                 process.kill(); // Terminate the child process
