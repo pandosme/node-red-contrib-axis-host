@@ -157,12 +157,16 @@ module.exports = function(RED) {
         });
 
         eventlistner.on('close', (code) => {
-//            node.warn("Events stopped",{payload:"Child process exited with code " + code});
-			node.status({fill:"red",shape:"dot",text:"Stopped"});
+			if( restart ) {
+				setTimeout(function(){
+					eventlistner = spawn('eventlistener');
+					node.warn("Events restarted",{payload:"Process exited with code " + code});
+				},2000);
+			}
         });
 
         node.on('close', (done) => {
-            // Clean up when the node is closed
+			restart = false;
 			node.status({fill:"red",shape:"dot",text:"Stopped"});
             if (eventlistner) {
                 eventlistner.kill(); // Terminate the child process

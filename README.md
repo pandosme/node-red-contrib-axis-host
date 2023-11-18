@@ -13,3 +13,9 @@ Generate an event in the Axis device that can be used to trigger an action in th
 
 ## Objects
 Analytics data of objects detected by the camera including bounding box and classification.  The output can be configured to recive detections, tracker, or paths.
+
+## Change log
+
+### 1.1.7
+- Added support for Objects attribute: color, bag, hat, face
+

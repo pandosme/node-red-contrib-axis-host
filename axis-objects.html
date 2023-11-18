@@ -61,17 +61,28 @@
             <option value="0">Middle-bottom (feet)</option>
 		</select>
 	</div>
-	<div class="form-row">
+	<div class="form-row version2">
+        <label for="node-input-attributes"><i class="icon-tag"></i> Attributes</label>
+        <select id="node-input-attributes">
+            <option value="110">Ignore</option>
+            <option value="10">Very low confidence</option>
+            <option value="30">Low confidence</option>
+            <option value="50">Medium confidence</option>
+            <option value="70">High confidence</option>
+            <option value="90">Very high confidence</option>
+		</select>
+	</div>
+	<div class="form-row version2">
         <label for="node-input-predictions"><i class="icon-tag"></i> Predictions</label>
         <select id="node-input-predictions">
             <option value="1">Yes</option>
             <option value="0">No</option>
 		</select>
 	</div>
-	<div class="form-row idleSelect">
-        <label for="node-input-idle"><i class="icon-tag"></i> Object idle</label>
+	<div class="form-row version2">
+        <label for="node-input-idle"><i class="icon-tag"></i> Max idle</label>
         <select id="node-input-idle">
-            <option value="0">Unlimited</option>
+            <option value="0">Forever</option>
             <option value="1">1 minute</option>
             <option value="2">2 minutes</option>
             <option value="3">3 minutes</option>
@@ -80,7 +91,6 @@
             <option value="20">20 minutes</option>
             <option value="30">30 minutes</option>
             <option value="60">1 hour</option>
-            <option value="120">2 hours</option>
 		</select>
 	</div>
 </script>
@@ -97,6 +107,7 @@ RED.nodes.registerType('Objects',{
 		rotation: { value:"0"},
 		cog: { value:"0"},
 		predictions: { value:"0"},
+		attributes: { value:"110"},
 		idle: { value:"0"}
 	},
 	icon: "font-awesome/fa-object-ungroup",
@@ -133,32 +144,10 @@ RED.nodes.registerType('Objects',{
 		return text;
 	},
 	oneditprepare: function() {
-		$("#node-input-output").change(function(e){
-			var output = $("#node-input-output").val();
-			var version = $("#node-input-version").val();
-			var showIdle = true;
-			if( output === "1")
-				showIdle = false;
-			if( version === "1")
-				showIdle = false;
-			if( showIdle )
-				$(".idleSelect").show();
-			else
-				$(".idleSelect").hide();
-		});
-
 		$("#node-input-version").change(function() {
-			var output = $("#node-input-output").val();
-			var version = $("#node-input-version").val();
-			var showIdle = true;
-			if( output === "1")
-				showIdle = false;
-			if( version === "1")
-				showIdle = false;
-			if( showIdle )
-				$(".idleSelect").show();
-			else
-				$(".idleSelect").hide();
+			$(".version2").hide();
+			if( $("#node-input-version").val() === "2")
+				$(".version2").show();
 		});
 	}
 });

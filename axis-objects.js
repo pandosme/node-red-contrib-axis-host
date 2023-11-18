@@ -13,6 +13,7 @@ module.exports = function(RED) {
 		this.rotation = config.rotation;
 		this.cog = config.cog;
 		this.predictions = config.predictions;
+		this.attribute = config.attributes;
 		this.idle = config.idle || "0";
 		
 		var node = this;
@@ -60,8 +61,10 @@ module.exports = function(RED) {
 
         process.on('close', (code) => {
 			if( restart ) {
-				process = spawn(path,[node.output,node.rotation,node.cog,node.classFilter,node.confidence, node.predictions, node.idle]);
-				node.error("Objects restarted",{payload:'Process exited with code ' + code });
+				setTimeout(function(){
+					process = spawn(path,[node.output,node.rotation,node.cog,node.classFilter,node.confidence, node.predictions, node.idle,node.attributes]);
+					node.error("Objects restarted",{payload:'Process exited with code ' + code });
+				},2000);
 			}
         });
 
@@ -84,6 +87,7 @@ module.exports = function(RED) {
 			rotation: { type:"text" },
 			cog: { type:"text" },
 			predictions: { type:"text" },
+			attributes: { type:"text" },			
 			idle: { type:"text"}
 		}		
 	});
