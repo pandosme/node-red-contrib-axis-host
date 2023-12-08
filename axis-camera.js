@@ -9,6 +9,7 @@ module.exports = function(RED) {
 		RED.nodes.createNode(this,config);
 		this.resolution = config.resolution;
 		this.overlay = config.overlay;
+		this.channel = config.channel;
 		this.output = config.output;
 		var node = this;
 		var buffers = [];
@@ -21,11 +22,12 @@ module.exports = function(RED) {
 			var width = parseInt( items[0] );
 			var height = parseInt( items[1] );
 			var overlay = node.overlay === "yes";
+			var channel = parseInt(node.channel);
 			var process = null;
 			var args = [];
 			
 			//If crop requested, use vdo-client
-			if( msg.hasOwnProperty("crop") || overlay ) {
+			if( (msg.hasOwnProperty("crop") || overlay) && channel !== 1 ) {
 				//syntax: vdo-client -n 1 -t jpeg -O all -X 0 -Y 1 -W 100 -H 100 -o /tmp/imgfile.jpg 1920 720
 				args.push('-n'); args.push('1');
 				args.push('-t'); args.push('jpeg');
@@ -76,7 +78,7 @@ module.exports = function(RED) {
 			//syntax: /usr/local/packages/Nodered/nodeimage 1280 720 1
 			buffers = [];
 	
-			var process = spawn("/usr/local/packages/Nodered/nodeimage",[width,height,overlay]);
+			var process = spawn("/usr/local/packages/Nodered/nodeimage",[width,height,overlay,channel]);
 
 			process.stdout.on('data', (data) => {
 				if( data.length >= 65536 ) {
