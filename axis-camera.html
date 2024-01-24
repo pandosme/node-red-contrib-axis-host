@@ -1,25 +1,8 @@
-<script type="text/x-red" data-template-name="Axis camera">
-    <div class="form-row">
-        <label for="node-input-preset"><i class="icon-tag"></i> Camera</label>
-        <input type="text" id="node-input-preset">
-    </div>
-    <div class="form-row">
-        <label for="node-input-action"><i class="icon-tag"></i> Action</label>
-        <select id="node-input-action">
-            <option value="JPEG Image">JPEG Image</option>
-            <option value="Recordings">Recordings</option>
-            <option value="Start recording">Start recording</option>
-            <option value="Stop recording">Stop recording</option>
-            <option value="Camera Info">Camera Info</option>
-            <option value="Get image settings">Get image settings</option>
-            <option value="Set image settings">Set image settings</option>
-            <option value="Set video filter">Set video filter</option>
-		</select>
-	</div>
-
-    <div class="form-row user_input_resolution">
+<script type="text/x-red" data-template-name="Camera">
+	<div class="form-row">
         <label for="node-input-resolution"><i class="icon-tag"></i> Resolution</label>
         <select id="node-input-resolution">
+            <option value="2688x1512">2688x1512 [16:9]</option>
             <option value="1920x1080">1920x1080 [16:9]</option>
             <option value="1280x720">1280x720 [16:9]</option>
             <option value="640x360">640x360 [16:9]</option>
@@ -27,175 +10,95 @@
             <option value="800x600">800x600 [4:3]</option>
             <option value="640x480">640x480 [4:3]</option>
             <option value="320x240">320x240 [4:3]</option>
+            <option value="4096x4096">2048x2048 [1:1]</option>
             <option value="2048x2048">2048x2048 [1:1]</option>
             <option value="1280x1280">1280x1280 [1:1]</option>
             <option value="800x800">800x800 [1:1]</option>
             <option value="640x640">640x640 [1:1]</option>
 		</select>
 	</div>
-
-    <div class="form-row user_input_filter">
-        <label for="node-input-options"><i class="icon-tag"></i> Filter</label>
-        <select id="node-input-options">
-            <option value="None">None</option>
-            <option value="Sketch">Sketch</option>
-            <option value="Blur">Blur</option>
+	<div class="form-row">
+        <label for="node-input-overlay"><i class="icon-tag"></i> Overlay</label>
+        <select id="node-input-overlay">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
 		</select>
 	</div>
-
-    <div class="form-row user_input_options">
-        <label for="node-input-options"><i class="icon-tag"></i> Options</label>
-        <input type="text" id="node-input-options" placeholder="Overrides msg.options">
-    </div>
-
-    <div class="form-row user_input_data">
-        <label for="node-input-data"><i class="icon-tag"></i> Data</label>
-        <input type="text" id="node-input-data" placeholder="Overrides msg.payload">
-    </div>
-
-    <div class="form-row user_input_response">
+	<div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <select id="node-input-channel">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+		</select>
+	</div>
+	<div class="form-row">
         <label for="node-input-output"><i class="icon-tag"></i> Output</label>
         <select id="node-input-output">
-            <option value="Base64">Base64</option>
-            <option value="Buffer">Buffer</option>
+            <option value="buffer">Buffer</option>
+            <option value="base64">Base64</option>
 		</select>
 	</div>
-
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="optional">
-    </div>
+	
 </script>
 
 <script type="text/javascript">
-RED.nodes.registerType('Axis camera',{
+RED.nodes.registerType('Camera',{
 	category: 'Axis',
 	color: '#FFCC33',
 	defaults: {
-		name: { value:""},
-		preset: {type:"Device Access"},
-		action: { value:"JPEG Image"},
-		resolution: { value:"640x360"},
-		output: { value:"Base64"},
-		filename: { value:""},
-		options: { value:""},
-		data: { value:""}
+		resolution: { value:"1280x720"},
+		overlay: { value:"yes"},
+		channel: { value:"1"},
+		output: { value:"buffer"}
 	},
-	icon: "font-awesome/fa-video-camera",
-	inputs:1,
+	icon: "font-awesome/fa-camera",
+	inputs: 1,
 	outputs:1,
 	label: function() {
-		return this.name || this.action || "Axis Camera";
-	},
-	oneditprepare: function() {
-		$("#node-input-action").change(function() {
-			var action = $("#node-input-action").val();
-			$(".user_input_resolution").hide();
-			$(".user_input_response").hide();
-			$(".user_input_data").hide();
-			$(".user_input_options").hide();
-			$(".user_input_filter").hide();
-			switch (action) {
-				case "JPEG Image":
-					$(".user_input_resolution").show();
-					$(".user_input_response").show();
-				break;
-				case "Set image settings":
-					$(".user_input_data").show();
-				break;
-				case "Set video filter":
-					$(".user_input_filter").show();
-				break;
-			}
-		});
+		return this.resolution || "Camera";
 	}
 });
 </script>
 
-<script type="text/x-red" data-help-name="Axis camera">
-	<h2>Inputs & Outputs</h2>
-	Set the device and call an action.
-	Action will only output on success.  Use a Catch node to get detailed errors.
+<script type="text/x-red" data-help-name="Camera">
+
+<h2>Inputs</h2>
+
+<br/>
+
+<p>
+	<b>Resolution</b><br/>
+	Set the resolution you want.  Note that if the resolution is not supported by the camera, an error will be thrown.
+	<dl class="message-properties">
+		<dt>msg.resolution<span class="property-type">string</span></dt>
+		<dd>
+			Overrides the node setting resolution. The syntax is "WIDTHxHEIGHT";
+		</dd>
+	</dl>	
+</p><br/>
+<p>
+	<b>Overlay</b><br/>
+	Select if you want text, image and graphics overlay in the image (if present).
+</p><br/>
+<p>
+	<b>Image crop</b><br/>
+	It is possible to extract part of the image (crop). Make sure that coordinates are within the image resolution.
+	<dl class="message-properties">
+		<dt>msg.crop<span class="property-type">object</span></dt>
+		<dd>
+		{<br/>
+		&nbsp;&nbsp;"x":100,<br/>
+		&nbsp;&nbsp;"y":100,<br/>
+		&nbsp;&nbsp;"w":200,<br/>
+		&nbsp;&nbsp;"h":150<br/>
+		}<br/>
+		</dd>
+	</dl>	
+</p><br/><br/>
+
+<h2>Outputs</h2>
+JPEG image as binary buffer or base64
 	
-	<br/><br/>
-
-	<p>
-		<b>JPEG Image</b><br/>
-		Capture a JPEG image and outputs as binary or base64 format
-		<dl class="message-properties">
-			<dt>msg.resolution<span class="property-type">string</span></dt>
-			<dd>
-				Overrides the node resolution setting. 
-				The resolution needs to be supported by the camera (e.g. "800x600").<br/>
-				It is possible to add addition paramaters e.g. "&camera=1" in the request.  See VAPIX documentation for image capture parameters
-			</dd>
-		</dl>	
-	</p><br/>
-
-	<p>
-		<b>Recordings</b><br/>
-		List camera recordings store on SD Card and NAS
-		<dl class="message-properties">
-			<dt>msg.payload<span class="property-type">object</span></dt>
-			<dd>
-			Optional selections<br/>
-			{<br/>
-			&nbsp;&nbsp;"from": [date string, EPOCH timestamp or Date object],<br/>
-			&nbsp;&nbsp;"to": [null, date string, EPOCH timestamp or Date object]<br/>
-			}<br/>
-			</dd>
-		</dl>	
-	</p><br/>
-
-	<p>
-		<b>Start recording</b><br/>
-		Record to SD Card using the default stream profile.  An SD Card in camera must be mounted.<br/>
-		Output (msg.payload) is a recording ID to be used with Stop recording.
-	</p><br/>
-
-	<p>
-		<b>Stop recording</b><br/>
-		<dl class="message-properties">
-			<dt>msg.payload<span class="property-type">string</span></dt>
-			<dd>
-				Recording ID from Start recording
-			</dd>
-		</dl>	
-	</p><br/>
-
-	<p>
-		<b>Camera Info</b><br/>
-		Get the cameras image and resolution capabilities
-	</p>
-
-	<p>
-		<b>Get image settings</b><br/>
-		A number of selected few image/camera settings.  See Set image settings
-	</p><br/>
-
-	<p>
-		<b>Set image settings</b><br/>
-		Change camera settings.  Each property is optional.<br/>
-		DayLevel controls IR cut filter (0=off, 100=on, 1-99=automatic)
-		<dl class="message-properties">
-			<dt>msg.payload<span class="property-type">object</span></dt>
-			<dd>
-			{<br/>
-			&nbsp;&nbsp;"Brightness":50,<br/>
-			&nbsp;&nbsp;"ColorLevel":50,<br/>
-			&nbsp;&nbsp;"Contrast":50,<br/>
-			&nbsp;&nbsp;"Exposure":"auto",<br/>
-			&nbsp;&nbsp;"WhiteBalance":"auto",<br/>
-			&nbsp;&nbsp;"WDR":false,<br/>
-			&nbsp;&nbsp;"DayLevel":50<br/>
-			}<br/>
-			</dd>
-		</dl>	
-	</p><br/>
-
-	<p>
-		<b>Set video filter</b><br/>
-		Apply sketch or blur filter on video.  Set type in the node configuration
-	</p><br/>
-
 </script>
