@@ -16,8 +16,12 @@ Analytics data of objects detected by the camera including bounding box and clas
 
 ## Change log
 
+### 1.3.1
+- Added examples for Object Detection, Tracker and Path
+
 ### 1.3.0
 - Fixed bugs in image capture
+
 ### 1.1.7
 - Added support for Objects attribute: color, bag, hat, face
 

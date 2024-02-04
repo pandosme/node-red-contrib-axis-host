@@ -1,0 +1,187 @@
+[
+    {
+        "id": "4fe838f224c601a1",
+        "type": "tab",
+        "label": "Dashboard video & image",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9a8f8d41ce4f9ff5",
+        "type": "ui_template",
+        "z": "4fe838f224c601a1",
+        "group": "b9a47c091b5be2ac",
+        "name": "Video",
+        "order": 6,
+        "width": "10",
+        "height": "7",
+        "format": "<script src=\"/js/media-stream-player.min.js\"></script>\n<div id=\"{{'video_'+$id}}\" style=\"width:100%;height:100%\">\n</div>\n\n\n<script>\n\n(function(scope) {\n    scope.$watch('msg', function(msg) {\n        if( !msg || !msg.topic  )\n            return;\n        console.log(msg.topic);\n        if( msg.topic === \"video\") {\n            $(\"#video_\"+scope.$id).empty();\n            var player = '<media-stream-player hostname=\"'+window.location.hostname+'\" format=\"RTP_H264\" compression=\"40\" audio=\"0\" resolution=\"'+ msg.payload +'\" variant=\"basic\" autoplay></media-stream-player>';\n            $(\"#video_\"+scope.$id).append(player);\n        }\n    });\n})(scope);\n\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 630,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "436b5cc7c40ef181",
+        "type": "change",
+        "z": "4fe838f224c601a1",
+        "name": "Resolution",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1280x720",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "video",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 100,
+        "wires": [
+            [
+                "9a8f8d41ce4f9ff5"
+            ]
+        ]
+    },
+    {
+        "id": "88fad02cf38f1d2b",
+        "type": "ui_button",
+        "z": "4fe838f224c601a1",
+        "name": "",
+        "group": "b9a47c091b5be2ac",
+        "order": 1,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "label": "Play",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 230,
+        "y": 100,
+        "wires": [
+            [
+                "436b5cc7c40ef181"
+            ]
+        ]
+    },
+    {
+        "id": "e516567fb211690b",
+        "type": "Camera",
+        "z": "4fe838f224c601a1",
+        "resolution": "1280x720",
+        "overlay": "yes",
+        "output": "base64",
+        "x": 420,
+        "y": 180,
+        "wires": [
+            [
+                "9c9c3f1468df8e75"
+            ]
+        ]
+    },
+    {
+        "id": "9c9c3f1468df8e75",
+        "type": "ui_template",
+        "z": "4fe838f224c601a1",
+        "group": "dc8fe43c9ac19d79",
+        "name": "Image",
+        "order": 5,
+        "width": "10",
+        "height": "7",
+        "format": "<img src=\"data:image/jpeg;base64,{{msg.payload}}\" style=\"width:100%\">\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 630,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e122b859c5882e1a",
+        "type": "ui_button",
+        "z": "4fe838f224c601a1",
+        "name": "",
+        "group": "dc8fe43c9ac19d79",
+        "order": 1,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "label": "Image",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 230,
+        "y": 180,
+        "wires": [
+            [
+                "e516567fb211690b"
+            ]
+        ]
+    },
+    {
+        "id": "b9a47c091b5be2ac",
+        "type": "ui_group",
+        "name": "Video",
+        "tab": "1926a9d019b54e62",
+        "order": 1,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dc8fe43c9ac19d79",
+        "type": "ui_group",
+        "name": "Image",
+        "tab": "1926a9d019b54e62",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1926a9d019b54e62",
+        "type": "ui_tab",
+        "name": "Video & Image",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
