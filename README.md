@@ -1,6 +1,6 @@
 # node-red-contrib-axis-host
 
-When running [Node-RED on an Axis Device](https://pandosme.github.io/acap/node-red/2020/01/01/nodered-acap.html), these nodes provides bindings to resources in the device.  
+When running [Node-RED on an Axis Device](https://pandosme.github.io/acap/node-red/2023/09/12/nodered-acap.html), these nodes provides bindings to resources in the device.  
 
 ## Events
 Revice events detected in the Axis device.
