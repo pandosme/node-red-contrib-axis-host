@@ -80,7 +80,7 @@
             "79413750e0b501a1",
             "287dd1ea0cbf61c6"
         ],
-        "x": 264,
+        "x": 274,
         "y": 259,
         "w": 752,
         "h": 122
@@ -107,7 +107,7 @@
             "61c4febc40436017",
             "6a09459418f71a16"
         ],
-        "x": 264,
+        "x": 274,
         "y": 439,
         "w": 992,
         "h": 202
@@ -188,7 +188,7 @@
         "z": "af0246322846fc54",
         "g": "f61db3ed8bd785a8",
         "name": "Filter",
-        "func": "var settings = flow.get(\"settings\");\nif(!settings)\n    return;\n\nif( msg.payload.distance < settings.distance) \n    return;\n\nif( msg.payload.confidence < settings.confidence )\n    return;\n\nif( msg.payload.age < settings.age)  \n    return;\n\nvar classMatch = false;\nsettings.classes.forEach(function(element) {\n    if( element === msg.payload.class )\n        classMatch = true;\n});\nif(!classMatch)\n    return;\n\nvar aoiMatch = false;\nmsg.payload.path.forEach(function(position) {\n    if (!aoiMatch && \n        position.x >= settings.aoi.x1 && \n        position.x <= settings.aoi.x2 &&\n        position.y >= settings.aoi.y1 &&\n        position.y <= settings.aoi.y2)\n            aoiMatch = true;\n});\n\nif( !aoiMatch )\n    return;\n\nreturn msg;",
+        "func": "var settings = flow.get(\"settings\");\nif(!settings)\n    return;\n\nif( msg.payload.distance < settings.distance) \n    return;\n\nif( msg.payload.confidence < settings.confidence )\n    return;\n\nif( msg.payload.age < settings.age)  \n    return;\n\nvar classMatch = false;\nsettings.classes.forEach(function (element) {\n    if (element === msg.payload.class)\n        classMatch = true;\n    if (element === \"Head\" && msg.payload.class === \"Face\")\n        classMatch = true;\n});\n\n\nvar aoiMatch = false;\nmsg.payload.path.forEach(function(position) {\n    if (!aoiMatch && \n        position.x >= settings.aoi.x1 && \n        position.x <= settings.aoi.x2 &&\n        position.y >= settings.aoi.y1 &&\n        position.y <= settings.aoi.y2)\n            aoiMatch = true;\n});\n\nif( !aoiMatch )\n    return;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -219,7 +219,7 @@
         "resendOnRefresh": false,
         "templateScope": "local",
         "className": "",
-        "x": 680,
+        "x": 690,
         "y": 340,
         "wires": [
             [
@@ -363,11 +363,6 @@
                 "type": "str"
             },
             {
-                "label": "Face",
-                "value": "Face",
-                "type": "str"
-            },
-            {
                 "label": "Head",
                 "value": "Head",
                 "type": "str"
@@ -469,7 +464,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 900,
+        "x": 910,
         "y": 340,
         "wires": [
             [
@@ -498,7 +493,7 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 340,
+        "x": 350,
         "y": 300,
         "wires": [
             [
@@ -591,7 +586,7 @@
             "7662c75554a09498",
             "fb01cbd0da801fea"
         ],
-        "x": 985,
+        "x": 1195,
         "y": 160,
         "wires": []
     },
@@ -620,7 +615,7 @@
         "type": "comment",
         "z": "af0246322846fc54",
         "name": "Version 2.1 [README]",
-        "info": "You need to install the flow \"Device Info\" from examples or\nhttps://github.com/pandosme/CamFlows/blob/master/flows/Device%20Info.json\n\nThis flow prvides device information in global.context that this flow needs.",
+        "info": "This node provides Object Paths.  Data is produces when after an object is lost (left the scene) and fulfills the filters.\nThe common case is that this data is stored in a database for common use cases like\n* Object Forensic/Search\n* Counting\n* Flow heatmap\n* Dwell heatmap\n\nThe Dashboard nodes provides a way for installers and administrators to filter out unwanted detections.\n\nTo use in a custom service, create a new tab and link to\n* path\n\nIt is recommeded to install the flow \"Device Info\" from examples or\nhttps://github.com/pandosme/CamFlows/blob/master/flows/Device%20Info.json.\nThis flows the data that the flow stores in global.context.\n",
         "x": 380,
         "y": 60,
         "wires": []
@@ -660,7 +655,7 @@
         "z": "af0246322846fc54",
         "name": "path",
         "info": "",
-        "x": 870,
+        "x": 1090,
         "y": 160,
         "wires": []
     },
@@ -677,7 +672,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
+        "x": 380,
         "y": 480,
         "wires": [
             [
@@ -705,7 +700,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 580,
+        "x": 590,
         "y": 480,
         "wires": [
             [
@@ -726,7 +721,7 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 800,
+        "x": 810,
         "y": 480,
         "wires": [
             [
@@ -743,7 +738,7 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 1000,
+        "x": 1010,
         "y": 480,
         "wires": [
             [
@@ -771,7 +766,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1160,
+        "x": 1170,
         "y": 480,
         "wires": [
             [
@@ -802,7 +797,7 @@
             "b254e18d5b3839ef"
         ],
         "uncaught": false,
-        "x": 340,
+        "x": 350,
         "y": 560,
         "wires": [
             [
@@ -830,7 +825,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
+        "x": 540,
         "y": 600,
         "wires": [
             [
@@ -868,7 +863,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 710,
+        "x": 720,
         "y": 600,
         "wires": [
             [
@@ -888,7 +883,7 @@
         "createDir": true,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 930,
+        "x": 940,
         "y": 600,
         "wires": [
             []
@@ -913,7 +908,7 @@
         "links": [
             "c5f94431136c8964"
         ],
-        "x": 1195,
+        "x": 1065,
         "y": 340,
         "wires": []
     },
@@ -1236,16 +1231,6 @@
         ]
     },
     {
-        "id": "78afca6bf5724457",
-        "type": "comment",
-        "z": "af0246322846fc54",
-        "name": "Updated",
-        "info": "",
-        "x": 1100,
-        "y": 340,
-        "wires": []
-    },
-    {
         "id": "d5f8432d308fd267",
         "type": "comment",
         "z": "af0246322846fc54",
@@ -1285,17 +1270,7 @@
         "links": [
             "b70e91df7fc2dff6"
         ],
-        "x": 1195,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "e93d3755c1a9aa23",
-        "type": "comment",
-        "z": "af0246322846fc54",
-        "name": "Start",
-        "info": "",
-        "x": 1090,
+        "x": 1065,
         "y": 300,
         "wires": []
     },
@@ -1467,7 +1442,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
+        "x": 490,
         "y": 300,
         "wires": [
             [

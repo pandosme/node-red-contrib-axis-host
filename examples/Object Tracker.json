@@ -163,12 +163,12 @@
         "id": "8db2625546c62904",
         "type": "link out",
         "z": "07af90e564fe3f82",
-        "name": "Tracker",
+        "name": "tracker",
         "mode": "link",
         "links": [
             "69a5fa5730be7a7e"
         ],
-        "x": 985,
+        "x": 1195,
         "y": 160,
         "wires": []
     },
@@ -227,7 +227,7 @@
         "z": "07af90e564fe3f82",
         "name": "tracker",
         "info": "",
-        "x": 870,
+        "x": 1090,
         "y": 160,
         "wires": []
     },
@@ -240,7 +240,7 @@
         "links": [
             "bda8da910c99e199"
         ],
-        "x": 1405,
+        "x": 1435,
         "y": 480,
         "wires": []
     },
@@ -267,7 +267,7 @@
         "z": "07af90e564fe3f82",
         "name": "Init",
         "info": "",
-        "x": 1320,
+        "x": 1330,
         "y": 480,
         "wires": []
     },
@@ -280,7 +280,7 @@
         "links": [
             "fe5bb5bd871d4516"
         ],
-        "x": 1195,
+        "x": 1075,
         "y": 340,
         "wires": []
     },
@@ -367,16 +367,6 @@
         "wires": []
     },
     {
-        "id": "54ed5b6092cf8063",
-        "type": "comment",
-        "z": "07af90e564fe3f82",
-        "name": "Updated",
-        "info": "",
-        "x": 1100,
-        "y": 340,
-        "wires": []
-    },
-    {
         "id": "1bd81a40cad271a8",
         "type": "comment",
         "z": "07af90e564fe3f82",
@@ -395,17 +385,7 @@
         "links": [
             "6afa716855e83546"
         ],
-        "x": 1195,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "5764721e07f4f919",
-        "type": "comment",
-        "z": "07af90e564fe3f82",
-        "name": "Start",
-        "info": "",
-        "x": 1090,
+        "x": 1075,
         "y": 300,
         "wires": []
     },
@@ -612,11 +592,6 @@
             {
                 "label": "Human",
                 "value": "Human",
-                "type": "str"
-            },
-            {
-                "label": "Face",
-                "value": "Face",
                 "type": "str"
             },
             {
@@ -1060,7 +1035,7 @@
         "z": "07af90e564fe3f82",
         "g": "96026c53581e5918",
         "name": "Filter",
-        "func": "var settings = flow.get(\"settings\");\nif(!settings)\n    return;\n\nvar trackers = flow.get(\"trackers\") || {};\n\nmsg.changes = null;\n\nif( msg.payload.active === false ) {\n    if( !trackers.hasOwnProperty(msg.payload.id) )\n        return;\n    delete trackers[msg.payload.id];\n    flow.set(\"trackers\",trackers);\n    node.send(msg);\n    return;\n}\n\nif( trackers.hasOwnProperty(msg.payload.id) )\n    return msg;\n\nvar ignore = false;\n\nif( msg.payload.distance < settings.distance) \n    ignore = true;\n\nif( !ignore && msg.payload.confidnece < settings.confidence )\n    ignore = true;\n\nif( msg.payload.age < settings.age)  \n    ignore = true;\n\nvar classMatch = false;\nsettings.classes.forEach(function(element) {\n    if( element === msg.payload.class )\n        classMatch = true;\n});\n\nif(!classMatch)\n    ignore = true;\n\nif (msg.payload.cx < settings.aoi.x1 || \n    msg.payload.cx > settings.aoi.x2 ||\n    msg.payload.cy < settings.aoi.y1 ||\n    msg.payload.cy > settings.aoi.y2)\n       ignore = true;\n\nif( ignore  )\n    return;\n\n trackers[msg.payload.id] = msg.payload;\n flow.set(\"trackers\",trackers);\n\nreturn msg;",
+        "func": "var settings = flow.get(\"settings\");\nif(!settings)\n    return;\n\nvar trackers = flow.get(\"trackers\") || {};\n\nmsg.changes = null;\n\nif( msg.payload.active === false ) {\n    if( !trackers.hasOwnProperty(msg.payload.id) )\n        return;\n    delete trackers[msg.payload.id];\n    flow.set(\"trackers\",trackers);\n    node.send(msg);\n    return;\n}\n\nif( trackers.hasOwnProperty(msg.payload.id) )\n    return msg;\n\nvar ignore = false;\n\nif( msg.payload.distance < settings.distance) \n    ignore = true;\n\nif( !ignore && msg.payload.confidnece < settings.confidence )\n    ignore = true;\n\nif( msg.payload.age < settings.age)  \n    ignore = true;\n\nvar classMatch = false;\nsettings.classes.forEach(function(element) {\n    if( element === msg.payload.class )\n        classMatch = true;\n    if (element === \"Head\" && msg.payload.class === \"Face\")\n        classMatch = true;\n});\n\nif(!classMatch)\n    ignore = true;\n\nif (msg.payload.cx < settings.aoi.x1 || \n    msg.payload.cx > settings.aoi.x2 ||\n    msg.payload.cy < settings.aoi.y1 ||\n    msg.payload.cy > settings.aoi.y2)\n       ignore = true;\n\nif( ignore  )\n    return;\n\n trackers[msg.payload.id] = msg.payload;\n flow.set(\"trackers\",trackers);\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1449,7 +1424,7 @@
         "type": "comment",
         "z": "07af90e564fe3f82",
         "name": "Version 2.1 [README]",
-        "info": "It is recommeded to install the flow \"Device Info\" from examples or\nhttps://github.com/pandosme/CamFlows/blob/master/flows/Device%20Info.json.\nThis flows the data that the flow stores in global.context.\n",
+        "info": "This node provides Object Trackers.  Data is produces when object has moved a certain distance.\n\nCommon use cases are:\n* Automation\n\nThe Dashboard nodes provides a way for installers and administrators to filter out unwanted detections.\n\nTo use in a custom service, create a new tab and link to\n* tracker\n\nIt is recommeded to install the flow \"Device Info\" from examples or\nhttps://github.com/pandosme/CamFlows/blob/master/flows/Device%20Info.json.\nThis flows the data that the flow stores in global.context.\n",
         "x": 380,
         "y": 60,
         "wires": []
