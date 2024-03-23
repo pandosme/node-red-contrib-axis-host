@@ -16,6 +16,9 @@ Analytics data of objects detected by the camera including bounding box and clas
 
 ## Change log
 
+### 1.3.6
+- Updated examples
+
 ### 1.3.5
 - Fixed flaws in examples
 
