@@ -634,6 +634,11 @@
                 "label": "License plate",
                 "value": "License plate",
                 "type": "str"
+            },
+            {
+                "label": "Animal",
+                "value": "Animal",
+                "type": "str"
             }
         ],
         "payload": "",
@@ -1424,7 +1429,7 @@
         "id": "3306cbcb0a89aad1",
         "type": "comment",
         "z": "9676460ef60f5c6c",
-        "name": "Version 2.1 [README]",
+        "name": "Version 2.2 [README]",
         "info": "This node provides Object Trackers.  Data is produces when object has moved a certain distance.\n\nCommon use cases are:\n* Automation\n\nThe Dashboard nodes provides a way for installers and administrators to filter out unwanted detections.\n\nTo use in a custom service, create a new tab and link to\n* tracker\n\nIt is recommeded to install the flow \"Device Info\" from examples or\nhttps://github.com/pandosme/CamFlows/blob/master/flows/Device%20Info.json.\nThis flows the data that the flow stores in global.context.\n",
         "x": 380,
         "y": 60,

@@ -1,6 +1,6 @@
 [
     {
-        "id": "3f9fbf9fc83bc7d6",
+        "id": "0a89d0d74136ced3",
         "type": "tab",
         "label": "Object Detections",
         "disabled": false,
@@ -8,9 +8,9 @@
         "env": []
     },
     {
-        "id": "f7dde0e372b88bf8",
+        "id": "83da97b10bf1e5f4",
         "type": "group",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Settings",
         "style": {
             "stroke": "#000000",
@@ -19,30 +19,30 @@
             "color": "#000000"
         },
         "nodes": [
-            "cdc605c7f7dde43e",
-            "83735be0e9d78bc7",
-            "2d332fe7d0e20f06",
-            "b05ba25a2a473fea",
-            "ae7eadaa49a34761",
-            "d6fe682dc2b9c6e6",
-            "f43bf9577ea0da76",
-            "69bdbe0cfda4303b",
-            "5828ec6601beb7b6",
-            "64b28fd44c923071",
-            "0428ab2696b0a4e2",
-            "9591cbb2fee56712",
-            "f1834d1e5829e0c6",
-            "e505d94485c7ea0e",
-            "19af0fdf408294e6",
-            "4cdadd28d820d5a3",
-            "4b5e463082725f71",
-            "69a0f7d7ee9f79f4",
-            "ba4c5b53b341fbde",
-            "70426b6d99f8f877",
-            "c5cf63b0b72fb442",
-            "93ada226d1366dcb",
-            "898e617b28fcac46",
-            "e5d7dd53e212efa7"
+            "cb23453a5e12259f",
+            "a8971b23c93d8aee",
+            "adeb4057cf10a72f",
+            "118583acbdd5ca24",
+            "dd499db5fd268d4a",
+            "ece8d9dedf6561a7",
+            "783cad4bb20aedfb",
+            "06f7093fc484ad5c",
+            "f7ce4b0b2f5c55f7",
+            "29c934a0fa89ee97",
+            "013e4dde2d110584",
+            "c25f92b120c07a92",
+            "6bd122c48bb54d57",
+            "78e9799aafa843c4",
+            "073e64c8d7ac2751",
+            "3dc9cc57350a9cd8",
+            "a799c75eb6f16b33",
+            "7fd77b1366ad158b",
+            "bc97fa5813c08edb",
+            "61ebc7a89c3faf96",
+            "de428fb389c88793",
+            "1c49819326737206",
+            "a82ff62ca8c0e9ef",
+            "14113a378184f62a"
         ],
         "x": 274,
         "y": 979,
@@ -50,9 +50,9 @@
         "h": 422
     },
     {
-        "id": "0290d3ecc4e84233",
+        "id": "0836001e0ed9ef2d",
         "type": "group",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Output",
         "style": {
             "stroke": "#000000",
@@ -61,11 +61,11 @@
             "color": "#000000"
         },
         "nodes": [
-            "2ad717d740ca2244",
-            "dea53715435964d0",
-            "ccf4ab6299e103f9",
-            "2fd4b1d80e7acec3",
-            "6816c4835ad9ae7f"
+            "51beda30390d51b9",
+            "8cd7fba6b2681b97",
+            "889adcb59b46b494",
+            "c6f1a860938129a5",
+            "d2615f64bc99e92d"
         ],
         "x": 274,
         "y": 139,
@@ -73,9 +73,9 @@
         "h": 162
     },
     {
-        "id": "766bfdf553109fb9",
+        "id": "571dea40ec98a709",
         "type": "group",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Dashboard",
         "style": {
             "stroke": "#000000",
@@ -84,12 +84,12 @@
             "color": "#000000"
         },
         "nodes": [
-            "3bc1dc58ceca337c",
-            "2e24a6a118370c0d",
-            "274d6ac4a4ac58d0",
-            "c3f20841277e98e2",
-            "f1761832d81305e2",
-            "e2d189ae490bc365"
+            "cbefc3af5fa0a578",
+            "20d1dba22a0a73c0",
+            "ed154d4a94943396",
+            "c094834c037ddc52",
+            "2b0dac76155de7a4",
+            "298a0ff6736e9b92"
         ],
         "x": 274,
         "y": 359,
@@ -97,9 +97,9 @@
         "h": 262
     },
     {
-        "id": "8b3e0f497cf37dd6",
+        "id": "617351a0bddccdbd",
         "type": "group",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Initialization",
         "style": {
             "stroke": "#000000",
@@ -108,16 +108,16 @@
             "color": "#000000"
         },
         "nodes": [
-            "7170f64f2c031b86",
-            "dcee1590a75bfb11",
-            "6af2a1b6be084f8b",
-            "532c07dfbb29a904",
-            "1bdf4a743e5c848e",
-            "11158dfd76d6c549",
-            "a386f3625a3b3a68",
-            "29d182aa8e594864",
-            "9d63bd528379b58c",
-            "974b08bd947402e0"
+            "c260c2b5ac38f314",
+            "2727882bddfa07a6",
+            "9ce1c98565d107d2",
+            "704108ed9fd672ee",
+            "4dae2833527a1579",
+            "0cc29e5804145436",
+            "0aa237d24afb7a9c",
+            "3d5de463c15bc60f",
+            "448f551b57947f68",
+            "ebd3d68ad5dd83a2"
         ],
         "x": 274,
         "y": 679,
@@ -125,9 +125,9 @@
         "h": 202
     },
     {
-        "id": "8134229cbfc4ff1a",
+        "id": "24ae11c441481abc",
         "type": "group",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Exceptions",
         "style": {
             "stroke": "#000000",
@@ -136,10 +136,10 @@
             "color": "#000000"
         },
         "nodes": [
-            "aff39c1e058d8524",
-            "f592af23793ef5cc",
-            "2dfadf22db39c7a3",
-            "8feb3dc413629483"
+            "25d329200dc9e3c6",
+            "04d017d8d6fabfa5",
+            "3410b77701b09ad0",
+            "db01df28cd414ffd"
         ],
         "x": 274,
         "y": 1459,
@@ -147,52 +147,52 @@
         "h": 142
     },
     {
-        "id": "f1834d1e5829e0c6",
+        "id": "6bd122c48bb54d57",
         "type": "junction",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "x": 1260,
         "y": 1020,
         "wires": [
             [
-                "03d4d4ea47ae1a22"
+                "e2516bfd948420de"
             ]
         ]
     },
     {
-        "id": "4b5e463082725f71",
+        "id": "a799c75eb6f16b33",
         "type": "junction",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "x": 1020,
         "y": 1320,
         "wires": [
             [
-                "9b27de4068a8df1a"
+                "f18cbb8ba1e01f00"
             ]
         ]
     },
     {
-        "id": "ab30931705df01ba",
+        "id": "452cf95a5d5bebd5",
         "type": "link out",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "detections",
         "mode": "link",
         "links": [
-            "3e6d968759419b65"
+            "ec62c3ca1fc2c21c"
         ],
         "x": 1415,
         "y": 180,
         "wires": []
     },
     {
-        "id": "3e6d968759419b65",
+        "id": "ec62c3ca1fc2c21c",
         "type": "link in",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Visualize",
         "links": [
-            "9b27de4068a8df1a",
-            "ab30931705df01ba",
+            "f18cbb8ba1e01f00",
+            "452cf95a5d5bebd5",
             "ef266590d130a22e",
             "89fdf8a12a15475d"
         ],
@@ -200,24 +200,24 @@
         "y": 480,
         "wires": [
             [
-                "f1761832d81305e2"
+                "2b0dac76155de7a4"
             ]
         ]
     },
     {
-        "id": "79a4159d78d89bab",
+        "id": "656e4e70035359fc",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
-        "name": "Version 1.4 [README]   ",
+        "z": "0a89d0d74136ced3",
+        "name": "Version 1.5 [README]   ",
         "info": "This node provides Object Detection Analytics Data.\nCommon use cases are:\n* Presence transitions\n* Queue management\n\nThe Dashboard nodes provides a way for installers and administrators to filter out unwanted detections.\n\nTo use in a custom service, creat a new tab and link to one or more\n* detections\n* counter\n* state\n* exceptions\n\n\nNOTE: This flow requires the \"Device Info\" flow\" from examples or\nhttps://github.com/pandosme/CamFlows/blob/master/flows/Device%20Info.json\nThis flow stores information about the camera in global context.",
         "x": 380,
         "y": 60,
         "wires": []
     },
     {
-        "id": "e45c5aabce7eda11",
+        "id": "f34220426e563f91",
         "type": "inject",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "On start",
         "props": [
             {
@@ -239,14 +239,14 @@
         "y": 760,
         "wires": [
             [
-                "7170f64f2c031b86"
+                "c260c2b5ac38f314"
             ]
         ]
     },
     {
-        "id": "153a7ecc8e82ec60",
+        "id": "cd129cbe8a0c2299",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "detections",
         "info": "",
         "x": 1320,
@@ -254,39 +254,39 @@
         "wires": []
     },
     {
-        "id": "c65096c362c8fef0",
+        "id": "5c34711862fe1b51",
         "type": "link out",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Initialized",
         "mode": "link",
         "links": [
-            "338c26761a633ad5"
+            "467cbf0ad52ad104"
         ],
         "x": 1495,
         "y": 720,
         "wires": []
     },
     {
-        "id": "a2dd5368205501eb",
+        "id": "afe7c2e6ecb7526d",
         "type": "link in",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Update Settings",
         "links": [
-            "7cd22aae86dc94e6",
-            "03d4d4ea47ae1a22"
+            "8074869d6932c396",
+            "e2516bfd948420de"
         ],
         "x": 105,
         "y": 840,
         "wires": [
             [
-                "a386f3625a3b3a68"
+                "0aa237d24afb7a9c"
             ]
         ]
     },
     {
-        "id": "9768299b6c423589",
+        "id": "bf2b092a30e9c182",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Init",
         "info": "",
         "x": 1390,
@@ -294,13 +294,13 @@
         "wires": []
     },
     {
-        "id": "7cd22aae86dc94e6",
+        "id": "8074869d6932c396",
         "type": "link out",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "link out 24",
         "mode": "link",
         "links": [
-            "a2dd5368205501eb",
+            "afe7c2e6ecb7526d",
             "7629d04ef4c084e4"
         ],
         "x": 1185,
@@ -308,9 +308,9 @@
         "wires": []
     },
     {
-        "id": "907dc538e04b72d3",
+        "id": "dfc26f25cd05718a",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Update",
         "info": "",
         "x": 190,
@@ -318,30 +318,30 @@
         "wires": []
     },
     {
-        "id": "338c26761a633ad5",
+        "id": "467cbf0ad52ad104",
         "type": "link in",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "link in 33",
         "links": [
-            "c65096c362c8fef0",
+            "5c34711862fe1b51",
             "de8a5e5e2cb27a9b"
         ],
         "x": 105,
         "y": 1020,
         "wires": [
             [
-                "69bdbe0cfda4303b"
+                "06f7093fc484ad5c"
             ]
         ]
     },
     {
-        "id": "03d4d4ea47ae1a22",
+        "id": "e2516bfd948420de",
         "type": "link out",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Settings updated",
         "mode": "link",
         "links": [
-            "a2dd5368205501eb",
+            "afe7c2e6ecb7526d",
             "7629d04ef4c084e4"
         ],
         "x": 1455,
@@ -349,9 +349,9 @@
         "wires": []
     },
     {
-        "id": "7c3d97fa86378efe",
+        "id": "d3041ad45084a643",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Init",
         "info": "",
         "x": 190,
@@ -359,9 +359,9 @@
         "wires": []
     },
     {
-        "id": "f8b7789157f8adbb",
+        "id": "47067daf5469f013",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Updated",
         "info": "",
         "x": 1360,
@@ -369,9 +369,9 @@
         "wires": []
     },
     {
-        "id": "d02a928ebd3c8562",
+        "id": "511a59af70171edc",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Visualize",
         "info": "",
         "x": 200,
@@ -379,22 +379,22 @@
         "wires": []
     },
     {
-        "id": "9b27de4068a8df1a",
+        "id": "f18cbb8ba1e01f00",
         "type": "link out",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "aoi",
         "mode": "link",
         "links": [
-            "3e6d968759419b65"
+            "ec62c3ca1fc2c21c"
         ],
         "x": 1455,
         "y": 1320,
         "wires": []
     },
     {
-        "id": "b9b711f323541307",
+        "id": "c1e2c96c926b0e26",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Updated",
         "info": "",
         "x": 1090,
@@ -402,9 +402,9 @@
         "wires": []
     },
     {
-        "id": "4f656760fbe54ff5",
+        "id": "916f73b13a5be922",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Visualize",
         "info": "",
         "x": 1360,
@@ -412,29 +412,29 @@
         "wires": []
     },
     {
-        "id": "f857d9d446b150f3",
+        "id": "7e8235d30e289042",
         "type": "link in",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "link in 34",
         "links": [
-            "6d2d1062de721a60"
+            "7ca5913a2ca0b420"
         ],
         "x": 105,
         "y": 720,
         "wires": [
             [
-                "7170f64f2c031b86"
+                "c260c2b5ac38f314"
             ]
         ]
     },
     {
-        "id": "6d2d1062de721a60",
+        "id": "7ca5913a2ca0b420",
         "type": "link out",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Start",
         "mode": "link",
         "links": [
-            "f857d9d446b150f3",
+            "7e8235d30e289042",
             "8b80d877c2d860b0"
         ],
         "x": 1175,
@@ -442,9 +442,9 @@
         "wires": []
     },
     {
-        "id": "eaee0d0e56b96eed",
+        "id": "6ae72aa89a818c01",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Start",
         "info": "",
         "x": 1090,
@@ -452,9 +452,9 @@
         "wires": []
     },
     {
-        "id": "198d4e2d432f2cc4",
+        "id": "da85f18864e86fec",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Start",
         "info": "",
         "x": 190,
@@ -462,10 +462,10 @@
         "wires": []
     },
     {
-        "id": "cdc605c7f7dde43e",
+        "id": "cb23453a5e12259f",
         "type": "ui_numeric",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "label": "Age",
         "tooltip": "",
@@ -486,15 +486,15 @@
         "y": 1100,
         "wires": [
             [
-                "2d332fe7d0e20f06"
+                "adeb4057cf10a72f"
             ]
         ]
     },
     {
-        "id": "83735be0e9d78bc7",
+        "id": "a8971b23c93d8aee",
         "type": "ui_numeric",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "label": "Distance",
         "tooltip": "",
@@ -515,15 +515,15 @@
         "y": 1140,
         "wires": [
             [
-                "b05ba25a2a473fea"
+                "118583acbdd5ca24"
             ]
         ]
     },
     {
-        "id": "2d332fe7d0e20f06",
+        "id": "adeb4057cf10a72f",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "rules": [
             {
@@ -543,15 +543,15 @@
         "y": 1100,
         "wires": [
             [
-                "f1834d1e5829e0c6"
+                "6bd122c48bb54d57"
             ]
         ]
     },
     {
-        "id": "b05ba25a2a473fea",
+        "id": "118583acbdd5ca24",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "rules": [
             {
@@ -571,15 +571,15 @@
         "y": 1140,
         "wires": [
             [
-                "f1834d1e5829e0c6"
+                "6bd122c48bb54d57"
             ]
         ]
     },
     {
-        "id": "ae7eadaa49a34761",
+        "id": "dd499db5fd268d4a",
         "type": "ui_dropdown",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "Classes",
         "label": "Classes",
         "tooltip": "",
@@ -635,6 +635,11 @@
                 "label": "License plate",
                 "value": "License plate",
                 "type": "str"
+            },
+            {
+                "label": "Animal",
+                "value": "Animal",
+                "type": "str"
             }
         ],
         "payload": "",
@@ -645,15 +650,15 @@
         "y": 1060,
         "wires": [
             [
-                "d6fe682dc2b9c6e6"
+                "ece8d9dedf6561a7"
             ]
         ]
     },
     {
-        "id": "d6fe682dc2b9c6e6",
+        "id": "ece8d9dedf6561a7",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "rules": [
             {
@@ -674,15 +679,15 @@
         "y": 1060,
         "wires": [
             [
-                "f1834d1e5829e0c6"
+                "6bd122c48bb54d57"
             ]
         ]
     },
     {
-        "id": "f43bf9577ea0da76",
+        "id": "783cad4bb20aedfb",
         "type": "ui_dropdown",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "Confidence",
         "label": "Min confidence",
         "tooltip": "",
@@ -748,15 +753,15 @@
         "y": 1020,
         "wires": [
             [
-                "69a0f7d7ee9f79f4"
+                "7fd77b1366ad158b"
             ]
         ]
     },
     {
-        "id": "69bdbe0cfda4303b",
+        "id": "06f7093fc484ad5c",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "rules": [
             {
@@ -776,20 +781,20 @@
         "y": 1020,
         "wires": [
             [
-                "5828ec6601beb7b6",
-                "64b28fd44c923071",
-                "0428ab2696b0a4e2",
-                "9591cbb2fee56712",
-                "ba4c5b53b341fbde",
-                "93ada226d1366dcb"
+                "f7ce4b0b2f5c55f7",
+                "29c934a0fa89ee97",
+                "013e4dde2d110584",
+                "c25f92b120c07a92",
+                "bc97fa5813c08edb",
+                "1c49819326737206"
             ]
         ]
     },
     {
-        "id": "5828ec6601beb7b6",
+        "id": "f7ce4b0b2f5c55f7",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "confidence",
         "rules": [
             {
@@ -809,15 +814,15 @@
         "y": 1020,
         "wires": [
             [
-                "f43bf9577ea0da76"
+                "783cad4bb20aedfb"
             ]
         ]
     },
     {
-        "id": "64b28fd44c923071",
+        "id": "29c934a0fa89ee97",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "classes",
         "rules": [
             {
@@ -837,15 +842,15 @@
         "y": 1060,
         "wires": [
             [
-                "ae7eadaa49a34761"
+                "dd499db5fd268d4a"
             ]
         ]
     },
     {
-        "id": "0428ab2696b0a4e2",
+        "id": "013e4dde2d110584",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "age",
         "rules": [
             {
@@ -865,15 +870,15 @@
         "y": 1100,
         "wires": [
             [
-                "cdc605c7f7dde43e"
+                "cb23453a5e12259f"
             ]
         ]
     },
     {
-        "id": "9591cbb2fee56712",
+        "id": "c25f92b120c07a92",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "distance",
         "rules": [
             {
@@ -893,15 +898,15 @@
         "y": 1140,
         "wires": [
             [
-                "83735be0e9d78bc7"
+                "a8971b23c93d8aee"
             ]
         ]
     },
     {
-        "id": "e505d94485c7ea0e",
+        "id": "78e9799aafa843c4",
         "type": "ui_button",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "group": "fb7dc356b5701bac",
         "order": 6,
@@ -922,15 +927,15 @@
         "y": 1320,
         "wires": [
             [
-                "19af0fdf408294e6"
+                "073e64c8d7ac2751"
             ]
         ]
     },
     {
-        "id": "19af0fdf408294e6",
+        "id": "073e64c8d7ac2751",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "rules": [
             {
@@ -957,15 +962,15 @@
         "y": 1320,
         "wires": [
             [
-                "4b5e463082725f71"
+                "a799c75eb6f16b33"
             ]
         ]
     },
     {
-        "id": "4cdadd28d820d5a3",
+        "id": "3dc9cc57350a9cd8",
         "type": "ui_button",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "group": "fb7dc356b5701bac",
         "order": 8,
@@ -986,15 +991,15 @@
         "y": 1360,
         "wires": [
             [
-                "4b5e463082725f71"
+                "a799c75eb6f16b33"
             ]
         ]
     },
     {
-        "id": "69a0f7d7ee9f79f4",
+        "id": "7fd77b1366ad158b",
         "type": "function",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "set flow.settings.confidence",
         "func": "var settings = flow.get(\"settings\");\nsettings.confidence = parseInt(msg.payload);\nflow.set(\"settings\", settings);\nreturn msg;",
         "outputs": 1,
@@ -1007,15 +1012,15 @@
         "y": 1020,
         "wires": [
             [
-                "f1834d1e5829e0c6"
+                "6bd122c48bb54d57"
             ]
         ]
     },
     {
-        "id": "2ad717d740ca2244",
+        "id": "51beda30390d51b9",
         "type": "Objects",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "0290d3ecc4e84233",
+        "z": "0a89d0d74136ced3",
+        "g": "0836001e0ed9ef2d",
         "version": "2",
         "output": "1",
         "classFilter": "-1",
@@ -1029,15 +1034,15 @@
         "y": 180,
         "wires": [
             [
-                "dea53715435964d0"
+                "8cd7fba6b2681b97"
             ]
         ]
     },
     {
-        "id": "dea53715435964d0",
+        "id": "8cd7fba6b2681b97",
         "type": "function",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "0290d3ecc4e84233",
+        "z": "0a89d0d74136ced3",
+        "g": "0836001e0ed9ef2d",
         "name": "Detections filter",
         "func": "\nvar settings = flow.get(\"settings\");\nif(!settings)\n    return;\n\nvar list = [];\n\nmsg.payload.forEach( function(item){\n    if (item.confidence < settings.confidence)\n        return;\n    if( item.age < settings.age)\n        return;\n    var dx = (item.cx - item.bx);\n    dx = dx * dx;\n    var dy = (item.cy - item.by);\n    dy = dy * dy;\n    item.distance = parseInt(Math.sqrt(dx+dy)/10);\n    if( item.distance < settings.distance )\n        return;\n\n    var classMatch = false;\n    settings.classes.forEach(function (element) {\n        if (element === item.class)\n            classMatch = true;\n        if( item.class === \"Face\" && element === \"Head\")\n            classMatch = true;\n    });\n    if (!classMatch)\n        return;\n    if( settings.aoi ) {\n        if( item.cx < settings.aoi.x1 )\n            return;\n        if (item.cx > settings.aoi.x2)\n            return;\n        if (item.cy < settings.aoi.y1)\n            return;\n        if (item.cy > settings.aoi.y2)\n            return;\n    }            \n    list.push(item);\n});\n\n\nmsg.payload = list;\n\nreturn msg;\n",
         "outputs": 1,
@@ -1050,17 +1055,17 @@
         "y": 180,
         "wires": [
             [
-                "ab30931705df01ba",
-                "ccf4ab6299e103f9",
-                "2fd4b1d80e7acec3"
+                "452cf95a5d5bebd5",
+                "889adcb59b46b494",
+                "c6f1a860938129a5"
             ]
         ]
     },
     {
-        "id": "3bc1dc58ceca337c",
+        "id": "cbefc3af5fa0a578",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "766bfdf553109fb9",
+        "z": "0a89d0d74136ced3",
+        "g": "571dea40ec98a709",
         "name": "",
         "rules": [
             {
@@ -1080,15 +1085,15 @@
         "y": 480,
         "wires": [
             [
-                "7cd22aae86dc94e6"
+                "8074869d6932c396"
             ]
         ]
     },
     {
-        "id": "2e24a6a118370c0d",
+        "id": "20d1dba22a0a73c0",
         "type": "ui_button",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "766bfdf553109fb9",
+        "z": "0a89d0d74136ced3",
+        "g": "571dea40ec98a709",
         "name": "",
         "group": "5f090a4ecb012945",
         "order": 1,
@@ -1109,16 +1114,16 @@
         "y": 400,
         "wires": [
             [
-                "6d2d1062de721a60",
-                "e2d189ae490bc365"
+                "7ca5913a2ca0b420",
+                "298a0ff6736e9b92"
             ]
         ]
     },
     {
-        "id": "7170f64f2c031b86",
+        "id": "c260c2b5ac38f314",
         "type": "function",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "Default settings",
         "func": "msg.payload = {\n    service: \"ObjectDetections\",\n    aoi: {\n        id: \"aoi\",\n        x1: 200,\n        y1: 200,\n        x2: 800,\n        y2: 800\n    },\n    age: 2,\n    distance: 10,\n    confidence: 30,\n    classes: [\"Human\", \"Car\"],\n    timeout: 5,\n    threshold: 1\n}\n\nreturn msg;\n",
         "outputs": 1,
@@ -1131,15 +1136,15 @@
         "y": 720,
         "wires": [
             [
-                "dcee1590a75bfb11"
+                "2727882bddfa07a6"
             ]
         ]
     },
     {
-        "id": "dcee1590a75bfb11",
+        "id": "2727882bddfa07a6",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "flow.settings",
         "rules": [
             {
@@ -1159,15 +1164,15 @@
         "y": 720,
         "wires": [
             [
-                "6af2a1b6be084f8b"
+                "9ce1c98565d107d2"
             ]
         ]
     },
     {
-        "id": "6af2a1b6be084f8b",
+        "id": "9ce1c98565d107d2",
         "type": "file in",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "",
         "filename": "sdcard/ObjectDetections.json",
         "filenameType": "str",
@@ -1180,15 +1185,15 @@
         "y": 720,
         "wires": [
             [
-                "532c07dfbb29a904"
+                "704108ed9fd672ee"
             ]
         ]
     },
     {
-        "id": "532c07dfbb29a904",
+        "id": "704108ed9fd672ee",
         "type": "json",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "",
         "property": "payload",
         "action": "",
@@ -1197,15 +1202,15 @@
         "y": 720,
         "wires": [
             [
-                "1bdf4a743e5c848e"
+                "4dae2833527a1579"
             ]
         ]
     },
     {
-        "id": "1bdf4a743e5c848e",
+        "id": "4dae2833527a1579",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "flow.settings",
         "rules": [
             {
@@ -1225,33 +1230,33 @@
         "y": 720,
         "wires": [
             [
-                "c65096c362c8fef0"
+                "5c34711862fe1b51"
             ]
         ]
     },
     {
-        "id": "11158dfd76d6c549",
+        "id": "0cc29e5804145436",
         "type": "catch",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "",
         "scope": [
-            "6af2a1b6be084f8b"
+            "9ce1c98565d107d2"
         ],
         "uncaught": false,
         "x": 350,
         "y": 800,
         "wires": [
             [
-                "a386f3625a3b3a68"
+                "0aa237d24afb7a9c"
             ]
         ]
     },
     {
-        "id": "a386f3625a3b3a68",
+        "id": "0aa237d24afb7a9c",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "flow.settings",
         "rules": [
             {
@@ -1271,15 +1276,15 @@
         "y": 840,
         "wires": [
             [
-                "974b08bd947402e0"
+                "ebd3d68ad5dd83a2"
             ]
         ]
     },
     {
-        "id": "29d182aa8e594864",
+        "id": "3d5de463c15bc60f",
         "type": "function",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "pretty",
         "func": "msg.payload = JSON.stringify(msg.payload,null,2);\nreturn msg;",
         "outputs": 1,
@@ -1292,15 +1297,15 @@
         "y": 840,
         "wires": [
             [
-                "9d63bd528379b58c"
+                "448f551b57947f68"
             ]
         ]
     },
     {
-        "id": "9d63bd528379b58c",
+        "id": "448f551b57947f68",
         "type": "file",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "",
         "filename": "sdcard/ObjectDetections.json",
         "filenameType": "str",
@@ -1315,10 +1320,10 @@
         ]
     },
     {
-        "id": "ccf4ab6299e103f9",
+        "id": "889adcb59b46b494",
         "type": "function",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "0290d3ecc4e84233",
+        "z": "0a89d0d74136ced3",
+        "g": "0836001e0ed9ef2d",
         "name": "Presence counter",
         "func": "if( msg.changes === null )\n    return;\n\nvar device = global.get(\"device\");\nif(!device) {\n    node.error(\"Missing global.device. Check Readme\",msg);\n    return;\n}\nvar settings = flow.get(\"settings\");\nif(!settings) {\n    node.error(\"Missing global.device.camera. Check Readme\",msg);\n    return;\n}\n\nvar counter = flow.get(\"detectionsCounter\") || 0;\nif( msg.payload.length === counter )\n    return;\ncounter = msg.payload.length;\nflow.set(\"detectionsCounter\",counter);\nmsg.topic = \"presence/counter/\" + device.serial;\nmsg.payload = counter;\nreturn msg;",
         "outputs": 1,
@@ -1331,15 +1336,15 @@
         "y": 220,
         "wires": [
             [
-                "41e82f8305a8e7a2"
+                "1a76e8f0e020ee80"
             ]
         ]
     },
     {
-        "id": "2fd4b1d80e7acec3",
+        "id": "c6f1a860938129a5",
         "type": "function",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "0290d3ecc4e84233",
+        "z": "0a89d0d74136ced3",
+        "g": "0836001e0ed9ef2d",
         "name": "Presence state",
         "func": "var threshold = flow.get(\"settings\").threshold || 1;\n\nif (msg.payload.length < threshold)\n    return;\n\nmsg.delay = flow.get(\"settings\").timeout * 1000;\nreturn msg;",
         "outputs": 1,
@@ -1352,15 +1357,15 @@
         "y": 260,
         "wires": [
             [
-                "6816c4835ad9ae7f"
+                "d2615f64bc99e92d"
             ]
         ]
     },
     {
-        "id": "6816c4835ad9ae7f",
+        "id": "d2615f64bc99e92d",
         "type": "trigger",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "0290d3ecc4e84233",
+        "z": "0a89d0d74136ced3",
+        "g": "0836001e0ed9ef2d",
         "name": "",
         "op1": "true",
         "op2": "false",
@@ -1378,27 +1383,27 @@
         "y": 260,
         "wires": [
             [
-                "f2db1cc6ac8e0108"
+                "e763115a275e556e"
             ]
         ]
     },
     {
-        "id": "41e82f8305a8e7a2",
+        "id": "1a76e8f0e020ee80",
         "type": "link out",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "counter",
         "mode": "link",
         "links": [
-            "5cfa81ebdf190c31"
+            "26baaa628bb804e1"
         ],
         "x": 1415,
         "y": 220,
         "wires": []
     },
     {
-        "id": "da330d31c63830e9",
+        "id": "ceebabc4e3c35f97",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "counter",
         "info": "",
         "x": 1310,
@@ -1406,10 +1411,10 @@
         "wires": []
     },
     {
-        "id": "ba4c5b53b341fbde",
+        "id": "bc97fa5813c08edb",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "timeout",
         "rules": [
             {
@@ -1429,15 +1434,15 @@
         "y": 1180,
         "wires": [
             [
-                "70426b6d99f8f877"
+                "61ebc7a89c3faf96"
             ]
         ]
     },
     {
-        "id": "70426b6d99f8f877",
+        "id": "61ebc7a89c3faf96",
         "type": "ui_numeric",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "label": "Presence transition",
         "tooltip": "",
@@ -1458,15 +1463,15 @@
         "y": 1180,
         "wires": [
             [
-                "c5cf63b0b72fb442"
+                "de428fb389c88793"
             ]
         ]
     },
     {
-        "id": "c5cf63b0b72fb442",
+        "id": "de428fb389c88793",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "rules": [
             {
@@ -1486,15 +1491,15 @@
         "y": 1180,
         "wires": [
             [
-                "f1834d1e5829e0c6"
+                "6bd122c48bb54d57"
             ]
         ]
     },
     {
-        "id": "274d6ac4a4ac58d0",
+        "id": "ed154d4a94943396",
         "type": "ui_text",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "766bfdf553109fb9",
+        "z": "0a89d0d74136ced3",
+        "g": "571dea40ec98a709",
         "group": "5f090a4ecb012945",
         "order": 4,
         "width": "4",
@@ -1513,26 +1518,26 @@
         "wires": []
     },
     {
-        "id": "5cfa81ebdf190c31",
+        "id": "26baaa628bb804e1",
         "type": "link in",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "link in 36",
         "links": [
-            "41e82f8305a8e7a2",
+            "1a76e8f0e020ee80",
             "3ecb626b56361038"
         ],
         "x": 105,
         "y": 540,
         "wires": [
             [
-                "274d6ac4a4ac58d0"
+                "ed154d4a94943396"
             ]
         ]
     },
     {
-        "id": "312c5207b9371009",
+        "id": "f1c113e461f5ec86",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "Counter",
         "info": "",
         "x": 210,
@@ -1540,25 +1545,25 @@
         "wires": []
     },
     {
-        "id": "791d4108e767e78b",
+        "id": "63506fab7f460800",
         "type": "link in",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "link in 37",
         "links": [
-            "f2db1cc6ac8e0108"
+            "e763115a275e556e"
         ],
         "x": 105,
         "y": 580,
         "wires": [
             [
-                "c3f20841277e98e2"
+                "c094834c037ddc52"
             ]
         ]
     },
     {
-        "id": "cb80e71deef49ee7",
+        "id": "79b5057a86b8ace5",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "State",
         "info": "",
         "x": 210,
@@ -1566,10 +1571,10 @@
         "wires": []
     },
     {
-        "id": "c3f20841277e98e2",
+        "id": "c094834c037ddc52",
         "type": "ui_text",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "766bfdf553109fb9",
+        "z": "0a89d0d74136ced3",
+        "g": "571dea40ec98a709",
         "group": "5f090a4ecb012945",
         "order": 4,
         "width": "4",
@@ -1588,13 +1593,13 @@
         "wires": []
     },
     {
-        "id": "f2db1cc6ac8e0108",
+        "id": "e763115a275e556e",
         "type": "link out",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "state",
         "mode": "link",
         "links": [
-            "791d4108e767e78b",
+            "63506fab7f460800",
             "8c93538ef61c66b4",
             "4ec48c6f57b6de7b"
         ],
@@ -1603,9 +1608,9 @@
         "wires": []
     },
     {
-        "id": "7e1ecbbe96534f48",
+        "id": "9b9452df6fa59c2a",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "state",
         "info": "",
         "x": 1310,
@@ -1613,10 +1618,10 @@
         "wires": []
     },
     {
-        "id": "aff39c1e058d8524",
+        "id": "25d329200dc9e3c6",
         "type": "catch",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8134229cbfc4ff1a",
+        "z": "0a89d0d74136ced3",
+        "g": "24ae11c441481abc",
         "name": "",
         "scope": null,
         "uncaught": true,
@@ -1624,16 +1629,16 @@
         "y": 1500,
         "wires": [
             [
-                "f592af23793ef5cc",
-                "2dfadf22db39c7a3"
+                "04d017d8d6fabfa5",
+                "3410b77701b09ad0"
             ]
         ]
     },
     {
-        "id": "f592af23793ef5cc",
+        "id": "04d017d8d6fabfa5",
         "type": "function",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8134229cbfc4ff1a",
+        "z": "0a89d0d74136ced3",
+        "g": "24ae11c441481abc",
         "name": "Message",
         "func": "msg.topic = \"ObjectDetections\";\nmsg.payload = msg.error;\nreturn msg;",
         "outputs": 1,
@@ -1646,16 +1651,16 @@
         "y": 1500,
         "wires": [
             [
-                "8feb3dc413629483",
-                "64082d9b6f78f2a4"
+                "db01df28cd414ffd",
+                "47370be698a8ad11"
             ]
         ]
     },
     {
-        "id": "2dfadf22db39c7a3",
+        "id": "3410b77701b09ad0",
         "type": "debug",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8134229cbfc4ff1a",
+        "z": "0a89d0d74136ced3",
+        "g": "24ae11c441481abc",
         "name": "debug 198",
         "active": true,
         "tosidebar": true,
@@ -1670,10 +1675,10 @@
         "wires": []
     },
     {
-        "id": "8feb3dc413629483",
+        "id": "db01df28cd414ffd",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8134229cbfc4ff1a",
+        "z": "0a89d0d74136ced3",
+        "g": "24ae11c441481abc",
         "name": "",
         "rules": [
             {
@@ -1693,14 +1698,14 @@
         "y": 1560,
         "wires": [
             [
-                "69063184c6306f83"
+                "e56f9d2a01e08b5e"
             ]
         ]
     },
     {
-        "id": "69063184c6306f83",
+        "id": "e56f9d2a01e08b5e",
         "type": "ui_toast",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "position": "dialog",
         "displayTime": "3",
         "highlight": "",
@@ -1719,9 +1724,9 @@
         ]
     },
     {
-        "id": "0a9588f71dac5f55",
+        "id": "f2771661582ebff9",
         "type": "comment",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "exceptions",
         "info": "",
         "x": 1010,
@@ -1729,9 +1734,9 @@
         "wires": []
     },
     {
-        "id": "64082d9b6f78f2a4",
+        "id": "47370be698a8ad11",
         "type": "link out",
-        "z": "3f9fbf9fc83bc7d6",
+        "z": "0a89d0d74136ced3",
         "name": "exceptions",
         "mode": "link",
         "links": [
@@ -1742,10 +1747,10 @@
         "wires": []
     },
     {
-        "id": "93ada226d1366dcb",
+        "id": "1c49819326737206",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "threshold",
         "rules": [
             {
@@ -1765,15 +1770,15 @@
         "y": 1220,
         "wires": [
             [
-                "898e617b28fcac46"
+                "a82ff62ca8c0e9ef"
             ]
         ]
     },
     {
-        "id": "898e617b28fcac46",
+        "id": "a82ff62ca8c0e9ef",
         "type": "ui_numeric",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "label": "Presence threshold",
         "tooltip": "",
@@ -1794,15 +1799,15 @@
         "y": 1220,
         "wires": [
             [
-                "e5d7dd53e212efa7"
+                "14113a378184f62a"
             ]
         ]
     },
     {
-        "id": "e5d7dd53e212efa7",
+        "id": "14113a378184f62a",
         "type": "change",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "f7dde0e372b88bf8",
+        "z": "0a89d0d74136ced3",
+        "g": "83da97b10bf1e5f4",
         "name": "",
         "rules": [
             {
@@ -1822,15 +1827,15 @@
         "y": 1220,
         "wires": [
             [
-                "f1834d1e5829e0c6"
+                "6bd122c48bb54d57"
             ]
         ]
     },
     {
-        "id": "e2d189ae490bc365",
+        "id": "298a0ff6736e9b92",
         "type": "function",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "766bfdf553109fb9",
+        "z": "0a89d0d74136ced3",
+        "g": "571dea40ec98a709",
         "name": "Init",
         "func": "msg.topic = \"init\";\nmsg.payload = {\n    aspect: \"16:9\",\n    rotation: 0,\n    resolution: \"1280x720\"\n}\n\nvar camera = global.get(\"camera\");\nif ( camera ) {\n    msg.payload.aspect = camera.aspect;\n    msg.payload.rotation = camera.rotation;\n    msg.payload.resolution = camera.largest;\n}\n\nreturn msg;\n",
         "outputs": 1,
@@ -1843,15 +1848,15 @@
         "y": 440,
         "wires": [
             [
-                "f1761832d81305e2"
+                "2b0dac76155de7a4"
             ]
         ]
     },
     {
-        "id": "f1761832d81305e2",
+        "id": "2b0dac76155de7a4",
         "type": "ui_template",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "766bfdf553109fb9",
+        "z": "0a89d0d74136ced3",
+        "g": "571dea40ec98a709",
         "group": "5f090a4ecb012945",
         "name": "Visualization",
         "order": 6,
@@ -1867,15 +1872,15 @@
         "y": 480,
         "wires": [
             [
-                "3bc1dc58ceca337c"
+                "cbefc3af5fa0a578"
             ]
         ]
     },
     {
-        "id": "974b08bd947402e0",
+        "id": "ebd3d68ad5dd83a2",
         "type": "function",
-        "z": "3f9fbf9fc83bc7d6",
-        "g": "8b3e0f497cf37dd6",
+        "z": "0a89d0d74136ced3",
+        "g": "617351a0bddccdbd",
         "name": "Validate",
         "func": "if(!msg.payload.hasOwnProperty(\"classes\"))\n    msg.payload.classes = [\"Human\", \"Car\"];\nif(!msg.payload.hasOwnProperty(\"age\"))\n    msg.payload.age = 1;\nif(!msg.payload.hasOwnProperty(\"distance\"))\n    msg.payload.distance = 20;\nif(!msg.payload.hasOwnProperty(\"confidence\"))\n    msg.payload.confidence = 30;\nif(!msg.payload.hasOwnProperty(\"aoi\"))\n    msg.payload.aoi = {\n        x1: 200,\n        y1: 200,\n        x2: 800,\n        y2: 800\n    };\n\nflow.set(\"settings\",msg.payload);\n\nreturn msg;\n",
         "outputs": 1,
@@ -1888,7 +1893,7 @@
         "y": 840,
         "wires": [
             [
-                "29d182aa8e594864"
+                "3d5de463c15bc60f"
             ]
         ]
     },

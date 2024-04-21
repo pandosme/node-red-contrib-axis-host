@@ -172,8 +172,8 @@
         "rotation": "0",
         "cog": "0",
         "predictions": "0",
-        "attributes": "50",
-        "idle": "30",
+        "attributes": "70",
+        "idle": "60",
         "x": 380,
         "y": 160,
         "wires": [
@@ -401,6 +401,11 @@
                 "label": "License plate",
                 "value": "License plate",
                 "type": "str"
+            },
+            {
+                "label": "Animal",
+                "value": "Animal",
+                "type": "str"
             }
         ],
         "payload": "",
@@ -584,9 +589,9 @@
         "mode": "link",
         "links": [
             "67615986fce9fd9e",
-            "fb01cbd0da801fea"
+            "bc0d67d94e6e3cf0"
         ],
-        "x": 1195,
+        "x": 975,
         "y": 160,
         "wires": []
     },
@@ -614,7 +619,7 @@
         "id": "3d74fdb3b1ef26a9",
         "type": "comment",
         "z": "0ed3f78ea57ea6ea",
-        "name": "Version 2.2 [README]",
+        "name": "Version 2.3 [README]",
         "info": "This node provides Object Paths.  Data is produces when after an object is lost (left the scene) and fulfills the filters.\nThe common case is that this data is stored in a database for common use cases like\n* Object Forensic/Search\n* Counting\n* Flow heatmap\n* Dwell heatmap\n\nThe Dashboard nodes provides a way for installers and administrators to filter out unwanted detections.\n\nTo use in a custom service, create a new tab and link to\n* path\n\nIt is recommeded to install the flow \"Device Info\" from examples or\nhttps://github.com/pandosme/CamFlows/blob/master/flows/Device%20Info.json.\nThis flows the data that the flow stores in global.context.\n",
         "x": 380,
         "y": 60,
@@ -655,7 +660,7 @@
         "z": "0ed3f78ea57ea6ea",
         "name": "path",
         "info": "",
-        "x": 1090,
+        "x": 870,
         "y": 160,
         "wires": []
     },
@@ -1392,10 +1397,10 @@
         "id": "a8255de0a5c09ebd",
         "type": "link out",
         "z": "0ed3f78ea57ea6ea",
-        "name": "exceptions",
+        "name": "exception",
         "mode": "link",
         "links": [
-            "3c2ea4cc7b1c8688"
+            "62d75f5c16e43097"
         ],
         "x": 1085,
         "y": 1100,
