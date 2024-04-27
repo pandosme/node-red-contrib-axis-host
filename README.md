@@ -16,7 +16,7 @@ Analytics data of objects detected by the camera including bounding box and clas
 
 ## Change log
 
-### 1.4.0
+### 1.4.1
 - Added support for radar including examples.
 
 ### 1.3.8

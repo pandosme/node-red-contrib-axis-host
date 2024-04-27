@@ -1,0 +1,157 @@
+[
+    {
+        "id": "88bf023c2fe02b62",
+        "type": "tab",
+        "label": "Radar",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c3f46286d8406c54",
+        "type": "Objects",
+        "z": "88bf023c2fe02b62",
+        "version": "3",
+        "output": "2",
+        "classFilter": "-1",
+        "confidence": "0",
+        "rotation": "0",
+        "cog": "0",
+        "units": "2",
+        "predictions": "0",
+        "attributes": "50",
+        "idle": "0",
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "96df7d51f7cc0ac4",
+                "9a691ee47565125c"
+            ]
+        ]
+    },
+    {
+        "id": "c02a0590e375ce3f",
+        "type": "catch",
+        "z": "88bf023c2fe02b62",
+        "name": "",
+        "scope": null,
+        "uncaught": true,
+        "x": 200,
+        "y": 60,
+        "wires": [
+            [
+                "d8b208185bcc3b6b"
+            ]
+        ]
+    },
+    {
+        "id": "d8b208185bcc3b6b",
+        "type": "debug",
+        "z": "88bf023c2fe02b62",
+        "name": "Error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "96df7d51f7cc0ac4",
+        "type": "debug",
+        "z": "88bf023c2fe02b62",
+        "name": "Detections",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9a691ee47565125c",
+        "type": "function",
+        "z": "88bf023c2fe02b62",
+        "name": "Radar Tracker",
+        "func": "var trackers = flow.get(\"trackers\") || {};\nvar detections = msg.payload;\ndetections.forEach(function(item){\n    var id = item.id.toString();\n    if( !trackers.hasOwnProperty(id) ) {\n        trackers[id] = item;\n        trackers[id].px = item.x;\n        trackers[id].py = item.y;\n        msg.payload = item;\n        msg.payload.dx = item.bx - item.x;\n        msg.payload.dy = item.by - item.y;\n        node.send(msg);\n    } else {\n        var dx = trackers[id].px - item.x;\n        var dy = trackers[id].py - item.y;\n        var distance = Math.sqrt((dx*dx)+(dy*dy));\n        if( distance >= 50 ) {\n            trackers[id].px = item.x;\n            trackers[id].py = item.y;\n            msg.payload = item;\n            msg.payload.dx = item.bx - item.x;\n            msg.payload.dy = item.by - item.y;\n            node.send(msg);\n        }\n    }\n    if( item.active === false ) {\n        msg.payload = item;\n        msg.payload.dx = item.bx - item.x;\n        msg.payload.dy = item.by - item.y;\n        node.send(msg);\n        delete(trackers[id])\n    }\n});\nflow.set(\"trackers\",trackers);\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "bcf53d66aa0bfc54",
+                "8209d0c0414b98a9"
+            ]
+        ]
+    },
+    {
+        "id": "bcf53d66aa0bfc54",
+        "type": "debug",
+        "z": "88bf023c2fe02b62",
+        "name": "Tracker",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "8209d0c0414b98a9",
+        "type": "function",
+        "z": "88bf023c2fe02b62",
+        "name": "Radar Path",
+        "func": "var paths = flow.get(\"paths\") || {};\nvar tracker = msg.payload;\nvar id = tracker.id.toString();\nif( !paths.hasOwnProperty(id) ) {\n    paths[id] = {\n        id: tracker.id,\n        confidence: tracker.confidence,\n        class: tracker.class,\n        timestamp: tracker.birth,\n        age: tracker.age,\n        dx: tracker.dx,\n        dy: tracker.dy,\n        velocity: tracker.topVelocity,\n        distance: tracker.distance,\n        sampletime: tracker.timestamp,\n        dwell: 0,\n        path:[\n            {\n                x: tracker.x,\n                y: tracker.y,\n                d: 0\n            }\n        ]\n    }\n} else {\n    paths[id].confidence = tracker.confidence;\n    paths[id].class = tracker.class;\n    paths[id].age = tracker.age;\n    paths[id].dx = tracker.dx;\n    paths[id].dy = tracker.dy;\n    paths[id].distance = tracker.distance;\n    paths[id].velocity = tracker.topVelocity;\n    var duration = (tracker.timestamp - paths[id].sampletime) / 1000;\n    if( duration > paths[id].dwell )\n        paths[id].dwell = duration;\n    paths[id].sampletime = tracker.timestamp;\n    paths[id].path[paths[id].path.length-1].d = duration;\n    paths[id].path.push({\n        x: tracker.x,\n        y: tracker.y,\n        d: 0\n    });\n}\n\nif( tracker.active === false ) {\n    if( paths[id].age > 1.0 && paths[id].path.length > 2 ) {\n        msg.payload = paths[id];\n        msg.topic = \"path\";\n        node.send(msg);\n    }\n    delete paths[id];\n}\n\nflow.set(\"paths\",paths);\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 240,
+        "wires": [
+            [
+                "5a24cee3fc1a1495"
+            ]
+        ]
+    },
+    {
+        "id": "5a24cee3fc1a1495",
+        "type": "debug",
+        "z": "88bf023c2fe02b62",
+        "name": "Path",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 240,
+        "wires": []
+    }
+]
