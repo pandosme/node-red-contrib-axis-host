@@ -2,19 +2,28 @@
 	<div class="form-row">
         <label for="node-input-version"><i class="icon-tag"></i> Version</label>
         <select id="node-input-version">
-            <option value="1">V1 (Any FW)</option>
-            <option value="2">V2 (FW 11.6 or later)</option>
+            <option value="1">Any Camera FW</option>
+            <option value="2">Camera FW 11.6 or later</option>
+            <option value="3">D2110 Radar</option>
 		</select>
 	</div>
-	<div class="form-row">
+	<div class="form-row version1">
         <label for="node-input-output"><i class="icon-tag"></i> Output</label>
         <select id="node-input-output">
+            <option value="1">Detections</option>
             <option value="2">Tracker</option>
             <option value="3">Path</option>
-            <option value="1">Detections</option>
 		</select>
 	</div>
-	<div class="form-row">
+	<div class="form-row version3">
+        <label for="node-input-units"><i class="icon-tag"></i> Units</label>
+        <select id="node-input-units">
+            <option value="0">Meters & m/s</option>
+            <option value="1">Meters & km/h</option>
+            <option value="2">Feet & mph</option>
+		</select>
+	</div>
+	<div class="form-row version1">
         <label for="node-input-confidence"><i class="icon-tag"></i> Confidence</label>
         <select id="node-input-confidence">
             <option value="0">Any</option>
@@ -30,7 +39,7 @@
             <option value="100">100 or more</option>
 		</select>
 	</div>
-	<div class="form-row">
+	<div class="form-row version1">
         <label for="node-input-rotation"><i class="icon-tag"></i> Rotation</label>
         <select id="node-input-rotation">
             <option value="0">0</option>
@@ -39,7 +48,7 @@
             <option value="270">270</option>
 		</select>
 	</div>
-	<div class="form-row">
+	<div class="form-row version1">
         <label for="node-input-cog"><i class="icon-tag"></i> CoG</label>
         <select id="node-input-cog">
             <option value="1">Center of object</option>
@@ -90,6 +99,7 @@ RED.nodes.registerType('Objects',{
 		confidence: { value:"40"},
 		rotation: { value:"0"},
 		cog: { value:"0"},
+		units: { value:"0"},
 		predictions: { value:"0"},
 		attributes: { value:"50"},
 		idle: { value:"0"}
@@ -125,13 +135,21 @@ RED.nodes.registerType('Objects',{
 			text += "License plate";
 		if( this.classFilter == "8" )
 			text += "Unkown";
+		if( this.version === "3")
+			text = "Radar";
 		return text;
 	},
 	oneditprepare: function() {
 		$("#node-input-version").change(function() {
 			$(".version2").hide();
+			$(".version3").hide();
 			if( $("#node-input-version").val() === "2")
 				$(".version2").show();
+			if( $("#node-input-version").val() === "3") {
+				$(".version1").hide();
+				$(".version2").hide();
+				$(".version3").show();
+			}
 		});
 	}
 });

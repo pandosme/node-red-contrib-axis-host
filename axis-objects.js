@@ -12,6 +12,7 @@ module.exports = function(RED) {
 		this.classFilter = config.classFilter;
 		this.rotation = config.rotation;
 		this.cog = config.cog;
+		this.units = config.units;
 		this.predictions = config.predictions;
 		this.attribute = config.attributes;
 		this.idle = config.idle || "0";
@@ -20,14 +21,22 @@ module.exports = function(RED) {
 		var topic = config.output==="1"?"detections":config.output==="2"?"tracker":"path";
 
 		var path = "/usr/local/packages/Nodered/nodeobjects";
-		if( this.version === "2")
+		if( node.version === "2")
 			path += "2";
 
 		var restart = true;
 
-        var process = spawn(path,[node.output,node.rotation,node.cog,node.classFilter,node.confidence, node.predictions, node.idle]);
+		if( node.version === "1" || node.version === "2") {
+			node.status({fill:"green",shape:"dot",text:"Running"});
+			var process = spawn(path,[node.output,node.rotation,node.cog,node.classFilter,node.confidence, node.predictions, node.idle]);
+		}
 
-		node.status({fill:"green",shape:"dot",text:"Running"});
+		if( node.version === "3") {
+			topic = "D2110"
+			node.status({fill:"green",shape:"dot",text:"Running"});
+			path = "/usr/local/packages/Nodered/D2110";
+			var process = spawn(path,[node.units]);
+		}
 
         process.stdout.on('data', (data) => {
 			var output = data.toString();
@@ -38,10 +47,9 @@ module.exports = function(RED) {
 					try {
 						jsonData = JSON.parse(rows[i]);
 					} catch {
-						node.error("Parse error",{payload: rows[i]});
+						node.error("Parse error",rows[i]);
 						return;
 					}
-					
 					node.send({
 						topic: topic,
 						payload:jsonData
@@ -62,8 +70,14 @@ module.exports = function(RED) {
         process.on('close', (code) => {
 			if( restart ) {
 				setTimeout(function(){
-					process = spawn(path,[node.output,node.rotation,node.cog,node.classFilter,node.confidence, node.predictions, node.idle,node.attributes]);
-					node.error("Objects restarted",{payload:'Process exited with code ' + code });
+					if( node.version === "1" || node.version === "2") {
+						process = spawn(path,[node.output,node.rotation,node.cog,node.classFilter,node.confidence, node.predictions, node.idle,node.attributes]);
+						node.error("Objects restarted",{payload:'Process exited with code ' + code });
+					}
+					if( node.version === "3") {
+						var process = spawn("radar_subscriber_client");
+						node.error("Objects restarted",{payload:'Process exited with code ' + code });
+					}
 				},2000);
 			}
         });
@@ -86,6 +100,7 @@ module.exports = function(RED) {
 			confidence: { type:"text" },
 			rotation: { type:"text" },
 			cog: { type:"text" },
+			units: { type:"text" },
 			predictions: { type:"text" },
 			attributes: { type:"text" },			
 			idle: { type:"text"}
