@@ -16,6 +16,9 @@ Analytics data of objects detected by the camera including bounding box and clas
 
 ## Change log
 
+### 1.4.2
+- Fixed parse flaw in events node.
+
 ### 1.4.1
 - Added support for radar including examples.
 

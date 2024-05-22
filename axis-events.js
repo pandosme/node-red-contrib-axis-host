@@ -105,7 +105,7 @@ module.exports = function(RED) {
 				var value = items[1];
 
 				//Make number and cleanup
-				if( isNaN(value) === false )
+				if( typeof value === "string" && value.length > 0 && isNaN(value) === false )
 					value = parseInt(value);
 
 				//Make boolean
