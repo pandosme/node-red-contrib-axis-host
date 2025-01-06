@@ -16,6 +16,9 @@ Analytics data of objects detected by the camera including bounding box and clas
 
 ## Change log
 
+### 1.5.0
+- Updated for Node-RED-Installer ACAP version 4.5.0.  Do not install/upgrade unless you run version 4.5.0.
+
 ### 1.4.1
 - Added support for radar including examples.
 

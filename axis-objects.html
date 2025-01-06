@@ -1,9 +1,8 @@
 <script type="text/x-red" data-template-name="Objects">
 	<div class="form-row">
-        <label for="node-input-version"><i class="icon-tag"></i> Version</label>
+        <label for="node-input-version"><i class="icon-tag"></i> Device</label>
         <select id="node-input-version">
-            <option value="1">Any Camera FW</option>
-            <option value="2">Camera FW 11.6 or later</option>
+            <option value="1">Camera</option>
             <option value="3">D2110 Radar</option>
 		</select>
 	</div>
@@ -51,31 +50,14 @@
 	<div class="form-row version1">
         <label for="node-input-cog"><i class="icon-tag"></i> CoG</label>
         <select id="node-input-cog">
-            <option value="1">Center of object</option>
-            <option value="0">Middle-bottom (feet)</option>
-		</select>
-	</div>
-	<div class="form-row version2">
-        <label for="node-input-attributes"><i class="icon-tag"></i> Attributes</label>
-        <select id="node-input-attributes">
-            <option value="10">Very low confidence</option>
-            <option value="30">Low confidence</option>
-            <option value="50">Medium confidence</option>
-            <option value="70">High confidence</option>
-            <option value="90">Very high confidence</option>
-		</select>
-	</div>
-	<div class="form-row version2">
-        <label for="node-input-predictions"><i class="icon-tag"></i> Predictions</label>
-        <select id="node-input-predictions">
-            <option value="1">Yes</option>
-            <option value="0">No</option>
+            <option value="0">Center of object</option>
+            <option value="1">Middle-bottom (feet/wheels)</option>
 		</select>
 	</div>
 	<div class="form-row version2">
         <label for="node-input-idle"><i class="icon-tag"></i> Max idle</label>
         <select id="node-input-idle">
-            <option value="0">Forever</option>
+            <option value="9999999">Forever</option>
             <option value="10">10 seconds</option>
             <option value="30">30 seconds</option>
             <option value="60">1 minute</option>
@@ -95,13 +77,10 @@ RED.nodes.registerType('Objects',{
 	defaults: {
 		version: { value:"1"},
 		output: { value:"2"},
-		classFilter: { value:"-1"},
+		units: { value:"40"},
 		confidence: { value:"40"},
 		rotation: { value:"0"},
 		cog: { value:"0"},
-		units: { value:"0"},
-		predictions: { value:"0"},
-		attributes: { value:"50"},
 		idle: { value:"0"}
 	},
 	icon: "font-awesome/fa-object-ungroup",
@@ -110,45 +89,36 @@ RED.nodes.registerType('Objects',{
 	label: function() {
 		var text = "";
 		if( this.output === "1")
-			text = "Detections: ";
+			text = "Detections";
 		if( this.output == "2")
-			text = "Tracker: ";
+			text = "Tracker";
 		if( this.output == "3")
-			text = "Path: ";
-		if( this.classFilter == "-1" )
-			text += "Everything";
-		if( this.classFilter == "0" )
-			text += "Human";
-		if( this.classFilter == "1" )
-			text += "Car";
-		if( this.classFilter == "2" )
-			text += "Truck";
-		if( this.classFilter == "3" )
-			text += "Bus";
-		if( this.classFilter == "4" )
-			text += "Bike";
-		if( this.classFilter == "5" )
-			text += "Vehicle (other)";
-		if( this.classFilter == "6" )
-			text += "Face";
-		if( this.classFilter == "7" )
-			text += "License plate";
-		if( this.classFilter == "8" )
-			text += "Unkown";
-		if( this.version === "3")
-			text = "Radar";
+			text = "Path";
 		return text;
 	},
 	oneditprepare: function() {
 		$("#node-input-version").change(function() {
-			$(".version2").hide();
-			$(".version3").hide();
-			if( $("#node-input-version").val() === "2")
+			if( $("#node-input-version").val() === "1") {
+				$(".version1").show();
 				$(".version2").show();
+				$(".version3").hide();
+			}
+			if( $("#node-input-version").val() === "2") {
+				$("#node-input-version").val("1");
+				$(".version1").show();
+				$(".version2").show();
+				$(".version3").hide();
+			}
 			if( $("#node-input-version").val() === "3") {
 				$(".version1").hide();
 				$(".version2").hide();
 				$(".version3").show();
+			}
+			if( $("#node-input-version").val() === "4") {
+				$("#node-input-version").val("1");
+				$(".version1").show();
+				$(".version2").show();
+				$(".version3").hide();
 			}
 		});
 	}
@@ -167,7 +137,10 @@ Objects provides data from the cameras object detection analytics.
 </p>
 <p>
 	<b>Output</b><br/>
-	Select Detections, Tracker or Path depending on the use case
+	Select Detections, Tracker or Path depending on the use case.<br>
+	<p>Detections are tycially used for real-time visalization use cases</p>
+	<p>Trackers are tycially used for automation use cases.  Trackers are only published when moving some distance</p>	
+	<p>Paths are tycially used for post data processing use cases e.g. pushed into a database.</p>	
 </p>
 <p>
 	<b>Confidence</b><br/>
@@ -183,18 +156,9 @@ Objects provides data from the cameras object detection analytics.
 	If the camera is mounted in the ceiling, looking stright down you should use "Center".  If the camera is mounted on the wall, having a perspective view, select bottom (feet).
 </p>
 <p>
-	<b>Attributes:</b><br/>
-	Attributes are predictions on object color, hat type, bag type and more.  The confidence level may need to be adjusted.  To low confidence may result in false values and too high may result in no prediction. 
-</p>
-<p>
-	<b>Predictions</b><br/>
-	Include detections based on predictions.  This may improve tracking and path in some scenarios.  It may also extend object detection after they are lost.  What setting works best depends on environment.
-</p>
-<p>
 	<b>Max Idle</b><br/>
 	The maximum time an object may be present in the scene before it is classified as dead.
 </p>
-
 
 <h3>Coordindate system</h3>
 <p>
@@ -204,14 +168,20 @@ pixelX = (x / 1000) * image width;
 pixelY = (y / 1000) * image height
 <p>
 
-<h3>Tracker</h3>
+<h3>Property description</h3>
 <p>
-Tracker is output when an object has moved 5% or more of the camera view.  Trackers are optimal for real-time processeing, logic and automation.
 <pre>
 id:			Unique ID of each object that can be used to tracker a specific object
 active:		true while the object is being tracked. false when object is lost (left scene)
-class:		Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
+class:		Class name
+class:		Class type
 distance:	Distance traveled in percent of camera view.  Distance may be longer than 100% if object moves back and forth.
+velocity:	Depending on device
+color:		Humen upper body or vehicle color
+color2:		Human lower body
+vehicle:	true/false if classified as vehicle
+face:		true/false if classified as face is visable
+hat:		true/false if classified as a head has a hat
 age:		Seconds the object has been in scene
 birth:		Timestamp when the object was detected. EPOCH ms resolution.
 timestamp:	Current/last timestamp. EPOCH ms resolution
@@ -225,21 +195,6 @@ bx:			Birth X (center of gravity)
 by:			Birth y (center of gravity)
 dx:			Total delta X movement from bx.  Negative value means left, positiv means right
 dy:			Total delta Y movement from by.  Negative value means up, positiv means down
-</pre>
-</p>
-
-<h3>Path</h3>
-<p>
-Path data are output when an object has exit the scene.  Path data are optimal counting, flow heatmap, dwell heatmap and forensic search.  
-<pre>
-id:			Unique object ID
-confidence: Some value.  The higher, the better.  Use this value to set confidence level in the node configuration.
-class:		Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
-timestamp:	Time when object entered the scene.  EPOCH ms resolution.
-dx:			Total delta X the object travelled in the scene.  negative value = left, postive values = right
-dy:			Total delta Y the object travelled in the scene.  negative value = up, postive values = down
-age:		Total time the object stated in the scene
-distance:	Thotal distance in percent of view.  This can be greater than 100 if the object move back and forth
 dwell:		The longest dwell period in seconds in a single sample position
 path:		An Array of sampled positions the object had moving through the scene.  The first sample is the first place the object entered the scene
 {
@@ -249,25 +204,5 @@ path:		An Array of sampled positions the object had moving through the scene.  T
 }
 </pre>
 </p>
-
-<h3>Detections</h3>
-<p>
-Detection provides the raw unprocessed data from the cameras analytics.  This may provide huge amount of data.  Use this data with coution and only when Trackers or Paths are not able to solve the use case.
-<pre>
-id:			Unique ID of each object that can be used to tracker a specific object
-timestamp:	EPOCH ms resolution.
-detections:	Array of all detection objects currently detected
-id:			Unique ID of each object that can be used to tracker a specific object
-class:		Human, Car, Truck, Bus, Motorcycle, (Other)Vehicle, Face, License plate 
-confidence:	Some value.  The higher, the better.  Use this value to set confidence level in the node configuration.
-x:			Bounding box x position
-y:			Bounding box y position
-w:			Bounding box width
-h:			Bounding box height,
-cx:			Center of gravity X.  Placement depends on node configuration
-cy:			Center of gravity Y
-</pre>
-</p>
-
 
 </script>
