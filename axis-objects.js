@@ -111,8 +111,8 @@ function processPath( tracker, node ) {
 			face: tracker.face || false,
 			path:[
 				{
-					x: tracker.x,
-					y: tracker.y,
+					x: tracker.cx,
+					y: tracker.cy,
 					d: 0
 				}
 			]
