@@ -16,10 +16,9 @@ Analytics data of objects detected by the camera including bounding box and clas
 
 ## Change log
 
-### 1.5.2 & 1.5.1
-- Fixed falyr coordinates in Object Paths in the Axis Objects Node
+### 1.5.1/2
+- Fixed faulty coordinates in Object Paths in the Axis Objects Node
 - Updated Axis Host examples
-
 
 ### 1.5.0
 - Updated for Node-RED-Installer ACAP version 4.5.0.  Do not install/upgrade unless you run version 4.5.0.
