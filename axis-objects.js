@@ -136,8 +136,8 @@ function processPath( tracker, node ) {
 		paths[tracker.id].sampletime = tracker.timestamp;
 		paths[tracker.id].path[paths[tracker.id].path.length-1].d = duration;
 		paths[tracker.id].path.push({
-			x: tracker.x,
-			y: tracker.y,
+			x: tracker.cx,
+			y: tracker.cy,
 			d: 0
 		});
 	}

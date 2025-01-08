@@ -16,7 +16,7 @@ Analytics data of objects detected by the camera including bounding box and clas
 
 ## Change log
 
-### 1.5.1/2
+### 1.5.3
 - Fixed faulty coordinates in Object Paths in the Axis Objects Node
 - Updated Axis Host examples
 
