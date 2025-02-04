@@ -16,6 +16,9 @@ Analytics data of objects detected by the camera including bounding box and clas
 
 ## Change log
 
+### 1.6.0
+- Adjustmens for changes in Node-RED version 4.2.0 (Axis OS 12)
+
 ### 1.5.3
 - Fixed faulty coordinates in Object Paths in the Axis Objects Node
 - Updated Axis Host examples

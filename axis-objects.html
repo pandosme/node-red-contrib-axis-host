@@ -81,7 +81,7 @@ RED.nodes.registerType('Objects',{
 		confidence: { value:"40"},
 		rotation: { value:"0"},
 		cog: { value:"0"},
-		idle: { value:"0"}
+		idle: { value:"9999999"}
 	},
 	icon: "font-awesome/fa-object-ungroup",
 	inputs: 0,
@@ -181,7 +181,7 @@ color:		Humen upper body or vehicle color
 color2:		Human lower body
 vehicle:	true/false if classified as vehicle
 face:		true/false if classified as face is visable
-hat:		true/false if classified as a head has a hat
+hat:		"","Hat" or "Helmet"
 age:		Seconds the object has been in scene
 birth:		Timestamp when the object was detected. EPOCH ms resolution.
 timestamp:	Current/last timestamp. EPOCH ms resolution
