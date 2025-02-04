@@ -18,7 +18,7 @@ module.exports = function(RED) {
 		this.idle = parseInt(config.idle) || 0;
 		
 		var node = this;
-		var path = "/usr/local/packages/Nodered/nodeobjects_aarch";
+		var path = "/usr/local/packages/Nodered/nodeobjects";
 		var topic = "path";
 		switch( node.output ) {
 			case "1": topic = "detections"; break;
