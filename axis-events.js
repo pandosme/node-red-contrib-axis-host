@@ -1,5 +1,5 @@
 //Copyright (c) 2023 Fred Juhlin
-//Updated: 2025-11-30 - Error resilience improvements
+//Updated: 2025-11-30 - Production version with dual timestamp handling
 
 const { spawn } = require('child_process');
 
@@ -11,9 +11,13 @@ module.exports = function(RED) {
 		this.initialization = config.initialization;
 		var node = this;
 		var suppress = false;
-		var restart = true;  // Fixed: Declare restart variable
+		var restart = true;
 		var eventlistner = null;
-		var dataBuffer = '';  // Fixed: Buffer for incomplete lines
+		var dataBuffer = '';
+
+		// Event state
+		var currentEvent = null;
+		var inEvent = false;
 
 		if(node.initialization) {
 			suppress = true;
@@ -22,192 +26,303 @@ module.exports = function(RED) {
 			}, 5000);
 		}
 
-		// Fixed: Extract setup logic to reusable function
+		// Helper: Strip ANSI escape codes and MESSAGE prefix
+		function stripPrefix(line) {
+			// Remove ANSI color codes (e.g., \x1b[32;01m or \u001b[32;01m)
+			var cleanLine = line.replace(/\x1b\[[0-9;]*m/g, '');
+			cleanLine = cleanLine.replace(/\u001b\[[0-9;]*m/g, '');
+
+			// Match and extract after <MESSAGE >
+			var match = cleanLine.match(/^<MESSAGE\s*>\s*(.*)$/);
+			return match ? match[1].trim() : cleanLine.trim();
+		}
+
+		// Helper: Parse timestamp to EPOCH with milliseconds
+		function parseTimestamp(value) {
+			// Check if already a valid number (including decimals)
+			if(/^-?\d+\.?\d*$/.test(value)) {
+				return parseFloat(value);
+			}
+
+			// Otherwise try to parse as ISO 8601 date string
+			try {
+				var date = new Date(value);
+				if(!isNaN(date.getTime())) {
+					return date.getTime() / 1000;  // Convert to seconds with decimals
+				}
+			} catch(e) {
+				// Parsing failed
+			}
+
+			// Return as-is if both methods fail
+			return value;
+		}
+
+		// Helper: Extract bracket content from line
+		function extractBracket(line) {
+			var match = line.match(/\[([^\]]+)\]/);
+			return match ? match[1] : null;
+		}
+
+		// Helper: Parse topic line
+		function parseTopic(bracketContent) {
+			// Match topicX in various formats
+			var topicMatch = bracketContent.match(/topic(\d+)/);
+			if(!topicMatch) return null;
+
+			var topicNumber = topicMatch[1];
+			var topicValue = null;
+
+			// First, try parentheses immediately after topicX: topic1 (value)
+			var parenMatch = bracketContent.match(/topic\d+\s*\(([^)]+)\)/);
+			if(parenMatch) {
+				topicValue = parenMatch[1];
+			} else {
+				// Otherwise extract after = with optional quotes
+				var valueMatch = bracketContent.match(/=\s*['"]?([^'"\s()]+)['"]?/);
+				if(valueMatch) {
+					topicValue = valueMatch[1];
+				}
+			}
+
+			if(topicValue) {
+				return {
+					number: topicNumber,
+					value: topicValue
+				};
+			}
+			return null;
+		}
+
+		// Helper: Parse property line
+		function parseProperty(bracketContent) {
+			// Split on first = sign
+			var eqIndex = bracketContent.indexOf('=');
+			if(eqIndex < 0) return null;
+
+			var key = bracketContent.substring(0, eqIndex).trim();
+			var value = bracketContent.substring(eqIndex + 1).trim();
+
+			// Remove any parentheses from key
+			key = key.replace(/\s*\([^)]*\)/g, '');
+			key = key.toLowerCase();
+
+			// Remove quotes and take first token from value
+			value = value.replace(/^['"]|['"]$/g, '');
+			value = value.split(/\s/)[0];
+
+			return { key: key, value: value };
+		}
+
+		// Helper: Convert property to appropriate type
+		function convertProperty(key, value) {
+			// State properties - all become 'state' with boolean value
+			var stateProperties = [
+				'active', 'state', 'ready', 'failed', 'connected', 
+				'day', 'running', 'disruption', 'logicalstate',
+				'alert', 'systeminitializing'
+			];
+
+			if(stateProperties.indexOf(key) >= 0) {
+				var boolValue = (value === '1' || value === 'Yes');
+				return { key: 'state', value: boolValue };
+			}
+
+			// Timestamp properties - handle both EPOCH numbers and ISO strings
+			var timestampProperties = [
+				'triggertime', 'stoptime', 'starttime', 'resettime'
+			];
+
+			if(timestampProperties.indexOf(key) >= 0) {
+				return { key: key, value: parseTimestamp(value) };
+			}
+
+			// Try to convert to number (integer or float)
+			if(/^-?\d+\.?\d*$/.test(value)) {
+				var num = parseFloat(value);
+				// Return integer if no decimal part
+				return { key: key, value: (num % 1 === 0) ? parseInt(value) : num };
+			}
+
+			// Keep as string
+			return { key: key, value: value };
+		}
+
+		// Helper: Emit complete event
+		function emitEvent(event) {
+			// Validate we have at least topic0 and topic1
+			if(!event.topics[0] || !event.topics[1]) {
+				return;
+			}
+
+			// Build topic string
+			var topic = event.topics[0];
+			if(event.topics[1]) topic += '/' + event.topics[1];
+			if(event.topics[2]) topic += '/' + event.topics[2];
+			if(event.topics[3]) topic += '/' + event.topics[3];
+
+			// Filter by group
+			if(node.group !== "All events" && topic.search(node.group) < 0) {
+				return;
+			}
+
+			// Filter audiocontrol
+			if(event.topics[0] === 'audiocontrol') {
+				return;
+			}
+
+			// Only send if we have payload data
+			if(Object.keys(event.payload).length === 0) {
+				return;
+			}
+
+			node.send({
+				topic: topic,
+				payload: event.payload
+			});
+		}
+
+		// Helper: Process a single line
+		function processLine(line) {
+			// Strip ANSI codes and MESSAGE prefix
+			var content = stripPrefix(line);
+
+			// Skip empty lines
+			if(!content || content.length === 0) {
+				return;
+			}
+
+			// Check for event start: must contain 'Event' with dashes
+			// Pattern: '---- Event ------------------------'
+			if(content.search(/----\s*Event\s*----/) >= 0) {
+				// Emit previous event if exists
+				if(inEvent && currentEvent) {
+					emitEvent(currentEvent);
+				}
+				// Start new event
+				currentEvent = {
+					topics: [null, null, null, null],
+					payload: {}
+				};
+				inEvent = true;
+				return;
+			}
+
+			// Check for event end: only dashes (no 'Event' text)
+			// Pattern: '-----------------------------------' (30+ dashes, no other text)
+			if(/^-{30,}$/.test(content)) {
+				if(inEvent && currentEvent) {
+					emitEvent(currentEvent);
+					currentEvent = null;
+				}
+				inEvent = false;
+				return;
+			}
+
+			// Skip metadata lines
+			if(content.search(/^<\s*(Property|Internal)\s*>/) >= 0) {
+				return;
+			}
+			if(content.search(/^(Global|Local|Producer|Timestamp)\s*(Declaration)?\s*Id/i) >= 0) {
+				return;
+			}
+
+			// Skip if not in event
+			if(!inEvent || !currentEvent) {
+				return;
+			}
+
+			// Extract bracketed content
+			var bracketContent = extractBracket(content);
+			if(!bracketContent) {
+				return;
+			}
+
+			// Try parsing as topic
+			var topicData = parseTopic(bracketContent);
+			if(topicData) {
+				var idx = parseInt(topicData.number);
+				if(idx >= 0 && idx <= 3) {
+					currentEvent.topics[idx] = topicData.value;
+				}
+				return;
+			}
+
+			// Try parsing as property
+			var propertyData = parseProperty(bracketContent);
+			if(!propertyData) {
+				return;
+			}
+
+			// Skip unwanted properties
+			var skipKeys = [
+				'relaytoken', 'inputtoken', 'videosourceconfigurationtoken', 
+				'diskmountpoint', 'source', 'token', 'channel', 'port',
+				'disk_id', 'name', 'status', 'temperature', 'overall_health',
+				'wear', 'diskreadwritefailure', 'disktype', 'diskremoved',
+				'diskavailable', 'diskunmountedsafely', 'diskreadonly',
+				'timestamp', 'diskrecipientdisk', 'diskid', 'diskrecordingmaxage',
+				'diskcleanuppolicy', 'eventname', 'diskdisruption', 'diskstatus',
+				'category', 'diskstoragedisk', 'diskfull', 'diskmountpoint',
+				'diskboundshareid', 'disklocked'
+			];
+
+			if(skipKeys.indexOf(propertyData.key) >= 0) {
+				return;
+			}
+
+			// Convert property
+			var converted = convertProperty(propertyData.key, propertyData.value);
+			currentEvent.payload[converted.key] = converted.value;
+		}
+
+		// Setup event listener
 		function setupEventListener() {
 			const listener = spawn('eventlistener');
 			node.status({fill:"green", shape:"dot", text:"Running"});
 
-			// Reset data buffer for new listener
+			// Reset state
 			dataBuffer = '';
+			currentEvent = null;
+			inEvent = false;
 
 			listener.stdout.on('data', (data) => {
-				if(suppress)
+				if(suppress) {
 					return;
+				}
 
-				// Fixed: Handle partial messages with buffer accumulator
-				dataBuffer += data.toString();
-				var lines = dataBuffer.split("\n");
-				dataBuffer = lines.pop() || '';  // Keep incomplete line in buffer
+				try {
+					// Accumulate data
+					dataBuffer += data.toString();
+					var lines = dataBuffer.split("\n");
+					dataBuffer = lines.pop() || '';
 
-				var topic0 = null;
-				var topic1 = null;
-				var topic2 = null;
-				var topic3 = null;
-				var payload = {};
-
-				for(var i = 0; i < lines.length; i++) {
-					var line = lines[i];
-
-					// Fixed: Validate line length before slicing
-					if(line.length < 27)
-						continue;
-
-					var row = line.slice(27);  // Fixed: Use slice instead of deprecated substr
-					row = row.replace(/'/g, "");
-
-					if(row.search('- Event -') >= 0) {  // New event
-						topic0 = null;
-						topic1 = null;
-						topic2 = null;
-						topic3 = null;
-						payload = {};
-						continue;
+					// Process each line
+					for(var i = 0; i < lines.length; i++) {
+						processLine(lines[i]);
 					}
-
-					if(row.search('-------------------------') >= 0) {
-						var send = true;
-
-						// Fixed: Validate meaningful payload exists
-						if(topic0 && topic1 && Object.keys(payload).length > 0) {
-							var topic = topic0 + "/" + topic1;
-							if(topic2) {
-								topic += "/" + topic2;
-								if(topic2 === "xinternal_data")
-									send = false;
-							}
-							if(topic3)
-								topic += "/" + topic3;
-
-							// Ignore events
-							if(node.group !== "All events" && topic.search(node.group) < 0)
-								send = false;
-
-							if(send && topic0 === "audiocontrol")
-								send = false; 
-
-							if(send)
-								node.send({
-									topic: topic,
-									payload: payload
-								});
-						}
-						continue;
-					}
-
-					var brackets = row.match(/\[(.*?)\]/);
-					var bracket = (brackets && brackets.length > 0) ? brackets[1] : null;
-
-					if(!bracket)
-						continue;
-
-					// Parse topics with defensive checks
-					if(bracket.search("topic0") >= 0) {
-						var parts = bracket.split(" = ");
-						if(parts.length >= 2) {
-							var value = parts[1].split(" ");
-							topic0 = value.length > 0 ? value[0].toLowerCase() : null;
-						}
-						continue;
-					}
-					if(bracket.search("topic1") >= 0) {
-						var parts = bracket.split(" = ");
-						if(parts.length >= 2) {
-							var value = parts[1].split(" ");
-							topic1 = value.length > 0 ? value[0].toLowerCase() : null;
-						}
-						continue;
-					}
-					if(bracket.search("topic2") >= 0) {
-						var parts = bracket.split(" = ");
-						if(parts.length >= 2) {
-							var value = parts[1].split(" ");
-							topic2 = value.length > 0 ? value[0].toLowerCase() : null;
-						}
-						continue;
-					}
-					if(bracket.search("topic3") >= 0) {
-						var parts = bracket.split(" = ");
-						if(parts.length >= 2) {
-							var value = parts[1].split(" ");
-							topic3 = value.length > 0 ? value[0].toLowerCase() : null;
-						}
-						continue;
-					}
-
-					// Fixed: Validate split results
-					var items = bracket.split(' = ');
-					if(items.length < 2)
-						continue;
-
-					var property = items[0].split(" ")[0].replace(/[^\w\s]/g, '').toLowerCase();
-					var value = items[1];
-
-					// Fixed: Validate parseInt results
-					if(isNaN(value) === false) {
-						var parsed = parseInt(value);
-						if(!isNaN(parsed))
-							value = parsed;
-					}
-
-					// Make boolean conversions
-					if(property === "active")
-						value = value !== 0;
-					if(property === "state")
-						value = value !== 0;
-					if(property === "ready")
-						value = value !== 0;
-					if(property === "failed")
-						value = value !== 0;
-					if(property === "connected")
-						value = value !== 0;
-					if(property === "day")
-						value = value !== 0;
-					if(property === "running")
-						value = value !== 0;
-					if(property === "disruption")
-						value = value !== 0;
-					if(property === "logicalstate") {
-						property = "state";
-						value = value !== 0;
-					}
-					if(value === "Yes")
-						value = true;
-					if(value === "No")
-						value = false;
-
-					// Remove unwanted properties
-					if(property === "relaytoken")
-						continue;
-					if(property === "inputtoken")
-						continue;
-					if(property === "videosourceconfigurationtoken")
-						continue;
-					if(property === "diskmountpoint")
-						continue;
-
-					payload[property] = value;
+				} catch(error) {
+					node.error("Parser error: " + error.message);
 				}
 			});
 
-			// Fixed: Kill process on error
 			listener.on('error', (error) => {
-				node.error("Events not available", {payload: "Unable to locate service: " + error.message});
-				node.status({fill:"red", shape:"dot", text:"Stopped"});
+				node.error("Events not available: " + error.message);
+				node.status({fill:"red", shape:"dot", text:"Error"});
 				if(listener) {
 					listener.kill();
 				}
 			});
 
 			listener.stderr.on('data', (data) => {
-				node.error("Device Event error", {topic: "Error", payload: data.toString()});
+				node.error("stderr: " + data.toString());
 			});
 
 			listener.on('close', (code) => {
 				if(restart) {
-					node.warn("Events process exited", {payload: "Exit code: " + code + ", restarting in 2s"});
 					setTimeout(function(){
-						if(restart) {  // Double-check restart flag
-							eventlistner = setupEventListener();  // Fixed: Properly setup new listener
+						if(restart) {
+							eventlistner = setupEventListener();
 						}
 					}, 2000);
 				} else {
@@ -218,14 +333,14 @@ module.exports = function(RED) {
 			return listener;
 		}
 
-		// Initialize the event listener
+		// Initialize
 		eventlistner = setupEventListener();
 
 		node.on('close', (done) => {
 			restart = false;
 			node.status({fill:"red", shape:"dot", text:"Stopped"});
 			if(eventlistner) {
-				eventlistner.kill();  // Terminate the child process
+				eventlistner.kill();
 			}
 			done();
 		});
