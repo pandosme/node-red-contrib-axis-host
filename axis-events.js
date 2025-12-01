@@ -1,5 +1,5 @@
 //Copyright (c) 2023 Fred Juhlin
-//Updated: 2025-11-30 - Production version with dual timestamp handling
+//Updated: 2025-12-01 - Complete filtering with group selection
 
 const { spawn } = require('child_process');
 
@@ -158,17 +158,28 @@ module.exports = function(RED) {
 			// Build topic string
 			var topic = event.topics[0];
 			if(event.topics[1]) topic += '/' + event.topics[1];
-			if(event.topics[2]) topic += '/' + event.topics[2];
-			if(event.topics[3]) topic += '/' + event.topics[3];
+			if(event.topics[2]) {
+				// Filter out internal data events
+				if(event.topics[2] === 'xinternal_data') {
+					return;
+				}
+				topic += '/' + event.topics[2];
+			}
+			if(event.topics[3]) {
+				topic += '/' + event.topics[3];
+			}
 
-			// Filter by group
-			if(node.group !== "All events" && topic.search(node.group) < 0) {
+			// Filter out audiocontrol events (always)
+			if(event.topics[0].toLowerCase() === 'audiocontrol') {
 				return;
 			}
 
-			// Filter audiocontrol
-			if(event.topics[0] === 'audiocontrol') {
-				return;
+			// Filter by group (case-insensitive search)
+			if(node.group !== "All events") {
+				var topicLower = topic.toLowerCase();
+				if(topicLower.search(node.group.toLowerCase()) < 0) {
+					return;
+				}
 			}
 
 			// Only send if we have payload data
